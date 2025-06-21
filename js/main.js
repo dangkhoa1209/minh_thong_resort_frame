@@ -57,3 +57,43 @@ Array.from(products).forEach((product, index) => {
         })})`
     })
 })  
+
+// Mobile menu toggle
+const burger = document.querySelector('.burger');
+const nav = document.querySelector('.navigation');
+
+burger.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    burger.classList.toggle('active');
+});
+
+// Close menu when clicking on a link
+const navLinks = document.querySelectorAll('.navigation a');
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        nav.classList.remove('active');
+        burger.classList.remove('active');
+    });
+});  
+
+// Smooth scroll for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return; // Skip if it's just "#"
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            // Offset for fixed header
+            const headerHeight = document.querySelector('header').offsetHeight;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+});  
