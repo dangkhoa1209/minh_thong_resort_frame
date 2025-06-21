@@ -1,0 +1,67 @@
+
+/* Tablet */
+@media screen and (max-width: 768px) {
+    header {
+        padding: 20px 50px;
+    }
+    
+    .logo {
+        margin-right: 100px;
+    }
+    
+    #text {
+        font-size: 3.5em;
+    }
+    
+
+}
+
+/* Mobile */
+@media screen and (max-width: 576px) {
+    header {
+        padding: 15px 20px;
+    }
+    
+    .logo {
+        margin-right: 50px;
+        font-size: 1.5em;
+    }
+    
+    .navigation a {
+        padding: 4px 10px;
+        margin: 0 5px;
+        font-size: 0.9em;
+    }
+    
+    #text {
+        font-size: 2.5em;
+        width: 90%;
+        text-align: center;
+    }
+}
+
+/* Extremely small screens */
+@media screen and (max-width: 375px) {
+    .navigation a {
+        padding: 3px 8px;
+        margin: 0 3px;
+        font-size: 0.8em;
+    }
+    
+    #text {
+        font-size: 2em;
+    }
+}
+
+/* Burger menu styles */
+.burger {
+    display: none;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
