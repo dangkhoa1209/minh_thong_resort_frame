@@ -1,5 +1,16 @@
+.aline-x {
+    padding-left: 70px;
+    padding-right: 70px;
+}
 
-/* Tablet */
+.aline-y {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+
+
 @media screen and (max-width: 768px) {
     header {
         padding: 20px 50px;
