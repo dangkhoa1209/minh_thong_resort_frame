@@ -250,24 +250,42 @@ body {
   position: fixed;
   background: white;
   z-index: 9000;
-  /* overflow-y: auto; */
+  overflow: hidden; /* chặn scroll ban đầu */
   border-radius: 10px;
-
-  /* Trạng thái mặc định */
-  /* opacity: 0; */
   transform-origin: top left;
   pointer-events: none;
 }
 
 .product-popup.product-item-active {
-  opacity: 1;
   pointer-events: auto;
-  /* Mục tiêu sẽ là full màn hình */
   top: 0 !important;
   left: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
   transform: scale(1) !important;
+}
+
+/* Nút close cố định góc phải trên */
+.product-popup .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Nội dung chi tiết bên dưới */
+.product-popup .popup-content {
+  margin-top: 80px;
+  padding: 20px;
+}
+
+/* Cho scroll sau khi nội dung sẵn sàng */
+.product-popup.scrollable {
+  overflow-y: auto;
 }
 
 

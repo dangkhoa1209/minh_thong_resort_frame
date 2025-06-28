@@ -78,60 +78,77 @@ navLinks?.forEach(link => {
 
 
 
- const items = document.querySelectorAll('.product-item');
+const items = document.querySelectorAll('.product-item');
 
-  items.forEach(item => {
-    // const thumbnail = item.querySelector('.product-thumbnail');
-    const popup = item.querySelector('.product-popup');
-    const closeBtn = item.querySelector('.close-btn');
+items.forEach(item => {
+  const popup = item.querySelector('.product-popup');
 
-    item.addEventListener('click', () => {
-      const rect = item.getBoundingClientRect();
-      
+  item.addEventListener('click', () => {
+    const rect = item.getBoundingClientRect();
 
-      // Đặt popup theo vị trí gốc của item
-      popup.style.top = rect.top + 'px';
-      popup.style.left = rect.left + 'px';
-      popup.style.width = rect.width + 'px';
-      popup.style.height = rect.height + 'px';
-      popup.style.position = 'fixed';
-        
-       transition: ;
-    //   popup.style.transform = 'scale(0.8)';
+    // Thiết lập vị trí ban đầu cho popup (từ vị trí item)
+    popup.style.top = rect.top + 'px';
+    popup.style.left = rect.left + 'px';
+    popup.style.width = rect.width + 'px';
+    popup.style.height = rect.height + 'px';
+    popup.style.position = 'fixed';
 
-      // Bắt buộc render lần đầu
-      requestAnimationFrame(() => {
-         popup.style.transition = 'all 0.4s ease-in-out';
-        popup.classList.add('product-item-active');
-        popup.style.transform = 'scale(1)';
-      });
-    // setTimeout(() => {
-    //     popup.style.transition = 'all 0.4s ease-in-out';
-    //     popup.classList.add('product-item-active');
-    //     // popup.style.transform = 'scale(1)';
-    // }, 200)
-
-      document.body.style.overflow = 'hidden';
+    // Render phóng to
+    requestAnimationFrame(() => {
+        popup.style.transition = 'all 0.4s ease-in-out';
+      popup.classList.add('product-item-active');
+      popup.style.top = '0';
+      popup.style.left = '0';
+      popup.style.width = '100vw';
+      popup.style.height = '100vh';
     });
 
-   closeBtn?.addEventListener('click', (e) => {
-        e.stopPropagation()
-      const rect = item.getBoundingClientRect();
+    // Giả lập "render nội dung chi tiết" sau 400ms
+    setTimeout(() => {
+      // Nếu chưa có close-btn thì render nội dung chi tiết
+      if (!popup.querySelector('.close-btn')) {
+        popup.insertAdjacentHTML('beforeend', `
+          <button class="close-btn">X</button>
+          <div class="popup-content">
+            <p><b>Chi tiết nè</b></p>
+            <img src="https://picsum.photos/522/693?random=11" />
+            <img src="https://picsum.photos/522/693?random=12" />
+          </div>
+        `);
 
-      console.log('popup', popup);
-      
-    
-      popup.classList.remove('product-item-active');
-      popup.style.top = rect.top + 'px';
-      popup.style.left = rect.left + 'px';
-      popup.style.width = rect.width + 'px';
-      popup.style.height = rect.height + 'px';
-    //   popup.style.transform = 'scale(0.8)';
+        // Gán sự kiện đóng sau khi render nút X
+        const closeBtn = popup.querySelector('.close-btn');
+        closeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closePopup(item, popup);
+        });
+      }
 
-      document.body.style.overflow = 'auto';
+      // Cho scroll sau khi render xong nội dung
+      popup.style.overflowY = 'auto';
 
-      setTimeout(() => {
-        popup.removeAttribute('style');
-      }, 400);
-    });
+    }, 400);
+
+    document.body.style.overflow = 'hidden';
   });
+});
+
+function closePopup(item, popup) {
+  const rect = item.getBoundingClientRect();
+
+  popup.classList.remove('product-item-active');
+  popup.style.transition = 'all 0.4s ease-in-out';
+  popup.style.top = rect.top + 'px';
+  popup.style.left = rect.left + 'px';
+  popup.style.width = rect.width + 'px';
+  popup.style.height = rect.height + 'px';
+  popup.style.overflow = 'hidden';
+
+  document.body.style.overflow = 'auto';
+
+  setTimeout(() => {
+    // Reset lại nội dung (chỉ giữ ảnh preview nếu muốn)
+    popup.innerHTML = `<img src="https://picsum.photos/522/693?random=1" class="preview-image">`;
+    popup.removeAttribute('style');
+  }, 400);
+}
