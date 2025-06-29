@@ -75,7 +75,7 @@ navLinks?.forEach(link => {
 });  
 
 
-const items = document.querySelectorAll('.product');
+
 
 barba.init({
   transitions: [
@@ -91,6 +91,7 @@ barba.init({
   ]
 });
 
+const items = document.querySelectorAll('.product');
 
 items.forEach(item => {
   const popup = item.querySelector('.product__inner');
@@ -112,16 +113,17 @@ items.forEach(item => {
 
     // Render phóng to
     requestAnimationFrame(() => {
-        popup.style.transition = 'all 0.4s ease-in-out';
+        popup.style.transition = 'all 0.8s ease-in-out';
       popup.classList.add('product-item-active');
       popup.style.top = '0';
       popup.style.left = '0';
       popup.style.width = '100vw';
       popup.style.height = '100vh';
+      popup.style.borderRadius = '0px';
 
       setTimeout(() => {
        barba.go('/pages/four-seasons-resort-the-nam-hai.html');
-    }, 400);
+    }, 1000);
     });
    
   });

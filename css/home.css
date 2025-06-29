@@ -191,19 +191,21 @@
   width: 100%;
   aspect-ratio: 1366 / 778;
   overflow: hidden;
+  margin-bottom: 20px;
 
 }
 
 .product__inner {
   will-change: transform;
   background: white;
-  border-radius: 14px;
+  border-radius: 20px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 25px 50px -12px hsla(265.3, 20%, 10%, 35%);
   transform-origin: center top;
   width: 100%;
-  /* aspect-ratio: 1366 / 778; */
+  aspect-ratio: 1366 / 778;
+   max-height: calc(100vw *  778 / 1366);
 }
 
 .product__inner > img,
@@ -211,6 +213,8 @@
   width: 100%;
   object-fit: cover;
   object-position: center;
+  width: 100%;
+  max-height: calc(100vw *  778 / 1366);
 }
 
 .product-detail {

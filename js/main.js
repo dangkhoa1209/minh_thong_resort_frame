@@ -95,7 +95,7 @@ items.forEach(item => {
 
     // Render phóng to
     requestAnimationFrame(() => {
-        popup.style.transition = 'all 0.4s ease-in-out';
+        popup.style.transition = 'all 0.8s ease-in-out';
       popup.classList.add('product-item-active');
       popup.style.top = '0';
       popup.style.left = '0';
