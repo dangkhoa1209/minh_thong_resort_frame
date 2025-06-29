@@ -7,6 +7,12 @@
   font-family: 'Lato', sans-serif;
 }
 
+
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+
 img {
   pointer-events: none;
   -webkit-user-drag: none;
@@ -14,16 +20,21 @@ img {
 }
 
 
-.font-montserrat {
-  font-family: 'Montserrat', sans-serif;
-}
-
 body {
   background: #f9f9f9;
-  min-height: 200vh;
   overflow-x: hidden;
+}
+
+/* No select content */
+body {
   user-select: none;
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none;    /* Firefox */
   -ms-user-select: none;     /* IE10+ */
 }
+
+
+.space {
+  height: 90vh;
+}
+

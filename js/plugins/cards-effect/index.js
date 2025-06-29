@@ -1,4 +1,3 @@
-
 window.cardsEffect = window.cardsEffect || {};
 
 const defaultOptions = {
