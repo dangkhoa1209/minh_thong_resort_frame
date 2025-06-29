@@ -27,13 +27,15 @@ productsContainer.style.setProperty(
 )
 
 Array.from(products).forEach((product, index) => {
-     const offsetTop = 20 + index * 20
+    //  const offsetTop = 20 + index * 20
+    const offsetTop = 0 
 
     product.style.paddingTop = `${offsetTop}px`
     if (index === products.length - 1) {
         return
     }
-    const toScale = 1 - (products.length - 1 - index) * 0.05    
+    // const toScale = 1 - (products.length - 1 - index) * 0.05    
+    const toScale = 0.75
     const nextProduct = products[index + 1]
     const productInner = product.querySelector('.product__inner')
 
@@ -71,6 +73,60 @@ navLinks?.forEach(link => {
         burger.classList.remove('active');
     });
 });  
+
+
+const items = document.querySelectorAll('.product');
+
+barba.init({
+  transitions: [
+    {
+      name: 'instant',
+      leave() {
+        return Promise.resolve(); // không delay
+      },
+      enter() {
+        return Promise.resolve(); // không delay
+      }
+    }
+  ]
+});
+
+
+items.forEach(item => {
+  const popup = item.querySelector('.product__inner');
+
+  item.addEventListener('click', (e) => {
+    e.stopPropagation()
+    const rect = item.getBoundingClientRect();
+        document.body.style.overflow = 'hidden';
+
+
+    // Thiết lập vị trí ban đầu cho popup (từ vị trí item)
+    popup.style.top = rect.top + 'px';
+    popup.style.left = rect.left + 'px';
+    popup.style.width = rect.width + 'px';
+    popup.style.height = rect.height + 'px';
+    popup.style.zIndex = 9999;
+    item.style.zIndex = '1000';
+    popup.style.position = 'fixed';
+
+    // Render phóng to
+    requestAnimationFrame(() => {
+        popup.style.transition = 'all 0.4s ease-in-out';
+      popup.classList.add('product-item-active');
+      popup.style.top = '0';
+      popup.style.left = '0';
+      popup.style.width = '100vw';
+      popup.style.height = '100vh';
+
+      setTimeout(() => {
+       barba.go('/pages/four-seasons-resort-the-nam-hai.html');
+    }, 400);
+    });
+   
+  });
+});
+
 
 
 

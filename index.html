@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body>
-    <div class="container">
+<body data-barba="wrapper">
+    <div class="container"  data-barba="container">
         <div class="banner">
             <header class="header aline-x aline-y">
                 <h2 class="logo">Logo</h2>
@@ -68,37 +68,38 @@
             </div>
         </div>
 
-         <div class="space"></div>
+        <div class="space"></div>
 
-        <section class="products">
-            <div class="product" data-index="0">
-                <div class="product__inner">
-                    <p>card 1</p>
+        <section class="products ">
+           
+             <div class="product" data-index="0">
+                <div class="product__inner ">
+                    <img src="/acess/images//four-seasons-resort-the-nam-hai/2.jpg" class="product-thumbnail">
+             
                 </div>
             </div>
-            <div class="product" data-index="0">
-                <div class="product__inner">
-                    <p>card 2</p>
+             <div class="product" data-index="0">
+                <div class="product__inner ">
+                    <img src="/acess/images//four-seasons-resort-the-nam-hai/1.jpg" class="product-thumbnail">
+             
                 </div>
             </div>
-            <div class="product" data-index="0">
-                <div class="product__inner">
-                    <p>card 3</p>
+             <div class="product" data-index="0">
+               <div class="product__inner ">
+                    <img src="/acess/images//four-seasons-resort-the-nam-hai/3.jpg" class="product-thumbnail">
+             
                 </div>
             </div>
-
-            <div class="product" data-index="0">
-                <div class="product__inner">
-                   <p>card 4</p>
-                </div>
-            </div>
-
-            <div class="product" data-index="0">
-                <div class="product__inner">
-                    <p>card 5</p>
+             <div class="product" data-index="0">
+                <div class="product__inner ">
+                    <img src="/acess/images//four-seasons-resort-the-nam-hai/4.jpg" class="product-thumbnail">
+             
                 </div>
             </div>
         </section>
+
+                <div class="space"></div>
+
 
         <!-- Contact Section -->
         <section id="contact" class="contact-section">
@@ -166,6 +167,10 @@
 
     <script src="/js/plugins/cards-effect/helpers.js"></script>
     <script src="/js/plugins/cards-effect/index.js"></script>
+
+        <!-- load barba (UMD version) -->
+    <script src="https://unpkg.com/@barba/core"></script>
+        <script src="https://unpkg.com/gsap@latest/dist/gsap.min.js"></script>
     <script src="/js/home.js"></script>
 </body>
 
