@@ -150,7 +150,8 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  aspect-ratio: 1366 / 778;
+  height: 100vh;
+  max-height: calc(100vw *  778 / 1366);
   overflow: hidden;
   padding-top: 80px;
 }
@@ -186,6 +187,9 @@ body {
   width: 100%;
   pointer-events: none;
   object-fit: cover;
+  object-position: center;
+  height: 100%;
+   max-height: calc(100vw *  778 / 1366);
 }
 
 .sec {
