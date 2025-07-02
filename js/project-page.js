@@ -1,9 +1,7 @@
 const popup = document.getElementById("popup");
-const popupImg = document.getElementById("popupImg");
 const popupClose = document.getElementById("popupClose");
 
 document.querySelectorAll(".product-thumbnail").forEach((img, index) => {
-
   img.dataset.thumbId = `thumb-${index}`;
 
   img.addEventListener("click", () => {
@@ -11,86 +9,101 @@ document.querySelectorAll(".product-thumbnail").forEach((img, index) => {
     const clone = img.cloneNode();
     clone.classList.remove("product-thumbnail");
 
-    // Set starting position
-    clone.style.position = "fixed";
-    clone.style.left = `${rect.left}px`;
-    clone.style.top = `${rect.top}px`;
-    clone.style.width = `${rect.width}px`;
-    clone.style.height = `${rect.height}px`;
-    clone.style.objectFit = "contain";
-    clone.style.objectPosition = "center";
-    clone.style.zIndex = "9999";
-    clone.style.borderRadius = "20px";
-    clone.style.transition = "all 0.5s ease-in-out";
+    // Setup initial style for zoom-in
+    Object.assign(clone.style, {
+      position: "fixed",
+      left: `${rect.left}px`,
+      top: `${rect.top}px`,
+      width: `${rect.width}px`,
+      height: `${rect.height}px`,
+      objectFit: "cover",
+      objectPosition: "center",
+      zIndex: "9999",
+      borderRadius: "20px",
+      transition: "all 0.5s ease-in-out",
+      transform: "none"
+    });
 
     document.body.appendChild(clone);
 
-    requestAnimationFrame(() => { d
-      clone.style.left = "50%";
-      clone.style.top = "50%";
-      clone.style.transform = "translate(-50%, -50%)";
-      clone.style.maxWidth = "95%";
-      clone.style.maxHeight = "95%";
-      clone.style.width = "95%";
-      clone.style.height = "95%";
+    // Animate to center
+    requestAnimationFrame(() => {
+      Object.assign(clone.style, {
+        left: "50%",
+        top: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "95vw",
+        height: "95vh",
+        objectFit: "contain"
+      });
     });
 
-    // Show background after slight delay to keep transition smooth
+    // After animation complete, move to popup
     setTimeout(() => {
       clone.dataset.sourceId = img.dataset.thumbId;
-      popup.style.display = "flex";
-      popup.appendChild(clone);
       clone.classList.add("popup-img");
-    }, 600);
+
+      popup.innerHTML = '<span class="popup-close" id="popupClose">✕</span>';
+      popup.appendChild(clone);
+      popup.style.display = "flex";
+
+      document.getElementById("popupClose").addEventListener("click", closePopup);
+    }, 500);
   });
 });
 
-// Close logic
 function closePopup() {
-  const popupImage = popup.querySelector(".popup-img");
-  if (!popupImage) return;
-  const sourceId = popupImage.dataset.sourceId;
-  const rect = popupImage.getBoundingClientRect();
-  const originalImg = document.querySelector(`.product-thumbnail[data-thumb-id="${sourceId}"]`);
-  const originalImgRect = originalImg.getBoundingClientRect();
-  const clone = popupImage.cloneNode();
+  const popupImg = popup.querySelector(".popup-img");
+  if (!popupImg) return;
 
-  document.body.appendChild(clone);
-  popup.style.display = "none";
-  clone.style.transform = "none";
+  const sourceId = popupImg.dataset.sourceId;
+  const original = document.querySelector(`.product-thumbnail[data-thumb-id="${sourceId}"]`);
+  if (!original) return;
+
+  const fromRect = popupImg.getBoundingClientRect();
+  const toRect = original.getBoundingClientRect();
+
+  const clone = popupImg.cloneNode();
   clone.classList.remove("popup-img");
-  clone.style.position = "fixed";
-  clone.style.left = `${rect.left}px`;
-  clone.style.top = `${rect.top}px`;
-  clone.style.width = `${rect.width}px`;
-  clone.style.height = `${rect.height}px`;
-  clone.style.objectFit = "contain";
-  clone.style.objectPosition = "center";
-  clone.style.zIndex = "9999";
-  clone.style.borderRadius = "20px";
-  clone.style.transition = "all 0.5s ease-in-out";
 
-  requestAnimationFrame(() => {
-    clone.style.left = `${originalImgRect.left}px`;
-    clone.style.top = `${originalImgRect.top}px`;
-    clone.style.width = `${originalImgRect.width}px`;
-    clone.style.height = `${originalImgRect.height}px`;
-    clone.style.objectFit = "contain";
+  // Reset transform (no translate), then start from current position
+  Object.assign(clone.style, {
+    position: "fixed",
+    left: `${fromRect.left}px`,
+    top: `${fromRect.top}px`,
+    width: `${fromRect.width}px`,
+    height: `${fromRect.height}px`,
+    objectFit: "contain",
+    objectPosition: "center",
+    zIndex: "9999",
+    borderRadius: "20px",
+    transform: "none",
+    transition: "all 0.4s ease-in-out"
   });
 
-  popupImage.remove();
-  setTimeout(() => {
-    clone.style.opacity = 0;
-  }, 500);
+  popup.style.display = "none";
+  popup.innerHTML = "";
 
+  document.body.appendChild(clone);
+
+  // Animate to original thumbnail
+  requestAnimationFrame(() => {
+    Object.assign(clone.style, {
+      left: `${toRect.left}px`,
+      top: `${toRect.top}px`,
+      width: `${toRect.width}px`,
+      height: `${toRect.height}px`,
+      objectFit: "cover",
+      transform: "none"
+    });
+  });
+
+  // Remove clone after animation
   setTimeout(() => {
-    document.body.removeChild(clone);
-  }, 600);
+    clone.remove();
+  }, 400);
 }
 
-popupClose.addEventListener("click", closePopup);
 popup.addEventListener("click", e => {
-  if (e.target === popup) {
-    closePopup();
-  }
+  if (e.target === popup) closePopup();
 });
