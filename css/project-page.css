@@ -214,6 +214,7 @@
   transition: transform 0.4s ease;
   width: 100vw;
   height: 100vh;
+  cursor: pointer;
 }
 
 .popup-close {
@@ -224,6 +225,10 @@
   font-size: 30px;
   cursor: pointer;
   z-index: 10000;
+}
+
+.popup-img {
+  cursor: default;
 }
 
 /* end products */
