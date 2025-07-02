@@ -8,7 +8,7 @@
 }
 
 
-.font-montserrat {
+.font-style-montserrat {
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -22,28 +22,44 @@ img {
 
 body {
   background: #f9f9f9;
+  min-height: 200vh;
   overflow-x: hidden;
-}
-
-/* No select content */
-body {
   user-select: none;
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* IE10+ */
+  -webkit-user-select: none;
+  -moz-user-select: none; 
+  -ms-user-select: none;
 }
 
 * {
-  scrollbar-width: none;        /* Firefox */
-  -ms-overflow-style: none;     /* IE/Edge */
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
 }
 
 *::-webkit-scrollbar {
-  display: none;                /* Chrome, Safari, Opera */
+  display: none;       
 }
 
 
 .space {
   height: 90vh;
+}
+
+.font-bold {
+ font-weight: bold;
+}
+
+.font-thin {
+ font-weight: thin;
+}
+
+
+.px {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.py {
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 

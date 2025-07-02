@@ -7,26 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parallax Scrolling Website | Codehal</title>
     <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="stylesheet" href="/css/project-page.css">
+    <!-- <link rel="stylesheet" href="/css/responsive.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
     <div class="container">
-        <div class="banner">
-            <header class="header aline-x aline-y">
-                <h2 class="logo">Logo</h2>
-                <div class="menu">
-                    <p>
-                        <span>Menu</span>
-                    </p>
-                    <img class="menu-icon" src="/acess/svg/menu-icon.svg" alt="">
-                </div>
-            </header>
-            <section class="parallax">
+        <header class="header px py">
+            <h2 class="header__logo">Logo</h2>
+            <div class="header__menu">
+                <span>Menu</span>
+                <img class="header__icon" src="/acess/svg/menu-icon.svg" alt="Menu icon">
+            </div>
+        </header>
 
-                 <img src="/acess/images//four-seasons-resort-the-nam-hai/1.jpg">
+
+        <div class="banner">
+            <section class="parallax">
+                <img src="/acess/images//four-seasons-resort-the-nam-hai/1.jpg">
                 <!-- <img src="/acess/parallax/hill1.png" alt="" id="hill1">
                 <img src="/acess/parallax/hill2.png" alt="" id="hill2">
                 <img src="/acess/parallax/hill3.png" alt="" id="hill3">
@@ -41,7 +40,7 @@
             </section>
         </div>
 
-        <div class="about aline-x aline-y">
+        <div class="about px">
             <header class="header-about">
                 <h2 class="logo">Logo</h2>
                 <div class="menu-about">
@@ -54,22 +53,31 @@
 
             <div class="about-container">
                 <div class="about-title">
-                    <h2 class="about-title-1 font-montserrat ">Four seasons resort</h2>
-                    <h2 class="about-title-2 font-montserrat">The nam hai</h2>
+                    <h2 class="about-title-1 font-style-montserrat ">Four seasons resort</h2>
+                    <h2 class="about-title-2 font-style-montserrat">The nam hai</h2>
+                    <div class="location-time">
+                        <p>
+                            <span class="font-bold">Location</span> <span class="font-thin">Hoi An, Viet Nam</span>
+                        </p>
+                        <p>
+                            <span class="font-bold">Location</span> <span class="font-thin">2024</span>
+                        </p>
+                    </div>
                 </div>
 
                 <div>
                     <p class="about-content">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab dicta
-                        error nam eaque. Eum fuga laborum quos expedita iste saepe
-                        similique, unde possimus quia at magnam sed cupiditate?
-                        Reprehenderit, harum!
+                        With an idyllic location on Vietnam’s culturally rich central coast, our luxury Five-Star beach
+                        Resort offers a portal to three extraordinary UNESCO World Heritage sites and a breezy respite
+                        on the country’s most celebrated beach. You’ll have a chance to reconnect with your loved ones –
+                        whether you take to the East Sea by kayak, explore the glory of imperial Hue or simply savour
+                        quiet moments in your own tranquil villa at our luxury Resort in Hoi An, Vietnam.
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- <section class="products aline-x">
+        <!-- <section class="products px">
             <div class="product">
                 <div class="product-item">
                     <img src="https://picsum.photos/522/693?random=1" class="product-thumbnail">
