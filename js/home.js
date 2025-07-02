@@ -27,14 +27,11 @@ productsContainer.style.setProperty(
 )
 
 Array.from(products).forEach((product, index) => {
-    //  const offsetTop = 20 + index * 20
     const offsetTop = 0 
-
     product.style.paddingTop = `${offsetTop}px`
     if (index === products.length - 1) {
         return
     }
-    // const toScale = 1 - (products.length - 1 - index) * 0.05    
     const toScale = 0.75
     const nextProduct = products[index + 1]
     const productInner = product.querySelector('.product__inner')

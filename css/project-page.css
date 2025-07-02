@@ -163,6 +163,7 @@
   background-color: #eee;
   /* luôn có khung nền */
   position: relative;
+  cursor: pointer;
 }
 
 /* Giữ tỷ lệ bằng aspect-ratio */
