@@ -12,14 +12,6 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-
-img {
-  pointer-events: none;
-  -webkit-user-drag: none;
-  user-select: none;
-}
-
-
 body {
   background: #f9f9f9;
   min-height: 200vh;
