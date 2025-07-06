@@ -45,6 +45,10 @@ items.forEach(item => {
 
   const pageTo = popup.dataset.pageTo;
 
+  if(!pageTo) {
+    return
+  }
+
 
   item.addEventListener('click', (e) => {
     e.stopPropagation()
@@ -65,6 +69,7 @@ items.forEach(item => {
     requestAnimationFrame(() => {
       popup.style.transition = 'all 0.8s ease-in-out';
       popup.classList.add('project-item-active');
+     
       popup.style.top = '0';
       popup.style.left = '0';
       popup.style.width = '100vw';

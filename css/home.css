@@ -238,6 +238,7 @@
   background-color: white;
   transform: scale(1) !important;
   position: fixed;
+  transform: all 0.8s ease-in-out !important;
   z-index: 9999
 }
 
