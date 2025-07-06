@@ -17,7 +17,7 @@ Array.from(projects).forEach((project, index) => {
   if (index === projects.length - 1) {
     return
   }
-  const toScale = 0.75
+  const toScale = 0.85
   const nextproject = projects[index + 1]
   const projectInner = project.querySelector('.project__inner')
 
@@ -61,6 +61,7 @@ items.forEach(item => {
     popup.style.width = rect.width + 'px';
     popup.style.height = rect.height + 'px';
     popup.style.transform = 'translateX(0)';
+   
     popup.style.zIndex = 9999;
 
     // Force reflow để đảm bảo transition được kích hoạt
@@ -70,6 +71,8 @@ items.forEach(item => {
     requestAnimationFrame(() => {
       popup.style.transition = 'all 0.8s ease-in-out';
       popup.classList.add('expand-active');
+      popup.style.scale = '1';
+      popup.style.filter = 'brightness(1)';
       barbaGo?.(pageTo, 1000);
     });
   });
