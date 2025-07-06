@@ -1,6 +1,7 @@
 
 .container {
   max-width: 1920px;
+  margin: auto;
 }
 
 .banner {
@@ -205,7 +206,7 @@
   transform-origin: center top;
   width: 100%;
   aspect-ratio: 1366 / 778;
-  max-height: calc(100vw *  778 / 1366);
+  max-height: calc(min(100vw, 1920px) * 778 / 1366);
 }
 
 .project__inner > img,
@@ -214,7 +215,7 @@
   object-fit: cover;
   object-position: center;
   width: 100%;
-  max-height: calc(100vw *  778 / 1366);
+  max-height: calc(min(100vw, 1920px) * 778 / 1366);
 }
 
 .project-detail {
@@ -232,6 +233,8 @@
   left: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
+  max-width: 1920px;
+  margin: auto;
   background-color: white;
   transform: scale(1) !important;
   position: fixed;
