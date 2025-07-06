@@ -42,43 +42,39 @@ const items = document.querySelectorAll('.project');
 
 items.forEach(item => {
   const popup = item.querySelector('.project__inner');
-
   const pageTo = popup.dataset.pageTo;
 
-  if(!pageTo) {
-    return
-  }
-
+  if (!pageTo) return;
 
   item.addEventListener('click', (e) => {
-    e.stopPropagation()
+    e.stopPropagation();
     const rect = item.getBoundingClientRect();
     document.body.style.overflow = 'hidden';
 
+    // Reset class & transition để chuẩn bị vị trí ban đầu
+    popup.classList.remove('expand-active');
+    popup.style.transition = 'none';
 
-    // Thiết lập vị trí ban đầu cho popup (từ vị trí item)
+    // Thiết lập vị trí ban đầu (khớp item)
     popup.style.top = rect.top + 'px';
     popup.style.left = rect.left + 'px';
     popup.style.width = rect.width + 'px';
     popup.style.height = rect.height + 'px';
+    popup.style.transform = 'translateX(0)';
     popup.style.zIndex = 9999;
-    item.style.zIndex = '1000';
-    popup.style.position = 'fixed';
 
-    // Render phóng to
+    // Force reflow để đảm bảo transition được kích hoạt
+    void popup.offsetWidth;
+
+    // Bắt đầu transition
     requestAnimationFrame(() => {
       popup.style.transition = 'all 0.8s ease-in-out';
-      popup.classList.add('project-item-active');
-     
-      popup.style.top = '0';
-      popup.style.left = '0';
-      popup.style.width = '100vw';
-      popup.style.height = '100vh';
-      popup.style.borderRadius = '0px';
-      barbaGo?.(pageTo, 1000)
+      popup.classList.add('expand-active');
+      barbaGo?.(pageTo, 1000);
     });
   });
 });
+
 
 
 
