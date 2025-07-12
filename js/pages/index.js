@@ -1,3 +1,10 @@
+fetch('/components/footer/index.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('footer-placeholder').innerHTML = html
+  })
+
+
 document.querySelectorAll('.faq-item').forEach(faqItem => {
   faqItem.addEventListener('click', (event) => {
     const item = event.currentTarget; // hoặc dùng trực tiếp faqItem
@@ -14,13 +21,9 @@ document.querySelectorAll('.faq-item').forEach(faqItem => {
 });
 
 
-fetch('/components/footer/index.html')
-  .then(res => res.text())
-  .then(html => {
-    document.getElementById('footer-placeholder').innerHTML = html
-  })
 
-// slide project
+
+// img order product
 const images = [
   "/assets/images/four-seasons-resort-the-nam-hai/1.webp",
   "/assets/images/four-seasons-resort-the-nam-hai/2.webp",
@@ -32,7 +35,6 @@ const images = [
   "/assets/images/four-seasons-resort-the-nam-hai/8.webp",
   "/assets/images/four-seasons-resort-the-nam-hai/9.webp"
 ];
-
 
 const bg = document.getElementById('slideBackground');
 
