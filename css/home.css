@@ -335,58 +335,58 @@ body {
 }
 
 .introduce-header p {
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  color: #1f2937;
+  font-size: 35pt;
+  color: black;
   font-style: italic;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
-  .marquee-wrapper {
-      overflow: hidden;
-      white-space: nowrap;
-      width: 100%;
-      background: #fff;
-      padding: 20px 0;
-      border-top: 1px solid #eee;
-      border-bottom: 1px solid #eee;
-      user-select: none;
-      pointer-events: none;
-    }
+.partner {
+  overflow: hidden;
+  background: #fff;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  user-select: none;
+  pointer-events: none;
+}
 
-    .marquee-track {
-      display: inline-block;
-      white-space: nowrap;
-      animation: marquee 20s linear infinite;
-    }
+.partner .wrapper {
+  display: inline-flex;
+  width: max-content;
+  animation: partner-scroll 20s linear infinite;
+}
 
-    .marquee-item {
-      display: inline-block;
-      width: 226px;
-      height: 151px;
-      margin-right: 55px;
-    }
+.partner-item {
+  flex: none;
+  width: 226px;
+  height: 151px;
+  margin-right: 55px;
+}
 
-    .marquee-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: grayscale(100%);
-      opacity: 0.7;
-      transition: 0.3s;
-      pointer-events: none;
-    }
+.partner-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: 0.3s;
+  pointer-events: none;
+}
 
-    @keyframes marquee {
-      0% {
-        transform: translateX(0%);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
-    }
+@keyframes partner-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 
 .introduce-content {
   display: flex;
@@ -402,30 +402,32 @@ body {
 
 .introduce-images {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  flex: 2;
+  gap: 5px;
+  /* flex: 2; */
 }
 
 .introduce-images .introduce-image-box {
   position: relative;
-  flex: 1 1 calc(33.333% - 12px);
+  /* flex: 1 1 calc(33.333% - 12px); */
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 20px;
+  height: 673px;
+  width: 322px;
 }
 
 .introduce-images img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(100%);
+  justify-content: center;
+  /* filter: grayscale(100%); */
   transition: filter 0.3s ease;
   display: block;
-  border-radius: 12px;
+  border-radius: 20px;
 }
 
 .introduce-images .introduce-image-box:hover img {
-  filter: grayscale(0);
+  /* filter: grayscale(0); */
 }
 
 .introduce-images button {
@@ -433,16 +435,24 @@ body {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 8px 24px;
-  border: 1px solid #ffffff;
-  background: transparent;
+  border: 2px solid #ffffff;
+  background-color: transparent;
+  /* đảm bảo dùng background-color */
   color: #ffffff;
-  font-size: 14px;
+  font-size: 20pt;
   font-weight: 300;
   border-radius: 9999px;
   cursor: pointer;
-  transition: background 0.3s, color 0.3s;
+  width: 250px;
+  height: 70px;
+  transition: background-color 0.3s, color 0.3s;
+  outline: none;
+  /* loại bỏ viền mặc định */
+  box-shadow: none;
+  /* loại bỏ đổ bóng nếu có */
+  font-weight: 300;
 }
+
 
 .introduce-images button:hover {
   background: #ffffff;
