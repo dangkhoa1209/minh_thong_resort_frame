@@ -1,13 +1,14 @@
+document.querySelectorAll('.faq-item').forEach(faqItem => {
+  faqItem.addEventListener('click', (event) => {
+    const item = event.currentTarget; // hoặc dùng trực tiếp faqItem
+    const isActive = item.classList.contains('active');
 
- document.querySelectorAll('.faq-question').forEach(button => {
-    button.addEventListener('click', () => {
-      const item = button.closest('.faq-item');
-      const isActive = item.classList.contains('active');
+    // Bỏ active tất cả
+    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
 
-      document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-
-      if (!isActive) {
-        item.classList.add('active');
-      }
-    });
+    // Nếu chưa active thì thêm vào
+    if (!isActive) {
+      item.classList.add('active');
+    }
   });
+});
