@@ -10,6 +10,13 @@
     <link rel="stylesheet" href="/css/home.css">
     <!-- <link rel="stylesheet" href="/css/responsive.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Splide CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/css/splide.min.css" />
+<!-- Splide JS -->
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/js/splide.min.js"></script>
+
+
 </head>
 
 <body data-barba="wrapper">
@@ -95,24 +102,21 @@
                 <p>WHY CLIENT CHOOSE US</p>
             </div>
 
-           <div class="introduce-marquee-wrapper">
-  <div class="introduce-marquee-track">
-    <div class="introduce-marquee-inner">
-      <!-- Track 1 -->
-      <img src="https://placehold.co/100x50?text=Pearl" class="introduce-logo-img" alt="Pearl" />
-      <img src="https://placehold.co/120x50?text=Four+Seasons" class="introduce-logo-img" alt="Four Seasons" />
-      <img src="https://placehold.co/110x50?text=Mercure" class="introduce-logo-img" alt="Mercure" />
-      <img src="https://placehold.co/140x50?text=Ana+Mandara" class="introduce-logo-img" alt="Ana Mandara" />
-      <img src="https://placehold.co/110x50?text=Renaissance" class="introduce-logo-img" alt="Renaissance" />
-      <!-- Track 2 (duplicate) -->
-      <img src="https://placehold.co/100x50?text=Pearl" class="introduce-logo-img" alt="Pearl" />
-      <img src="https://placehold.co/120x50?text=Four+Seasons" class="introduce-logo-img" alt="Four Seasons" />
-      <img src="https://placehold.co/110x50?text=Mercure" class="introduce-logo-img" alt="Mercure" />
-      <img src="https://placehold.co/140x50?text=Ana+Mandara" class="introduce-logo-img" alt="Ana Mandara" />
-      <img src="https://placehold.co/110x50?text=Renaissance" class="introduce-logo-img" alt="Renaissance" />
-    </div>
+<div id="logo-marquee" class="splide">
+  <div class="splide__track">
+    <ul class="splide__list">
+      <li class="splide__slide"><img src="https://placehold.co/100x50?text=Pearl" /></li>
+      <li class="splide__slide"><img src="https://placehold.co/120x50?text=Four+Seasons" /></li>
+      <li class="splide__slide"><img src="https://placehold.co/110x50?text=Mercure" /></li>
+      <li class="splide__slide"><img src="https://placehold.co/140x50?text=Ana+Mandara" /></li>
+      <li class="splide__slide"><img src="https://placehold.co/110x50?text=Renaissance" /></li>
+      <!-- Có thể nhân đôi danh sách logo để mượt hơn -->
+    </ul>
   </div>
 </div>
+
+
+
 
 
             <div class="introduce-content">
@@ -266,6 +270,7 @@
 
     <script src="/js/feature/project.js"></script>
     <script src="/js/feature/header.js"></script>
+    <script src="/js/home.js"></script>
 </body>
 
 </html>
