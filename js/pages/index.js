@@ -22,15 +22,15 @@ fetch('/components/footer/index.html')
 
 // slide project
 const images = [
-  "/access/images/four-seasons-resort-the-nam-hai/1.webp",
-  "/access/images/four-seasons-resort-the-nam-hai/2.webp",
-  "/access/images/four-seasons-resort-the-nam-hai/3.webp",
-  "/access/images/four-seasons-resort-the-nam-hai/4.webp",
-  "/access/images/four-seasons-resort-the-nam-hai/5.webp",
-  "/access/images/four-seasons-resort-the-nam-hai/6.webp",
-  "/access/images/four-seasons-resort-the-nam-hai/7.webp",
-  "/access/images/four-seasons-resort-the-nam-hai/8.webp",
-  "/access/images/four-seasons-resort-the-nam-hai/9.webp"
+  "/assets/images/four-seasons-resort-the-nam-hai/1.webp",
+  "/assets/images/four-seasons-resort-the-nam-hai/2.webp",
+  "/assets/images/four-seasons-resort-the-nam-hai/3.webp",
+  "/assets/images/four-seasons-resort-the-nam-hai/4.webp",
+  "/assets/images/four-seasons-resort-the-nam-hai/5.webp",
+  "/assets/images/four-seasons-resort-the-nam-hai/6.webp",
+  "/assets/images/four-seasons-resort-the-nam-hai/7.webp",
+  "/assets/images/four-seasons-resort-the-nam-hai/8.webp",
+  "/assets/images/four-seasons-resort-the-nam-hai/9.webp"
 ];
 
 
