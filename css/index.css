@@ -55,3 +55,24 @@ body {
   padding-bottom: 40px;
 }
 
+
+.kit-button-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 68px;
+  padding: 0 32px;               /* padding ngang đều */
+  font-size: 23px;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 9999px;          /* bo tròn hoàn toàn */
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+
+}
+
+.kit-button-outline:hover {
+  background-color: #fff !important;
+  color: #000;
+}

@@ -321,11 +321,13 @@ body {
 /* slide product  */
 .slide-projects {
   position: relative;
-  height: 900px;
+  height: 1200px;
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
   overflow: hidden;
+   padding: 80px 70px !important;
+   box-sizing: border-box;
 }
 
 .slide-projects .background {
@@ -336,7 +338,7 @@ body {
   height: 100%;
   background-size: cover;
   background-position: center;
-  z-index: 0;
+  z-index: 1;
 }
 
 .slide-projects .background::after {
@@ -346,52 +348,63 @@ body {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
+.slide-projects .title {
+  font-size: 45pt;
+  z-index: 10;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  position: relative; /* BẮT BUỘC để z-index có hiệu lực */
+  margin-top: 20px; /* hoặc dùng padding */
+}
+
+
+.slide-projects .view-more {
+  text-align: center;
+  margin-top: 30px;
+  position: relative;
+  z-index: 10;
+  position: relative;
+  margin-top: 50px;
+}
+
+
+
+
 
 .swiper.swiper-projects {
   width: 100%;
-  height: 100%;
-  padding: 80px 0px !important;
+  height: 750px;
   position: relative;
   z-index: 1;
+  overflow: hidden;
+  border-radius: 20px;
+  margin-top: 80px;
 }
 
 .swiper-slide {
-  width: 300px;
-  height: 300px;
+  height: 750px;
+  max-height: 750px;
   overflow: hidden;
   border-radius: 12px;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-     background-position: center;
-      background-size: cover;
+  border-radius: 20px;
 }
-
- 
-
 
 .swiper-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: centers;
-  border-radius: 12px;
+  object-position: center;
+  border-radius: 20px;
 }
 
-.swiper-slide:not(.swiper-slide-active) {
+ 
+
+/* .swiper-slide:not(.swiper-slide-active) {
   transform: scale(0.7);
   opacity: 0.5;
-}
+} */
 
-.swiper-slide-prev,
-.swiper-slide-next {
-  transform: scale(0.85);
-  opacity: 0.7;
-}
-
-.swiper-pagination {
-  color: white;
-  text-align: center;
-  display: none;
-}
 
 /* Introduce */
 #introduce {
@@ -481,7 +494,6 @@ body {
 
 .introduce-images .introduce-image-box {
   position: relative;
-  /* flex: 1 1 calc(33.333% - 12px); */
   overflow: hidden;
   border-radius: 20px;
   height: 673px;
@@ -499,37 +511,19 @@ body {
   border-radius: 20px;
 }
 
-.introduce-images .introduce-image-box:hover img {
-  /* filter: grayscale(0); */
-}
 
-.introduce-images button {
+
+.introduce-images .view-more-button {
   position: absolute;
-  bottom: 20px;
+  bottom: -100px;
   left: 50%;
   transform: translateX(-50%);
-  border: 2px solid #ffffff;
   background-color: transparent;
-  /* đảm bảo dùng background-color */
-  color: #ffffff;
-  font-size: 20pt;
-  font-weight: 300;
-  border-radius: 9999px;
-  cursor: pointer;
-  width: 250px;
-  height: 70px;
-  transition: background-color 0.3s, color 0.3s;
-  outline: none;
-  /* loại bỏ viền mặc định */
-  box-shadow: none;
-  /* loại bỏ đổ bóng nếu có */
-  font-weight: 300;
+  transition: all 1s eases;
 }
 
-
-.introduce-images button:hover {
-  background: #ffffff;
-  color: #000000;
+.introduce-images:hover .view-more-button {
+  bottom: 20px;
 }
 
 .introduce-text-block {

@@ -22,12 +22,17 @@ fetch('/components/footer/index.html')
 
 // slide project
 const images = [
-  "https://swiperjs.com/demos/images/nature-1.jpg",
-  "https://swiperjs.com/demos/images/nature-2.jpg",
-  "https://swiperjs.com/demos/images/nature-3.jpg",
-  "https://swiperjs.com/demos/images/nature-4.jpg",
-  "https://swiperjs.com/demos/images/nature-5.jpg"
+  "/access/images/four-seasons-resort-the-nam-hai/1.webp",
+  "/access/images/four-seasons-resort-the-nam-hai/2.webp",
+  "/access/images/four-seasons-resort-the-nam-hai/3.webp",
+  "/access/images/four-seasons-resort-the-nam-hai/4.webp",
+  "/access/images/four-seasons-resort-the-nam-hai/5.webp",
+  "/access/images/four-seasons-resort-the-nam-hai/6.webp",
+  "/access/images/four-seasons-resort-the-nam-hai/7.webp",
+  "/access/images/four-seasons-resort-the-nam-hai/8.webp",
+  "/access/images/four-seasons-resort-the-nam-hai/9.webp"
 ];
+
 
 const bg = document.getElementById('slideBackground');
 
@@ -40,18 +45,14 @@ const swiper = new Swiper(".swiper-projects", {
   grabCursor: true,
   centeredSlides: true,
   loop: true,
-  spaceBetween: 30,
-  slidesPerView: 5,
+  spaceBetween: 120,               // 👈 khoảng cách giữa các slide
+  slidesPerView: 3,
   coverflowEffect: {
-    rotate: 20,            // Không xoay
-    stretch: -50,         // Thu hẹp chiều ngang 2 bên
-    depth: 150,           // Hiệu ứng 3D chiều sâu
-    modifier: 1,
-    slideShadows: false   // Tắt bóng nếu không cần
-  },
-  pagination: {
-    el: ".swiper-pagination",
-    clickable: true
+    rotate: 30,
+    stretch: 80,                  // 👈 khoảng cách giữa slide coverflow
+    depth: 300,
+    modifier: 0.5,
+    slideShadows: false
   },
   on: {
     init(swiper) {
