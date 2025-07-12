@@ -15,42 +15,50 @@ document.querySelectorAll('.faq-item').forEach(faqItem => {
 
 
 fetch('/components/footer/index.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('footer-placeholder').innerHTML = html
-        })
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('footer-placeholder').innerHTML = html
+  })
 
-        // slide project
+// slide project
 const images = [
-    "https://swiperjs.com/demos/images/nature-1.jpg",
-    "https://swiperjs.com/demos/images/nature-2.jpg",
-    "https://swiperjs.com/demos/images/nature-3.jpg",
-    "https://swiperjs.com/demos/images/nature-4.jpg",
-    "https://swiperjs.com/demos/images/nature-5.jpg"
-  ];
+  "https://swiperjs.com/demos/images/nature-1.jpg",
+  "https://swiperjs.com/demos/images/nature-2.jpg",
+  "https://swiperjs.com/demos/images/nature-3.jpg",
+  "https://swiperjs.com/demos/images/nature-4.jpg",
+  "https://swiperjs.com/demos/images/nature-5.jpg"
+];
 
-  const bg = document.getElementById('slideBackground');
+const bg = document.getElementById('slideBackground');
 
-  const setBackground = (index) => {
-    bg.style.backgroundImage = `url(${images[index]})`;
-  };
+const setBackground = (index) => {
+  bg.style.backgroundImage = `url(${images[index]})`;
+};
 
-  const swiper = new Swiper(".swiper-projects", {
-    grabCursor: true,
-    centeredSlides: true,
-    slidesPerView: 5,
-    loop: true,
-    spaceBetween: 30,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true
+const swiper = new Swiper(".swiper-projects", {
+  effect: "coverflow",
+  grabCursor: true,
+  centeredSlides: true,
+  loop: true,
+  spaceBetween: 30,
+  slidesPerView: 5,
+  coverflowEffect: {
+    rotate: 20,            // Không xoay
+    stretch: -50,         // Thu hẹp chiều ngang 2 bên
+    depth: 150,           // Hiệu ứng 3D chiều sâu
+    modifier: 1,
+    slideShadows: false   // Tắt bóng nếu không cần
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true
+  },
+  on: {
+    init(swiper) {
+      setBackground(swiper.realIndex);
     },
-    on: {
-      init(swiper) {
-        setBackground(swiper.realIndex);
-      },
-      slideChange(swiper) {
-        setBackground(swiper.realIndex);
-      }
+    slideChange(swiper) {
+      setBackground(swiper.realIndex);
     }
-  });
+  }
+});
