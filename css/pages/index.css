@@ -240,6 +240,38 @@ body {
   max-height: calc(min(100vw, 1920px) * 778 / 1366);
 }
 
+.project-meta {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  text-align: right;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  max-width: 60%;
+}
+
+.project-title {
+  text-transform: uppercase;
+  margin: 0;
+  font-weight: 300;
+  font-size: 39px;
+}
+
+.project-desc {
+  text-transform: uppercase;
+  margin: 0;
+   font-weight: 600;
+  font-size: 70px;
+}
+
+.project__inner img {
+  transform: scale(1.2);
+  transition: transform 0.3s ease-out;
+}
+
+
+
 .project__inner>img,
 .project-detail>img {
   width: 100%;
@@ -499,10 +531,14 @@ body {
 .introduce-header p {
   font-size: 35pt;
   color: black;
-  font-style: italic;
+  
   text-transform: uppercase;
   font-weight: 600;
   line-height: 200px;
+}
+
+.introduce-header p span{ 
+font-style: italic;
 }
 
 .partner {
@@ -560,7 +596,7 @@ body {
 .introduce-images {
   display: flex;
   gap: 5px;
-  width: 50%;
+  width: 52%;
 }
 
 .introduce-images .introduce-image-box {
@@ -601,7 +637,7 @@ body {
   list-style: none;
   padding: 0;
   margin: 0;
-  width: 50%;
+  width: 48%;
 }
 
 .introduce-text-block hr {

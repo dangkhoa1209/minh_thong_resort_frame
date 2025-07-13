@@ -49,6 +49,41 @@ Array.from(projects).forEach((project, index) => {
 });
 
 
+const projects2 = document.querySelectorAll('.project');
+
+function updateScaleOnScroll() {
+  const windowHeight = window.innerHeight;
+
+  projects2.forEach(project => {
+    const rect = project.getBoundingClientRect();
+    const projectMid = rect.top + rect.height / 2;
+    const screenMid = windowHeight / 2;
+
+    const distanceToCenter = Math.abs(projectMid - screenMid);
+    const maxDistance = windowHeight / 2;
+
+    const ratio = Math.min(distanceToCenter / maxDistance, 1);
+
+    const img = project.querySelector('img');
+
+    // Nếu ảnh nằm phía dưới trung tâm → áp dụng scale > 1
+    if (projectMid > screenMid) {
+      const scale = 1 + ratio * 0.2; // 1 → 1.2
+      img.style.transform = `scale(${scale})`;
+    } else {
+      img.style.transform = 'scale(1)';
+    }
+  });
+}
+
+
+window.addEventListener('scroll', updateScaleOnScroll);
+window.addEventListener('resize', updateScaleOnScroll);
+window.addEventListener('load', updateScaleOnScroll);
+
+
+
+
 // ************** OPEN PROJECT **************
 
 // Setup click để mở rộng project__inner như fullscreen
@@ -56,21 +91,19 @@ const items = document.querySelectorAll('.project');
 
 items.forEach(item => {
   const popup = item.querySelector('.project__inner');
-  const pageTo = popup.dataset.pageTo; // Lấy route cần điều hướng khi mở rộng
+  const pageTo = popup.dataset.pageTo;
 
-  if (!pageTo) return; // Nếu không có route thì bỏ qua
+  if (!pageTo) return;
 
   item.addEventListener('click', (e) => {
     e.stopPropagation();
 
-    const rect = item.getBoundingClientRect(); // Lấy vị trí của item gốc
-    document.body.style.overflow = 'hidden';   // Tránh scroll khi mở
+    const rect = item.getBoundingClientRect();
+    document.body.style.overflow = 'hidden';
 
-    // Reset style ban đầu cho popup
     popup.classList.remove('expand-active');
     popup.style.transition = 'none';
 
-    // Đặt popup trùng đúng vị trí gốc (để làm hiệu ứng từ chỗ cũ bay ra)
     popup.style.top = rect.top + 'px';
     popup.style.left = rect.left + 'px';
     popup.style.width = rect.width + 'px';
@@ -78,17 +111,28 @@ items.forEach(item => {
     popup.style.transform = 'translateX(0)';
     popup.style.zIndex = 9999;
 
-    // Force reflow để đảm bảo CSS transition hoạt động
+    // Lấy scale hiện tại của ảnh
+    const img = popup.querySelector('img');
+    const computedStyle = window.getComputedStyle(img);
+    const currentTransform = computedStyle.transform;
+
+    // Áp lại scale hiện tại để không nhảy về scale(1) ngay lập tức
+    img.style.transition = 'none';
+    img.style.transform = currentTransform;
+
     void popup.offsetWidth;
 
-    // Animation bắt đầu: mở rộng kích thước
+    // Animation mở rộng
     requestAnimationFrame(() => {
       popup.style.transition = 'all 0.8s ease-in-out';
       popup.classList.add('expand-active');
+
+      // Reset ảnh về scale(1) mượt
+      img.style.transition = 'transform 0.5s ease';
+      img.style.transform = 'scale(1)';
+
       popup.style.scale = '1';
       popup.style.filter = 'brightness(1)';
-
-
 
       if (barbaGoProject) {
         barbaGoProject(pageTo, 1000);

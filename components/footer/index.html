@@ -28,6 +28,9 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
   }
 
   .footer-menu li {
@@ -40,7 +43,7 @@
   .footer-heading {
     font-size: 25px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
   }
 
   .footer-text {
@@ -50,7 +53,7 @@
   }
 
   .footer-block {
-    margin-bottom: 30px;
+    margin-bottom: 60px;
   }
 
   /* Email input */
@@ -99,16 +102,36 @@
   }
 
   .footer-icon {
-    display: inline-flex;
     width: 40px;
     height: 40px;
-    border: 1px solid #fff;
-    border-radius: 50%;
+    background: transparent;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 20pt;
+    border-radius: 50%;
+    transition: background 0.3s, color 0.3s;
     color: white;
-    text-decoration: none;
+    /* mặc định logo trắng */
+  }
+
+  .footer-icon-ig {
+    border: 1.3px solid;
+  }
+
+  .footer-icon:hover {
+    background: white;
+    color: black;
+    /* hover → logo đen */
+  }
+
+  .footer-icon .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .footer-icon .icon-ig {
+    width: 24px;
+    height: 24px;
   }
 
   .footer-logo {
@@ -134,86 +157,86 @@
     gap: 10px;
   }
 
- @media (max-width: 1024px) {
-  .footer-menu li,
-  .footer-text,
-  .footer-input {
-    font-size: 20px;
+  @media (max-width: 1024px) {
+
+    .footer-menu li,
+    .footer-text,
+    .footer-input {
+      font-size: 20px;
+    }
+
+    .footer-heading {
+      font-size: 20px;
+    }
+
+    .footer-input-wrapper {
+      padding: 15px 16px;
+    }
+
+    .footer-arrow svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    .footer-icon {
+      width: 36px;
+      height: 36px;
+      font-size: 18pt;
+    }
+
+    .footer-logo {
+      margin-top: 120px;
+    }
   }
 
-  .footer-heading {
-    font-size: 20px;
-  }
+  @media (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+      gap: 50px;
+    }
 
-  .footer-input-wrapper {
-    padding: 15px 16px;
-  }
+    .footer-column-2 {
+      flex-direction: column;
+      gap: 30px;
+    }
 
-  .footer-arrow svg {
-    width: 30px;
-    height: 30px;
-  }
+    .footer-input-wrapper {
+      flex-direction: row;
+      align-items: center;
+      padding: 14px 16px;
+    }
 
-  .footer-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 18pt;
-  }
+    .footer-arrow {
+      margin-left: 10px;
+    }
 
-  .footer-logo {
-    margin-top: 120px;
-  }
-}
+    .footer-menu li {
+      font-size: 22px;
+    }
 
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    gap: 50px;
-  }
+    .footer-heading {
+      font-size: 18px;
+    }
 
-  .footer-column-2 {
-    flex-direction: column;
-    gap: 30px;
-  }
+    .footer-text {
+      font-size: 16px;
+    }
 
-  .footer-input-wrapper {
-    flex-direction: row;
-    align-items: center;
-    padding: 14px 16px;
-  }
+    .footer-input {
+      font-size: 16px;
+    }
 
-  .footer-arrow {
-    margin-left: 10px;
-  }
+    .footer-bottom {
+      font-size: 14px;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+    }
 
-  .footer-menu li {
-    font-size: 22px;
+    .footer-logo {
+      margin-top: 80px;
+    }
   }
-
-  .footer-heading {
-    font-size: 18px;
-  }
-
-  .footer-text {
-    font-size: 16px;
-  }
-
-  .footer-input {
-    font-size: 16px;
-  }
-
-  .footer-bottom {
-    font-size: 14px;
-    flex-direction: column;
-    gap: 6px;
-    align-items: flex-start;
-  }
-
-  .footer-logo {
-    margin-top: 80px;
-  }
-}
-
 </style>
 <section class="footer px">
   <div class="footer-container">
@@ -240,11 +263,44 @@
         <div>
           <h3 class="footer-heading">Follow Us</h3>
           <div class="footer-social">
-            <a href="#" class="footer-icon">📘</a>
-            <a href="#" class="footer-icon">📸</a>
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/abeldangphotographer" target="_blank" rel="noopener noreferrer"
+              class="footer-icon">
+              <svg class="icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <g id="OUTLINE_copy">
+                  <path fill="currentColor" d="M13.892,24.123h3.357v-8.124h2.239l0.297-2.799h-2.536l0.003-1.402c0-0.73,0.07-1.121,1.117-1.121h1.4v-2.8
+             h-2.24c-2.69,0-3.637,1.358-3.637,3.642V13.2h-1.677V16h1.677V24.123z" />
+                  <path fill="currentColor" d="M16,1c8.271,0,15,6.729,15,15s-6.729,15-15,15S1,24.271,1,16S7.729,1,16,1 M16,0
+             C7.163,0,0,7.163,0,16s7.163,16,16,16s16-7.163,16-16S24.837,0,16,0z" />
+                </g>
+              </svg>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/abeldang.photography" target="_blank" rel="noopener noreferrer"
+              class="footer-icon footer-icon-ig">
+              <svg class="icon icon-ig" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                <path fill="currentColor" d="M256.052,138.088c-65.268,0-117.913,52.646-117.913,117.912c0,65.267,52.645,117.91,117.913,117.91
+         c65.267,0,117.911-52.644,117.911-117.91C373.963,190.734,321.318,138.088,256.052,138.088z M256.052,332.659
+         c-42.177,0-76.659-34.38-76.659-76.659c0-42.279,34.378-76.657,76.659-76.657c42.277,0,76.657,34.378,76.657,76.657
+         C332.709,298.279,298.229,332.659,256.052,332.659z M406.288,133.266c0,15.291-12.315,27.502-27.502,27.502
+         c-15.292,0-27.502-12.314-27.502-27.502c0-15.188,12.313-27.503,27.502-27.503C393.973,105.763,406.288,118.077,406.288,133.266z
+         M484.382,161.177c-1.743-36.839-10.158-69.474-37.148-96.36c-26.886-26.887-59.52-35.302-96.36-37.148
+         c-37.971-2.155-151.777-2.155-189.747,0c-36.739,1.743-69.372,10.159-96.361,37.046c-26.99,26.887-35.302,59.52-37.149,96.36
+         c-2.155,37.969-2.155,151.777,0,189.747c1.745,36.842,10.159,69.473,37.149,96.361c26.989,26.887,59.521,35.301,96.361,37.148
+         c37.969,2.154,151.776,2.154,189.747,0c36.841-1.744,69.475-10.161,96.36-37.148c26.887-26.889,35.302-59.52,37.148-96.361
+         C486.538,312.853,486.538,199.147,484.382,161.177z M435.329,391.563c-8.004,20.112-23.5,35.61-43.716,43.716
+         c-30.273,12.009-102.108,9.236-135.562,9.236c-33.456,0-105.393,2.669-135.563-9.236c-20.114-8.005-35.611-23.498-43.717-43.716
+         C64.766,361.29,67.538,289.455,67.538,256s-2.669-105.391,9.234-135.562c8.006-20.114,23.5-35.61,43.717-43.716
+         c30.273-12.007,102.107-9.236,135.563-9.236c33.453,0,105.391-2.668,135.562,9.236c20.113,8.002,35.609,23.5,43.716,43.716
+         c12.007,30.272,9.237,102.107,9.237,135.562S447.336,361.392,435.329,391.563z" />
+              </svg>
+            </a>
           </div>
+
         </div>
       </div>
+
 
       <div class="footer-block">
         <h3 class="footer-heading">Get in touch</h3>
@@ -261,13 +317,14 @@
 
         </div>
       </div>
+
     </div>
   </div>
 
   <div class="footer-logo">
     <img src="/assets/images/logo/logo.png" alt="">
   </div>
- <hr>
+  <hr>
   <!-- Bottom -->
   <div class="footer-bottom">
     <div>ARCHITECTUREAL PHOTOGRAPHY FOR RESORT</div>
@@ -275,4 +332,3 @@
     <div>DESIGNED BY THONGRETINA</div>
   </div>
 </section>
-
