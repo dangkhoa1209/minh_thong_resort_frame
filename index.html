@@ -5,245 +5,134 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parallax Scrolling Website | Khoa</title>
+    <title>Parallax Scrolling Website | Codehal</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/pages/index.css">
-
-
+    <link rel="stylesheet" href="/css/pages/project.css">
 </head>
-<!-- oncontextmenu="return false;" -->
 
-<body data-barba="wrapper">
-    <div class="container" data-barba="container">
-        <div class="banner">
-            <header class="header px py">
-                <img src="/assets/svg/logo/logo-pro.svg" class="logo" alt="">
-                <div class="menu">
-                    <p>
-                        <span>Menu</span>
-                    </p>
-                    <img class="menu-icon" src="/assets/svg/menu-icon.svg" alt="">
+<body oncontextmenu="return false;">
+    <div class="container">
+        <header class="header px py">
+            <h2 class="header__logo logo">Logo</h2>
+            <div class="header__menu">
+                <span>Menu</span>
+                <img class="header__icon" src="/assets/svg/menu-icon.svg" alt="Menu icon">
+            </div>
+        </header>
+        <section class="banner">
+            <img class="banner__img" src="/assets/images/the-pear-hoi-an/1.jpg" alt="Resort image">
+        </section>
+
+        <div class="space"></div>
+
+
+        <section class="about px">
+            <header class="about__header">
+                <h2 class="about__header__logo logo">Logo</h2>
+                <div class="about__header__menu">
+                    <span>Menu</span>
+                    <img class="about__header__menu-icon" src="/assets/svg/menu-icon.svg" alt="Menu icon">
                 </div>
             </header>
 
-            <section class="banner-box">
-                <img src="/assets/images/the-pear-hoi-an/1.jpg">
-            </section>
+            <div class="about__container">
+                <div class="about__info">
+                    <h2 class="about__title about__title--thin font-style-montserrat">RESORT</h2>
+                    <h2 class="about__title about__title--bold font-style-montserrat">THE PEARL HOI AN</h2>
+
+                    <div class="about__meta">
+                        <p><span class="font-bold">Location</span> <span class="font-thin">Hoi An, Viet Nam</span></p>
+                        <p><span class="font-bold">Year</span> <span class="font-thin">2024</span></p>
+                    </div>
+                </div>
+
+                <div class="about__content">
+                    <p>
+                        The Pearl Hoi An is located on An Bang beach, one of the most beautiful white sand beaches in
+                        the world.
+                        All amenities are within reach with a system of 588 hotel rooms, apartments and super beach
+                        villas. In
+                        particular, The Pearl Hoi An also has an extremely convenient location, only 5km from Hoi An
+                        Ancient
+                        Town. Put aside the hustle and bustle of life and enjoy wonderful moments of relaxation with an
+                        endless
+                        journey of discovery at this beautiful beach resort on the shores of the World Heritage Site.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="space"></div>
+
+
+        <section class="products px">
+            <div class="product">
+                <div class="product-item ratio-4-3">
+                    <img src="/assets/images/the-pear-hoi-an/2.jpg" class="product-thumbnail" alt="">
+                </div>
+                <div class="product-item ratio-4-3">
+                    <img src="/assets/images/the-pear-hoi-an/3.jpg" class="product-thumbnail" alt="">
+                </div>
+            </div>
+
+            <div class="product">
+                <div class="product-item ratio-16-9">
+                    <img src="/assets/images/the-pear-hoi-an/4.jpg" class="product-thumbnail" alt="">
+                </div>
+            </div>
+
+
+            <div class="product">
+                <div class="product-item ratio-4-5">
+                    <img src="/assets/images/the-pear-hoi-an/5.jpg" class="product-thumbnail" alt="">
+                </div>
+                <div class="product-item ratio-4-5">
+                    <img src="/assets/images/the-pear-hoi-an/6.jpg" class="product-thumbnail" alt="">
+                </div>
+            </div>
+
+            <div class="product">
+                <div class="product-item ratio-16-9">
+                    <img src="/assets/images/the-pear-hoi-an/7.jpg" class="product-thumbnail" alt="">
+                </div>
+            </div>
+
+            <div class="product">
+                <div class="product-item ratio-4-3">
+                    <img src="/assets/images/the-pear-hoi-an/8.jpg" class="product-thumbnail" alt="">
+                </div>
+                <div class="product-item ratio-4-3">
+                    <img src="/assets/images/the-pear-hoi-an/9.jpg" class="product-thumbnail" alt="">
+                </div>
+            </div>
+
+            <div class="product">
+                <div class="product-item ratio-4-3">
+                    <img src="/assets/images/the-pear-hoi-an/10.jpg" class="product-thumbnail" alt="">
+                </div>
+                <div class="product-item ratio-4-3">
+                    <img src="/assets/images/the-pear-hoi-an/11.jpg" class="product-thumbnail" alt="">
+                </div>
+            </div>
+
+        </section>
+
+
+
+        <!-- POPUP -->
+        <div class="popup-overlay" id="popup">
+            <span class="popup-close" id="popupClose">✕</span>
         </div>
 
-        <!-- <header class="header-about">
-            <h2 class="logo">Logo</h2>
-            <div class="menu-about">
-                <p>
-                    <span>Menu</span>
-                </p>
-                <img class="menu-icon-about" src="/assets/svg/menu-icon.svg" alt="">
-            </div>
-        </header> -->
 
-        <!-- <div class="about-container">
-            <div class="about-title">
-                <h2 class="about-title-1 font-style-montserrat ">Four seasons resort</h2>
-                <h2 class="about-title-2 font-style-montserrat">The nam hai</h2>
-            </div>
-
-            <div>
-                <p class="about-content">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab dicta
-                    error nam eaque. Eum fuga laborum quos expedita iste saepe
-                    similique, unde possimus quia at magnam sed cupiditate?
-                    Reprehenderit, harum!
-                </p>
-            </div>
-        </div> -->
-
-
-        <!-- card -->
-        <section class="projects px">
-            <div class="project" data-index="0">
-                <div class="project__inner" data-page-to="/project/four-seasons-resort-the-nam-hai.html">
-                    <img src="/assets/images/four-seasons-resort-the-nam-hai/1.webp" class="project-thumbnail">
-                    <div class="project-meta">
-                        <h2 class="project-title font-style-montserrat">Four seasons
-                            resort</h2>
-                        <h2 class="project-desc font-style-montserrat">The nam hai</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="project" data-index="0">
-                <div class="project__inner " data-page-to="/project/marriott-renaissance-hoi-an.html">
-                    <img src="/assets/images/marriott-renaissance-hoi-an/1.jpg" class="project-thumbnail">
-                    <div class="project-meta">
-                        <h2 class="project-title font-style-montserrat">RESORT & SPA</h2>
-                        <h2 class="project-desc font-style-montserrat">RENAISSANCE</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="project" data-index="0">
-                <div class="project__inner" data-page-to="/project/the-pear-hoi-an.html">
-                    <img src="/assets/images/the-pear-hoi-an/1.jpg" class="project-thumbnail">
-                    <div class="project-meta">
-                        <h2 class="project-title font-style-montserrat">RESORT</h2>
-                        <h2 class="project-desc font-style-montserrat">THE PEARL HOI AN</h2>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="introduce">
-            <div class="introduce-header ">
-                <p class="font-style-montserrat"><span>WHY</span> CLIENT CHOOSE US</p>
-            </div>
-
-            <div class="partner">
-                <div class="container wrapper">
-                    <!-- Logo list -->
-                    <div class="partner-item wrapper-item">
-                        <img src="/assets/svg/partners/Asset 2.svg" alt="Pearl" class="partner-logo" />
-                    </div>
-
-                    <div class="partner-item wrapper-item">
-                        <img src="/assets/svg/partners/Asset 3.svg" alt="Pearl" class="partner-logo" />
-                    </div>
-
-                    <div class="partner-item wrapper-item">
-                        <img src="/assets/svg/partners/Asset 4.svg" alt="Pearl" class="partner-logo" />
-                    </div>
-
-                    <div class="partner-item wrapper-item">
-                        <img src="/assets/svg/partners/Asset 5.svg" alt="Pearl" class="partner-logo" />
-                    </div>
-
-                    <div class="partner-item wrapper-item">
-                        <img src="/assets/svg/partners/Asset 6.svg" alt="Pearl" class="partner-logo" />
-                    </div>
-
-                    <div class="partner-item wrapper-item">
-                        <img src="/assets/svg/partners/Asset 2.svg" alt="Pearl" class="partner-logo" />
-                    </div>
-
-                    <!-- dup -->
-                    <div class="partner-item wrapper-item">
-                        <img src="/assets/svg/partners/Asset 3.svg" alt="Pearl" class="partner-logo" />
-                    </div>
-
-                    <div class="partner-item wrapper-item">
-                        <img src="/assets/svg/partners/Asset 4.svg" alt="Pearl" class="partner-logo" />
-                    </div>
-
-                    <div class="partner-item wrapper-item">
-                        <img src="/assets/svg/partners/Asset 5.svg" alt="Pearl" class="partner-logo" />
-                    </div>
-
-                    <div class="partner-item wrapper-item">
-                        <img src="/assets/svg/partners/Asset 6.svg" alt="Pearl" class="partner-logo" />
-                    </div>
-
-                </div>
-            </div>
-
-
-
-
-            <div class="introduce-content">
-                <!-- Left images -->
-                <div class="introduce-images">
-                    <div class="introduce-image-box">
-                        <img src="/assets/images/teams/1.png" alt="Team Reviewing Camera" />
-                    </div>
-                    <div class="introduce-image-box">
-                        <img src="/assets/images/teams/2.png" alt="Drone on Beach" />
-                        <a href="#" class="kit-button-outline view-more-button">Learn More</a>
-                    </div>
-                    <div class="introduce-image-box">
-                        <img src="/assets/images/teams/3.png" alt="Camera Screen Beach" />
-                    </div>
-                </div>
-
-                <!-- Right text -->
-                <ul class="introduce-text-block">
-                    <hr>
-                    <li class="faq-item">
-                        <button class="faq-question">
-                            <span><strong>ARCHITECTURAL PRECISION</strong></span>
-                            <img src="/assets/svg/logo button/zoom.svg" class="faq-icon" alt="">
-                        </button>
-                        <div class="faq-answer">
-                            Lines, proportions, materials are captured with intention.
-                        </div>
-                    </li>
-                    <hr>
-                    <li class="faq-item">
-                        <button class="faq-question">
-                            <span><strong>CINEMATIC LIGHTING</strong></span>
-                            <img src="/assets/svg/logo button/zoom.svg" class="faq-icon" alt="">
-                        </button>
-                        <div class="faq-answer">
-                            Natural and staged
-                            light are used to evoke
-                            mood and luxury. </div>
-                    </li>
-                    <hr>
-                    <li class="faq-item">
-                        <button class="faq-question">
-                            <span><strong>GUEST EXPERIENCE FIRST</strong></span>
-                            <img src="/assets/svg/logo button/zoom.svg" class="faq-icon" alt="">
-                        </button>
-                        <div class="faq-answer">
-                            Every frame invites
-                            the viewer to imagine
-                            being there. </div>
-                    </li>
-                    <hr>
-                    <li class="faq-item">
-                        <button class="faq-question">
-                            <span><strong>CONSISTENT AESTHETIC</strong></span>
-                            <img src="/assets/svg/logo button/zoom.svg" class="faq-icon" alt="">
-                        </button>
-                        <div class="faq-answer">
-                            Editorial-quality photos
-                            with harmonious tones
-                            and clean composition.
-                        </div>
-                    </li>
-                    <hr>
-                    <li class="faq-item">
-                        <button class="faq-question">
-                            <span><strong>DRONE & DETAIL SHOTS</strong></span>
-                            <img src="/assets/svg/logo button/zoom.svg" class="faq-icon" alt="">
-                        </button>
-                        <div class="faq-answer">
-                            A comprehensive
-                            visual narrative from
-                            above and within.
-                        </div>
-                    </li>
-                    <hr>
-                </ul>
-
-            </div>
-        </section>
-
-
+        <div id="place-slide-project"></div>
+        <div id="place-footer"></div>
     </div>
 
-    <div id="place-footer"></div>
-
-    <!-- project - card effect -->
-    <script src="/js/plugins/cards-effect/helpers.js"></script>
-    <script src="/js/plugins/cards-effect/index.js"></script>
-
-    <!-- move to new page not load -->
-    <script src="/js/plugins/barba/core.js"></script>
-    <script src="/js/plugins/barba/gsap.js"></script>
-    <script src="/js/plugins/barba/index.js"></script>
 
     <script src="/js/plugins/component-loader.js"></script>
-
-
-    <script src="/js/feature/project.js"></script>
+    <script src="/js/pages/project.js"></script>
     <script src="/js/feature/header.js"></script>
-    <script src="/js/pages/index.js"></script>
 </body>
 
 </html>

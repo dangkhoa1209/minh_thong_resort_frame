@@ -1,0 +1,59 @@
+  .experience-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    transition: all 1s ease-in-out;
+  }
+
+  .experience-item {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 1s ease-in-out;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .experience-split {
+    display: flex;
+    width: 100%;
+  }
+
+  .experience-image {
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .experience-image img {
+    /* width: 100%; */
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 1s ease;
+  }
+
+  .experience-detail {
+    flex: 1;
+    background: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #000;
+     transition: transform 1s ease;
+  }
+
+  .experience-item:not(.active) .experience-detail {
+   flex: 0;
+  }
+
+  .experience-item.active {
+    flex: 9;
+  }
+
+  .experience-wrapper.open .experience-item:not(.active) {
+    flex: 0.5;
+  }
