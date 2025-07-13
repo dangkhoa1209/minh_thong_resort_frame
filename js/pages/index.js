@@ -1,8 +1,8 @@
 // ============================================
 // 1. Load footer HTML động
 // ============================================
-// Tải nội dung HTML từ /components/footer/index.html và chèn vào phần tử có id "footer-placeholder"
-loadComponent('/components/footer/index.html', 'footer-placeholder')
+// Tải nội dung HTML từ /components/footer/index.html và chèn vào phần tử có id "place-footer"
+loadComponent('/components/footer/index.html', 'place-footer')
 
 
 
