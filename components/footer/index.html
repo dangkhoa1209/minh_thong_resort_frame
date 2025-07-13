@@ -134,13 +134,86 @@
     gap: 10px;
   }
 
-  @media (min-width: 768px) {
-    .footer-bottom {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
+ @media (max-width: 1024px) {
+  .footer-menu li,
+  .footer-text,
+  .footer-input {
+    font-size: 20px;
   }
+
+  .footer-heading {
+    font-size: 20px;
+  }
+
+  .footer-input-wrapper {
+    padding: 15px 16px;
+  }
+
+  .footer-arrow svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .footer-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 18pt;
+  }
+
+  .footer-logo {
+    margin-top: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  .footer-column-2 {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .footer-input-wrapper {
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 16px;
+  }
+
+  .footer-arrow {
+    margin-left: 10px;
+  }
+
+  .footer-menu li {
+    font-size: 22px;
+  }
+
+  .footer-heading {
+    font-size: 18px;
+  }
+
+  .footer-text {
+    font-size: 16px;
+  }
+
+  .footer-input {
+    font-size: 16px;
+  }
+
+  .footer-bottom {
+    font-size: 14px;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+  }
+
+  .footer-logo {
+    margin-top: 80px;
+  }
+}
+
 </style>
 <section class="footer px">
   <div class="footer-container">
@@ -203,4 +276,3 @@
   </div>
 </section>
 
-<script src="/index.css"></script>
