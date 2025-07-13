@@ -1,0 +1,144 @@
+
+
+/* slide product  */
+#slide-projects {
+  margin-top: 70px;
+}
+
+.slide-projects {
+  position: relative;
+  height: 1200px;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 80px 70px !important;
+  box-sizing: border-box;
+}
+
+.slide-projects .background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  min-height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  background-color: blue;
+}
+
+.slide-projects .background::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.slide-projects .title {
+  font-size: 45pt;
+  z-index: 10;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  /* BẮT BUỘC để z-index có hiệu lực */
+  margin-top: 20px;
+  /* hoặc dùng padding */
+}
+
+
+.slide-projects .view-more {
+  text-align: center;
+  margin-top: 30px;
+  position: relative;
+  z-index: 10;
+  position: relative;
+  margin-top: 50px;
+}
+
+.swiper.swiper-projects {
+  width: 100%;
+  height: 750px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 20px;
+  margin-top: 80px;
+}
+
+.swiper-slide {
+  aspect-ratio: 522 / 690;
+  height: auto;
+  max-height: 690px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 522 / 690;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 20px;
+}
+
+/* Tablet */
+
+@media (max-width: 1199.98px) {
+  .slide-projects {
+    height: 1000px;
+    padding: 60px 40px;
+  }
+
+  .swiper.swiper-projects {
+    height: 600px;
+    margin-top: 60px;
+  }
+
+  .swiper-slide {
+    width: 390px;
+  }
+
+  .swiper-slide-prev,
+  .swiper-slide-next {
+    width: 300px;
+  }
+
+  .slide-projects .title {
+    font-size: 32pt;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+  .slide-projects {
+    height: 800px;
+    padding: 40px 20px;
+  }
+
+  .swiper.swiper-projects {
+    height: 500px;
+    margin-top: 40px;
+  }
+
+  .swiper-slide {
+    width: 280px;
+  }
+
+  .swiper-slide-prev,
+  .swiper-slide-next {
+    width: 200px;
+  }
+
+  .slide-projects .title {
+    font-size: 24pt;
+  }
+
+  .slide-projects .view-more {
+    margin-top: 30px;
+  }
+}

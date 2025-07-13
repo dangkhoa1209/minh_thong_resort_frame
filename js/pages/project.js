@@ -1,3 +1,7 @@
+loadComponent('/components/slide-project/index.html', 'slide-projects')
+loadComponent('/components/footer/index.html', 'footer-placeholder')
+
+
 // === CẤU HÌNH MỞ ẢNH PHÓNG TO TỪ THUMBNAIL ===
 const popup = document.getElementById("popup");          // Phần tử popup (dùng để hiển thị ảnh lớn)
 const popupClose = document.getElementById("popupClose"); // Nút đóng popup (sẽ được gán lại động sau)
@@ -145,3 +149,6 @@ function closePopup() {
 popup.addEventListener("click", e => {
   if (e.target === popup) closePopup();
 });
+
+
+
