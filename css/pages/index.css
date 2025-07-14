@@ -33,31 +33,6 @@ body {
   z-index: 1000;
 }
 
-.logo {
-  height: 20pt;
-  fill: white;
-  pointer-events: none;
-  margin: 0;
-  padding: 0;
-}
-
-.menu {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  color: #fff;
-  text-transform: uppercase;
-  font-size: 20px;
-}
-
-.menu-icon {
-  width: 20pt;
-  height: 20pt;
-  filter: invert(1);
-
-}
-
 .menu-about {
   display: flex;
   justify-content: center;

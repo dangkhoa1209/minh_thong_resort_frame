@@ -1,5 +1,6 @@
-loadComponent('/components/slide-project/index.html', 'place-slide-project')
+loadComponent('/components/slide-pages/project/index.html', 'place-slide-project')
 loadComponent('/components/footer/index.html', 'place-footer')
+loadComponent('/components/header/index.html', 'place-header')
 
 
 // === CẤU HÌNH MỞ ẢNH PHÓNG TO TỪ THUMBNAIL ===
