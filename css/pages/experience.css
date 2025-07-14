@@ -109,7 +109,7 @@
 .experience-detail {
   width: 0;
   background: rgba(255, 255, 255, 0.95);
-  padding: 0;
+  padding: 0px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -138,8 +138,16 @@
   display: flex;
   opacity: 1;
   width: 50%;
-  padding: 40px;
+  padding: 70px;
 }
+
+.experience-item.active .experience-image {
+  display: flex;
+  opacity: 1;
+  width: 50%;
+ 
+}
+
 
 .experience-item.active .experience-detail h3,
 .experience-item.active .experience-detail p {
