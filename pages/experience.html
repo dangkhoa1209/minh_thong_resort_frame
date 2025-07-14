@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Experience Gallery</title>
 
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/pages/experience.css">
@@ -17,12 +17,18 @@
       <div class="experience-split">
         <div class="experience-image">
           <img src="/assets/images/four-seasons-resort-the-nam-hai/1.webp" alt="Essential">
+          <div class="experience-title">ESSENTIAL COLLECTION</div>
         </div>
         <div class="experience-detail">
-          <button class="close-btn">×</button>
           <h3>ESSENTIAL COLLECTION</h3>
-          <p>Short detail here...</p>
+          <p>Discover the essence of luxury with curated experiences designed for relaxation and elegance.</p>
+          <p><strong>Purpose:</strong> Focused & Refined</p>
+          <p><em>Montserrat (Bold): 65pt</em></p>
+          <p><em>Montserrat (Regular): 50pt</em></p>
+          <p><em>Montserrat (Light): 36pt</em></p>
         </div>
+        <button class="close-btn"
+          onclick="this.closest('.experience-item').classList.remove('active'); this.closest('.experience-wrapper').classList.remove('open');">×</button>
       </div>
     </div>
 
@@ -30,12 +36,30 @@
       <div class="experience-split">
         <div class="experience-image">
           <img src="/assets/images/four-seasons-resort-the-nam-hai/2.webp" alt="Immersive">
+          <div class="experience-title">IMMERSIVE COLLECTION</div>
         </div>
         <div class="experience-detail">
-          <button class="close-btn">×</button>
           <h3>IMMERSIVE COLLECTION</h3>
-          <p>Full detail content here...</p>
+          <p>Dive into cultural adventures with immersive experiences that connect you to local traditions.</p>
+          <p><strong>Purpose:</strong> Build a complete, multi-day visual archive of your resort – ideal for high-end
+            marketing and full brand communication.</p>
+          <p><em>Lato (Bold): 25pt</em></p>
+          <p><em>Lato (Light): 25pt</em></p>
+          <ul>
+            <li>Coverage: 2-3 days of production</li>
+            <li>All room/villa types</li>
+            <li>All key public and service areas</li>
+            <li>Dining, spa, wellness, activity zones, lifestyle shots with models/staff/guests</li>
+            <li>Aerials, dusk/dawn sessions, conceptual details</li>
+            <li>Outcome: A cohesive visual language across every guest touchpoint. This library becomes a long-term
+              asset for advertising, international PR, and high-end campaigns.</li>
+          </ul>
+          <p><strong>Best for:</strong> Flagship properties, repositioning, or global distribution visuals.</p>
+          <p><em>Lato (Bold Italic): 25pt</em></p>
+          <button>Request This Experience</button>
         </div>
+        <button class="close-btn"
+          onclick="this.closest('.experience-item').classList.remove('active'); this.closest('.experience-wrapper').classList.remove('open');">×</button>
       </div>
     </div>
 
@@ -43,17 +67,18 @@
       <div class="experience-split">
         <div class="experience-image">
           <img src="/assets/images/four-seasons-resort-the-nam-hai/3.webp" alt="Signature">
+          <div class="experience-title">SIGNATURE COLLECTION</div>
         </div>
         <div class="experience-detail">
-          <button class="close-btn">×</button>
           <h3>SIGNATURE COLLECTION</h3>
-          <p>Another detail content here...</p>
+          <p>Indulge in bespoke journeys crafted for unforgettable moments and exclusive access.</p>
+          <p><strong>Purpose:</strong> Full Resort Narrative</p>
         </div>
+        <button class="close-btn"
+          onclick="this.closest('.experience-item').classList.remove('active'); this.closest('.experience-wrapper').classList.remove('open');">×</button>
       </div>
     </div>
   </div>
-
-
 </body>
 
 <script src="/js/pages/experience.js"></script>

@@ -1,82 +1,151 @@
 .experience-wrapper {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    transition: all 0.8s ease-in-out;
-  }
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  .experience-item {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transition: flex 0.8s ease-in-out;
-    display: flex;
-    align-items: stretch;
-  }
+.experience-item {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: stretch;
+}
 
-  .experience-split {
-    display: flex;
-    width: 100%;
-    height: 100%;
-  }
+.experience-split {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
 
-  .experience-image {
-    flex: 1;
-    overflow: hidden;
-    height: 100%;
-  }
+.experience-image {
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .experience-image img {
-    height: 100%;
-    width: auto;
-    max-width: none;
-    object-fit: contain;
-    object-position: center;
-    transition: transform 1s ease;
-    display: block;
-    margin: 0 auto;
-  }
+.experience-image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
 
-  .experience-detail {
-    flex: 0;
-    width: 0;
-    overflow: hidden;
-    background: white;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: #000;
-    opacity: 0;
-    transition: all 0.6s ease-in-out;
-    position: relative;
-  }
+.experience-title {
+  position: absolute;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  transition: transform 0.8s ease, font-size 0.8s ease;
+  transform-origin: left center;
+  white-space: nowrap;
+}
 
+.experience-item:not(.active) .experience-title {
+  transform: rotate(90deg) translateY(50%);
+  font-size: 16px;
+  left: 50%;
+  top: 50%;
+}
+
+.experience-item.active .experience-title {
+  display: none;
+  /* Hide title in active state, as details take over */
+}
+
+.experience-detail {
+  width: 0;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #333;
+  opacity: 0;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out, padding 0.8s ease;
+  overflow: hidden;
+}
+
+.experience-detail h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  transform: translateY(20px);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+}
+
+.experience-detail p {
+  font-size: 16px;
+  line-height: 1.6;
+  transform: translateY(20px);
+  transition: transform 0.5s ease 0.1s, opacity 0.5s ease 0.1s;
+  opacity: 0;
+}
+
+.experience-item.active .experience-detail {
+  display: flex;
+  opacity: 1;
+  width: 50%;
+  padding: 40px;
+}
+
+.experience-item.active .experience-detail h3,
+.experience-item.active .experience-detail p {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.experience-item.active {
+  flex: 8;
+}
+
+.experience-wrapper.open .experience-item:not(.active) {
+  flex: 0.5;
+  filter: brightness(0.7);
+  transition: flex 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.8s ease;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.experience-item.active .close-btn {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
   .experience-item.active .experience-detail {
-    flex: 1;
-    width: 50%;
-    opacity: 1;
+    width: 100%;
+    padding: 20px;
   }
 
-  .experience-item.active {
-    flex: 9;
+  .experience-item.active .experience-image {
+    display: none;
   }
 
-  .experience-wrapper.open .experience-item:not(.active) {
-    flex: 0.5;
+  .experience-item:not(.active) .experience-image img {
+    opacity: 0.6;
   }
-
-  .close-btn {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 32px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #000;
-    z-index: 10;
-    transition: opacity 0.3s ease;
-  }
+}
