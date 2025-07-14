@@ -4,6 +4,7 @@
   height: 100vh;
   overflow: hidden;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: black;
 }
 
 .experience-item {
@@ -35,10 +36,11 @@
 
 .experience-image img {
   height: 100%;
-  width: 100%;
-  object-fit: cover;
+  width: auto;
+  object-fit: contain;
   object-position: center;
   display: block;
+  opacity: 0.8;
 }
 
 .experience-title {
