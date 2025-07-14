@@ -48,23 +48,63 @@
   font-size: 24px;
   font-weight: bold;
   color: white;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-  transition: transform 0.8s ease, font-size 0.8s ease;
-  transform-origin: left center;
+  transition: all 0.8s ease;
   white-space: nowrap;
-}
-
-.experience-item:not(.active) .experience-title {
-  transform: rotate(90deg) translateY(50%);
-  font-size: 16px;
+  top: 40%;
   left: 50%;
-  top: 50%;
+  transform: translate(-50%);
+  text-align: center;
 }
 
-.experience-item.active .experience-title {
-  display: none;
-  /* Hide title in active state, as details take over */
+.experience-title .title {
+  font-size: 65px;
+  font-weight: 600;
 }
+
+.experience-title-footer {
+  position: absolute;
+  font-size: 36px;
+  font-weight: light;
+  color: white;
+  transition: all 0.8s ease;
+  white-space: nowrap;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%);
+  text-align: center;
+}
+
+.experience-title-mini {
+ position: absolute;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  transition: all 0.8s ease;
+  white-space: nowrap;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%) rotate(-90deg);
+  text-align: center;
+  display: none;
+}
+
+
+.experience-title .collection {
+  font-size: 50px;
+  font-weight: 300;
+}
+
+
+.experience-wrapper.open .experience-title,
+.experience-wrapper.open .experience-title-footer {
+  display: none;
+}
+
+.experience-wrapper.open .experience-item:not(.active) .experience-title-mini {
+  display: block;
+}
+
+
 
 .experience-detail {
   width: 0;
@@ -73,7 +113,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #333;
   opacity: 0;
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out, padding 0.8s ease;
   overflow: hidden;
@@ -109,12 +148,11 @@
 }
 
 .experience-item.active {
-  flex: 8;
+  flex: 9;
 }
 
 .experience-wrapper.open .experience-item:not(.active) {
   flex: 0.5;
-  filter: brightness(0.7);
   transition: flex 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.8s ease;
 }
 
