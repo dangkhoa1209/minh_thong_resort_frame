@@ -5,46 +5,6 @@
    margin: auto;
 }
 
-/* header */
-.header {
-  max-width: 1920px;
-  width: 100%;
-  margin: 0 auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 10;
-}
-
-.header__logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fff;
-}
-
-.header__menu {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #fff;
-}
-
-.header__menu span {
-  text-transform: uppercase;
-}
-
-.header__icon {
-  width: 20pt;
-  height: 20pt;
-  filter: invert(1);
-}
-/* end header */
-
 /* banner */
 .banner {
   width: 100%;

@@ -6,14 +6,25 @@ function loadComponent(url, containerId) {
       const temp = document.createElement('div');
       temp.innerHTML = html;
 
-      // Gắn CSS (link)
-      temp.querySelectorAll('link[rel="stylesheet"]')?.forEach(link => {
+      const cssLinks = temp.querySelectorAll('link[rel="stylesheet"]');
+      const scriptTags = temp.querySelectorAll('script[src]');
+
+      // Load CSS links
+      const cssPromises = [...cssLinks].map(link => {
         const exists = [...document.head.querySelectorAll('link')].some(l => l.href === link.href);
-        if (!exists) document.head.appendChild(link.cloneNode());
+        if (!exists) {
+          return new Promise(resolve => {
+            const newLink = link.cloneNode();
+            newLink.onload = resolve;
+            document.head.appendChild(newLink);
+          });
+        } else {
+          return Promise.resolve(); // Đã có rồi
+        }
       });
 
-      // Gắn JS (script)
-      temp.querySelectorAll('script[src]')?.forEach(script => {
+      // Load JS scripts
+      scriptTags.forEach(script => {
         const exists = [...document.querySelectorAll('script')].some(s => s.src === script.src);
         if (!exists) {
           const newScript = document.createElement('script');
@@ -23,9 +34,11 @@ function loadComponent(url, containerId) {
         }
       });
 
-      // Chỉ chèn phần nội dung cần hiển thị, ví dụ section.slide-projects
-      const content = temp.querySelector('section') || temp.firstElementChild;
-      if (content) container.appendChild(content);
+      // Chờ CSS load xong rồi mới append nội dung
+      Promise.all(cssPromises).then(() => {
+        const content = temp.querySelector('section') || temp.firstElementChild;
+        if (content) container.appendChild(content);
+      });
     })
     .catch(err => console.error("❌ Failed to load component:", err));
 }
