@@ -38,9 +38,6 @@
 
 .experience-image-box {
   background-color: black;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  overflow: hidden;
 }
 
 .experience-image-box img {
@@ -154,8 +151,6 @@
   display: flex;
   opacity: 1;
   width: 50%;
-  max-width: 50%;
-  overflow: hidden;
 }
 
 
