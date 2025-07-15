@@ -3,8 +3,8 @@
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
- background-color: #f9f9f9;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #f9f9f9;
 }
 
 .experience-item {
@@ -12,9 +12,10 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: stretch;
+  max-height: 100vh; /* Constrain to one screen height */
 }
 
 .experience-split {
@@ -23,7 +24,6 @@
   height: 100%;
   position: relative;
   background-color: #f9f9f9;
-  
 }
 
 .experience-image {
@@ -34,20 +34,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
 }
 
 .experience-image-box {
   background-color: black;
   height: 100%;
+  width: 100%;
 }
 
 .experience-image-box img {
   height: 100%;
-  width: auto;
-  object-fit: contain;
+  /* width: 100%; */
+  object-fit: contain; /* Changed to cover to maintain aspect ratio */
   object-position: center;
   display: block;
   opacity: 0.8;
+  transition: opacity 0.4s ease;
 }
 
 .experience-title {
@@ -55,7 +58,7 @@
   font-size: 24px;
   font-weight: bold;
   color: white;
-  transition: all 0.8s ease;
+  transition: all 0.6s ease;
   white-space: nowrap;
   top: 40%;
   left: 50%;
@@ -73,7 +76,7 @@
   font-size: 36px;
   font-weight: light;
   color: white;
-  transition: all 0.8s ease;
+  transition: all 0.6s ease;
   white-space: nowrap;
   bottom: 10%;
   left: 50%;
@@ -82,11 +85,11 @@
 }
 
 .experience-title-mini {
- position: absolute;
+  position: absolute;
   font-size: 24px;
   font-weight: bold;
   color: white;
-  transition: all 0.8s ease;
+  transition: all 0.6s ease;
   white-space: nowrap;
   top: 50%;
   left: 50%;
@@ -95,12 +98,10 @@
   display: none;
 }
 
-
 .experience-title .collection {
   font-size: 50px;
   font-weight: 300;
 }
-
 
 .experience-wrapper.open .experience-title,
 .experience-wrapper.open .experience-title-footer {
@@ -111,8 +112,6 @@
   display: block;
 }
 
-
-
 .experience-detail {
   width: 0;
   background: #f9f9f9;
@@ -121,33 +120,32 @@
   flex-direction: column;
   justify-content: center;
   opacity: 0;
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out, padding 0.8s ease;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in-out, padding 0.6s ease;
   overflow: hidden;
   text-align: left;
-  /* gap: 40px; */
 }
 
 .experience-detail .top {
-  padding-bottom: 100px;
+  padding-bottom: 80px;
 }
 
 .experience-detail .purpose {
-  padding-bottom: 77px;
+  padding-bottom: 60px;
 }
 
 .experience-detail .coverage-box {
-  padding-bottom: 77px;
+  padding-bottom: 60px;
 }
 
 .experience-detail .bottom {
-  padding-bottom: 68px;
+  padding-bottom: 50px;
 }
 
 .experience-detail .title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    font-size: 60px;
-    margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 60px;
+  margin: 0;
 }
 
 .experience-detail .subtitle {
@@ -157,10 +155,10 @@
 }
 
 .experience-detail .description {
-    font-size: 25px;
-    margin: 10px 0;
-    display: flex;
-    line-height: 35px;
+  font-size: 25px;
+  margin: 10px 0;
+  display: flex;
+  line-height: 35px;
 }
 
 .description .des-title {
@@ -172,43 +170,38 @@
   font-weight: 300;
 }
 
-
 .experience-detail .coverage {
-    text-align: left;
-    font-size: 16pt;
-    list-style-type: none;
-    padding: 0;
+  text-align: left;
+  font-size: 16pt;
+  list-style-type: none;
+  padding: 0;
 }
-
-
-
 
 .experience-detail .request-btn {
-    font-size: 16pt;
-    padding: 15px 20px;
-    color: black;
-    background-color: #f9f9f9;
-    border: 1px solid black;
-    border-radius: 50px;
-    cursor: pointer;
-    margin: 20px auto 0; 
-    display: block;      
-    transition: all 0.4s ease;
-    text-align: center;
+  font-size: 16pt;
+  padding: 15px 20px;
+  color: black;
+  background-color: #f9f9f9;
+  border: 1px solid black;
+  border-radius: 50px;
+  cursor: pointer;
+  margin: 20px auto 0;
+  display: block;
+  transition: all 0.3s ease;
+  text-align: center;
 }
 
-
 .experience-detail .request-btn:hover {
-    border: none;
-    background-color: black;
-    color: #f9f9f9;
+  border: none;
+  background-color: black;
+  color: #f9f9f9;
 }
 
 .experience-item.active .experience-detail {
   display: flex;
   opacity: 1;
   width: 60%;
-  padding: 73px;
+  padding: 60px;
 }
 
 .experience-item.active .experience-image {
@@ -217,13 +210,6 @@
   width: 40%;
 }
 
-
-/* .experience-item.active .experience-detail h3,
-.experience-item.active .experience-detail p {
-  transform: translateY(0);
-  opacity: 1;
-} */
-
 .experience-item.active {
   flex: 13;
   cursor: default;
@@ -231,39 +217,249 @@
 
 .experience-wrapper.open .experience-item:not(.active) {
   flex: 0.5;
-  transition: flex 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.8s ease;
+  transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease;
 }
 
 .close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 30px;
-  height: 30px;
+  bottom: 20px; /* Moved to bottom-right */
+  right: 20px;
+  width: 40px; /* Larger size for better visibility */
+  height: 40px;
   background: #fff;
-  border: none;
-  font-size: 20px;
+  border: 2px solid #000; /* Added border for style */
+  border-radius: 50%; /* Circular button */
+  font-size: 24px; /* Larger icon */
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease; /* Smooth transition for hover and opacity */
   z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.close-btn:hover {
+  background: #000; /* Invert colors on hover */
+  color: #fff;
+  transform: scale(1.1); /* Slight scale effect */
 }
 
 .experience-item.active .close-btn {
   opacity: 1;
 }
 
-@media (max-width: 768px) {
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+  .experience-item.active .experience-detail {
+    width: 50%;
+    padding: 40px;
+  }
+
+  .experience-item.active .experience-image {
+    width: 50%;
+  }
+
+  .experience-title .title {
+    font-size: 50px;
+  }
+
+
+
+ .experience-image-box{
+  min-height: 100vh;
+}
+
+  .experience-image-box img {
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  object-fit: cover; /* Đây là key để cover vùng chứa */
+  object-position: center; /* căn giữa hình ảnh */
+  display: block; /* xoá khoảng trống dưới img */
+}
+
+  .experience-title .collection {
+    font-size: 40px;
+  }
+
+  .experience-title-footer {
+    font-size: 28px;
+  }
+
+  .experience-detail .title {
+    font-size: 48px;
+  }
+
+  .experience-detail .subtitle {
+    font-size: 28px;
+  }
+
+  .experience-detail .description {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .experience-detail .coverage {
+    font-size: 14pt;
+  }
+
+  .experience-detail .request-btn {
+    font-size: 14pt;
+    padding: 12px 18px;
+  }
+
+  .close-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .experience-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .experience-item {
+    flex: 1 0 100%;
+    height: 300px; /* Fixed height for non-active items */
+    max-height: 100vh; /* Ensure max height is one screen */
+  }
+
+  .experience-item.active {
+    flex: 1 0 100%;
+    height: auto;
+    max-height: 100vh; /* Constrain active item height */
+  }
+
   .experience-item.active .experience-detail {
     width: 100%;
+    padding: 30px;
+  }
+
+  .experience-item.active .experience-image {
+    width: 100%;
+    height: 300px;
+  }
+
+  .experience-image-box img {
+    object-fit: cover; /* Ensure image fits properly */
+  }
+
+  .experience-title .title {
+    font-size: 40px;
+  }
+
+  .experience-title .collection {
+    font-size: 32px;
+  }
+
+  .experience-title-footer {
+    font-size: 24px;
+  }
+
+  .experience-title-mini {
+    font-size: 20px;
+  }
+
+  .experience-detail .title {
+    font-size: 36px;
+  }
+
+  .experience-detail .subtitle {
+    font-size: 24px;
+  }
+
+  .experience-detail .description {
+    font-size: 18px;
+    line-height: 28px;
+    flex-direction: column;
+  }
+
+  .description .des-title {
+    min-width: auto;
+    margin-bottom: 10px;
+  }
+
+  .experience-detail .coverage {
+    font-size: 12pt;
+  }
+
+  .experience-detail .request-btn {
+    font-size: 12pt;
+    padding: 10px 16px;
+  }
+
+  .experience-wrapper.open .experience-item:not(.active) {
+    flex: 1 0 100%;
+    height: 100px;
+  }
+
+  .close-btn {
+    bottom: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .experience-title .title {
+    font-size: 32px;
+  }
+
+  .experience-title .collection {
+    font-size: 28px;
+  }
+
+  .experience-title-footer {
+    font-size: 20px;
+  }
+
+  .experience-title-mini {
+    font-size: 18px;
+  }
+
+  .experience-detail .title {
+    font-size: 28px;
+  }
+
+  .experience-detail .subtitle {
+    font-size: 20px;
+  }
+
+  .experience-detail .description {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .experience-detail .coverage {
+    font-size: 10pt;
+  }
+
+  .experience-detail .request-btn {
+    font-size: 10pt;
+    padding: 8px 14px;
+  }
+
+  .experience-item.active .experience-detail {
     padding: 20px;
   }
 
   .experience-item.active .experience-image {
-    display: none;
+    height: 200px;
   }
 
-  .experience-item:not(.active) .experience-image img {
-    opacity: 0.6;
+  .close-btn {
+    bottom: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
   }
 }
