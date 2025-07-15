@@ -41,13 +41,16 @@
   background-color: black;
   height: 100%;
   width: 100%;
+  display: flex;              /* Canh giữa bằng flexbox */
+  align-items: center;        /* Canh giữa theo chiều dọc */
+  justify-content: center;    /* Canh giữa theo chiều ngang */
 }
 
 .experience-image-box img {
-  height: 100%;
-  /* width: 100%; */
-  object-fit: contain; /* Changed to cover to maintain aspect ratio */
-  object-position: center;
+  /* max-width: 100%;            */
+  max-height: 100%;
+  object-fit: contain;        /* Giữ nguyên tỉ lệ, không cắt */
+  object-position: center;    /* Đảm bảo ảnh nằm giữa */
   display: block;
   opacity: 0.8;
   transition: opacity 0.4s ease;
