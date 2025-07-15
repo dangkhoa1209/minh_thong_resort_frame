@@ -78,25 +78,24 @@
 
 .about__title--thin {
   font-weight: 300;
-  font-size: 39px;
+  font-size: var(--font-size-sub-title);
 }
 
 .about__title--bold {
   font-weight: 600;
-  font-size: 70px;
+  font-size: var(--font-size-title);
 }
 
 .about__meta {
   margin-top: 20px;
-  font-size: 23px;
-  line-height: 1.6;
+  font-size: var(--font-size-23);
   display: flex;
   justify-content: space-between;
 }
 
 .about__content {
-  font-size: 18pt;
-  line-height: 28pt;
+  font-size: var(--font-size-25);
+  line-height: var(--line-height);
   font-weight: 300;
 }
 
@@ -108,20 +107,19 @@
 .products {
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: var(--gap-80);
 }
 
 .product {
   display: flex;
-  gap: 50px;
+  gap: var(--gap);
 }
 
 /* Khung ảnh có aspect-ratio + fallback */
 .product-item {
   flex: 1;
-  border-radius: 20px;
+  border-radius: var(--border-radius);
   overflow: hidden;
-  background-color: #eee;
   /* luôn có khung nền */
   position: relative;
   cursor: pointer;
@@ -198,4 +196,18 @@
 #place-slide-project {
   margin-top: 70px;
 }
+
+@media (max-width: 1024px) {
+  .about__container {
+    flex-direction: column;
+    gap: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about__container {
+    gap: 30px;
+  }
+}
+
 

@@ -71,7 +71,7 @@ body {
   color: #359381;
   padding: 6px 15px;
   font-weight: 500;
-  border-radius: 20px;
+  border-radius: var(--border-radius);
   margin: 0px 10px;
   font-weight: 600;
 }
@@ -191,7 +191,7 @@ body {
 .project__inner {
   will-change: transform;
   background: white;
-  border-radius: 20px;
+  border-radius: var(--border-radius);
   position: relative;
   overflow: hidden;
   box-shadow: 0 25px 50px -12px hsla(265.3, 20%, 10%, 35%);
@@ -342,34 +342,32 @@ body {
   max-width: 1920px;
   width: 100%;
   margin: 0 auto;
-  background-color: #f9f9f9;
+  background-color: var(--main-color-white);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .introduce-header {
   text-align: center;
-  height: 200px;
+  padding-bottom: 120px;
 }
 
 .introduce-header p {
-  font-size: 35pt;
-  color: black;
-  
+  font-size: var(--font-size-title);
+  color: var(--main-color-black);
   text-transform: uppercase;
   font-weight: 600;
-  line-height: 200px;
 }
 
-.introduce-header p span{ 
-font-style: italic;
+.introduce-header p span {
+  font-style: italic;
 }
 
 .partner {
   overflow: hidden;
   user-select: none;
   pointer-events: none;
-  padding-bottom: 20px;
+  padding-bottom: var(--spacing-y-small);
 }
 
 .partner .wrapper {
@@ -386,14 +384,16 @@ font-style: italic;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden; /* Giúp gọn gàng nếu ảnh lớn bất thường */
+  overflow: hidden;
 }
 
 .partner-logo {
   width: 100%;
   height: 100%;
-  object-fit: contain;        /* Không cắt ảnh, canh giữa, giữ tỉ lệ */
-  object-position: center;    /* Canh giữa theo cả chiều ngang & dọc */
+  object-fit: contain;
+  /* Không cắt ảnh, canh giữa, giữ tỉ lệ */
+  object-position: center;
+  /* Canh giữa theo cả chiều ngang & dọc */
   display: block;
   pointer-events: none;
 }
@@ -413,8 +413,8 @@ font-style: italic;
 .introduce-content {
   display: flex;
   flex-direction: row;
-  gap: 24px;
-  padding: 30px;
+  gap:  var(--gap);
+  padding: var(--spacing-x);
 }
 
 .introduce-images {
@@ -426,7 +426,7 @@ font-style: italic;
 .introduce-images .introduce-image-box {
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: var(--border-radius);
   width: 100%;
   aspect-ratio: 322 / 673;
 }
@@ -439,23 +439,23 @@ font-style: italic;
   /* filter: grayscale(100%); */
   transition: filter 0.3s ease;
   display: block;
-  border-radius: 20px;
+  border-radius: var(--border-radius);
 }
 
 
 
-.introduce-images .view-more-button {
+.introduce-images .learn-more-button {
   position: absolute;
   bottom: -100px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: transparent;
   transition: all 1s eases;
 }
 
-.introduce-images:hover .view-more-button {
+.introduce-images:hover .learn-more-button {
   bottom: 20px;
 }
+
 
 .introduce-text-block {
   list-style: none;
@@ -479,7 +479,7 @@ font-style: italic;
   flex-direction: column;
   justify-content: center;
   padding: 0 16px;
-  background-color: #f9f9f9;
+  background-color: var(--main-color-white);
   transition: background-color 0.5s ease;
   position: relative;
   cursor: pointer;
@@ -534,7 +534,7 @@ font-style: italic;
 .faq-item.active {
   background-color: #0f0f0f;
   color: #fff;
- 
+
 }
 
 .faq-item.active .faq-icon {
@@ -555,11 +555,10 @@ font-style: italic;
   margin-top: 8px;
 }
 
+
+
 @media (max-width: 1024px) {
-  .introduce-header p {
-    font-size: 28pt;
-    line-height: 100px;
-  }
+
 
   .introduce-content {
     flex-direction: column;
@@ -577,16 +576,26 @@ font-style: italic;
     padding-top: 20px;
   }
 
-  .introduce-images .view-more-button {
-    bottom: 20px !important;
+  .introduce-header {
+    padding-bottom: 90px;
   }
+
+  .introduce-images .learn-more-button {
+    bottom: 20px;
+  }
+
+  .partner-item{
+    width: 180px;         /* vẫn ≈ 1.5  */
+    height: 120px;
+    margin-right: 40px;
+  }
+
+
+
 }
 
 @media (max-width: 768px) {
-  .introduce-header p {
-    font-size: 22pt;
-    line-height: 80px;
-  }
+
 
   .faq-item {
     height: auto;
@@ -603,8 +612,12 @@ font-style: italic;
   }
 
   .introduce-images {
-    flex-direction: column;
+    width: 100%;
     gap: 12px;
+  }
+
+  .introduce-text-block {
+    width: 100%;
   }
 
   .introduce-images .introduce-image-box {
@@ -612,11 +625,20 @@ font-style: italic;
     aspect-ratio: 322 / 673;
   }
 
-  .introduce-images .view-more-button {
-    bottom: 20px;
-    font-size: 16px;
-    padding: 12px 24px;
+  .introduce-images .learn-more-button {
+    bottom: 10px;
   }
+
+  .introduce-header {
+    padding-bottom: 40px;
+  }
+
+  .partner-item{
+    width: 140px;
+    height: 93px;         /* 140 / 93 ≈ 1.5  */
+    margin-right: 24px;
+  }
+
 }
 
 

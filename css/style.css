@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -12,21 +13,26 @@
   --main-color-black: #0f0f0f;
   --font-heading: 'Montserrat', sans-serif;
   --font-body: 'Lato', sans-serif;
-   /* Spacing ngang (horizontal) */
+  /* Spacing ngang (horizontal) */
   --spacing-x: 50px;
-   /* Spacing dọc (vertical) */
-   --spacing-y: 70px;
-   --spacing-y-small: 50px;
+  /* Spacing dọc (vertical) */
+  --spacing-y: 70px;
+  --spacing-y-small: 50px;
   /* Gap flex */
-   --gap: 50px;
-   --page-max-width: 1920px;
-   --font-size-title: 70px;
-   --font-size-sub-title: 39px;
-   --absolute-top: 50px;
-   --absolute-bottom: 50px;
-   --absolute-left: 50px;
-   --absolute-right: 50px;
-} 
+  --gap: 50px;
+   --gap-80: 80px;
+  --page-max-width: 1920px;
+  --font-size-title: 70px;
+  --font-size-sub-title: 39px;
+  --absolute-top: 50px;
+  --absolute-bottom: 50px;
+  --absolute-left: 50px;
+  --absolute-right: 50px;
+  --border-radius: 20px;
+  --line-height: 1.54;
+  --font-size-23: 23px;
+  --font-size-25: 25px;
+}
 
 @media (max-width: 1024px) {
   :root {
@@ -34,12 +40,17 @@
     --spacing-y: 50px;
     --spacing-y-small: 30px;
     --gap: 30px;
-     --font-size-title: 48px;
-   --font-size-sub-title: 30px;
+    --gap-80: 60px;
+    --font-size-title: 48px;
+    --font-size-sub-title: 30px;
     --absolute-top: 30px;
     --absolute-bottom: 30px;
     --absolute-left: 30px;
     --absolute-right: 30px;
+    --border-radius: 12px;
+    --font-size-23: 20px;
+
+    --font-size-25: 22px;
   }
 }
 
@@ -50,12 +61,17 @@
     --spacing-y: 20px;
     --spacing-y-small: 10px;
     --gap: 10px;
+    --gap-80: 40px;
     --font-size-title: 24px;
-   --font-size-sub-title: 20px;
+    --font-size-sub-title: 20px;
     --absolute-top: 20px;
     --absolute-bottom: 20px;
     --absolute-left: 16px;
     --absolute-right: 16px;
+    --border-radius: 12px;
+
+    --font-size-23: 16px;
+
   }
 }
 
@@ -65,30 +81,30 @@
 }
 
 body {
-  background: #f9f9f9;
+  background: var(--main-color-white);
   min-height: 100vh;
   overflow-x: hidden;
   user-select: none;
   -webkit-user-select: none;
-  -moz-user-select: none; 
+  -moz-user-select: none;
   -ms-user-select: none;
 }
 
 * {
-  scrollbar-width: none; 
+  scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
 *::-webkit-scrollbar {
-  display: none;       
+  display: none;
 }
 
 .font-bold {
- font-weight: bold;
+  font-weight: bold;
 }
 
 .font-thin {
- font-weight: 300;
+  font-weight: 300;
 }
 
 
@@ -98,20 +114,20 @@ body {
 }
 
 .py {
-   padding-top: var(--spacing-y);
+  padding-top: var(--spacing-y);
   padding-bottom: var(--spacing-y);
 }
 
 .pt {
-   padding-top: var(--spacing-y);
+  padding-top: var(--spacing-y);
 }
 
 .pb {
-   padding-bottom: var(--spacing-y);
+  padding-bottom: var(--spacing-y);
 }
 
 .py-small {
-   padding-top: var(--spacing-y-small);
+  padding-top: var(--spacing-y-small);
   padding-bottom: var(--small-y);
 }
 
@@ -120,7 +136,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 68px;
-  padding: 0 32px;              
+  padding: 0 32px;
   font-size: 23px;
   color: var(--main-color-white);
   border: 2px solid var(--main-color-white);
@@ -132,8 +148,5 @@ body {
 
 .button:hover {
   background-color: var(--main-color-white);
-  color:  var(--main-color-black);
+  color: var(--main-color-black);
 }
-
-
-
