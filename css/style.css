@@ -19,7 +19,13 @@
    --spacing-y-small: 50px;
   /* Gap flex */
    --gap: 50px;
-   --page-max-width: 1920px
+   --page-max-width: 1920px;
+   --font-size-title: 70px;
+   --font-size-sub-title: 39px;
+   --absolute-top: 50px;
+   --absolute-bottom: 50px;
+   --absolute-left: 50px;
+   --absolute-right: 50px;
 } 
 
 @media (max-width: 1024px) {
@@ -28,6 +34,12 @@
     --spacing-y: 50px;
     --spacing-y-small: 30px;
     --gap: 30px;
+     --font-size-title: 48px;
+   --font-size-sub-title: 30px;
+    --absolute-top: 30px;
+    --absolute-bottom: 30px;
+    --absolute-left: 30px;
+    --absolute-right: 30px;
   }
 }
 
@@ -38,6 +50,12 @@
     --spacing-y: 20px;
     --spacing-y-small: 10px;
     --gap: 10px;
+    --font-size-title: 24px;
+   --font-size-sub-title: 20px;
+    --absolute-top: 20px;
+    --absolute-bottom: 20px;
+    --absolute-left: 16px;
+    --absolute-right: 16px;
   }
 }
 
