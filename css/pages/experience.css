@@ -38,6 +38,7 @@
 
 .experience-image-box {
   background-color: black;
+  height: 100%;
 }
 
 .experience-image-box img {
@@ -114,7 +115,7 @@
 
 .experience-detail {
   width: 0;
-  background: rgba(255, 255, 255, 0.95);
+  background: #f9f9f9;
   padding: 0px;
   display: flex;
   flex-direction: column;
@@ -122,46 +123,110 @@
   opacity: 0;
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out, padding 0.8s ease;
   overflow: hidden;
+  text-align: left;
+  /* gap: 40px; */
 }
 
-.experience-detail h3 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  transform: translateY(20px);
-  transition: transform 0.5s ease, opacity 0.5s ease;
-  opacity: 0;
+.experience-detail .top {
+  padding-bottom: 100px;
 }
 
-.experience-detail p {
-  font-size: 16px;
-  line-height: 1.6;
-  transform: translateY(20px);
-  transition: transform 0.5s ease 0.1s, opacity 0.5s ease 0.1s;
-  opacity: 0;
+.experience-detail .purpose {
+  padding-bottom: 77px;
+}
+
+.experience-detail .coverage-box {
+  padding-bottom: 77px;
+}
+
+.experience-detail .bottom {
+  padding-bottom: 68px;
+}
+
+.experience-detail .title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 60px;
+    margin: 0;
+}
+
+.experience-detail .subtitle {
+  font-size: 36px;
+  font-weight: 300;
+  margin: 10px 0;
+}
+
+.experience-detail .description {
+    font-size: 25px;
+    margin: 10px 0;
+    display: flex;
+    line-height: 35px;
+}
+
+.description .des-title {
+  font-weight: bold;
+  min-width: 130px;
+}
+
+.description .des-content {
+  font-weight: 300;
+}
+
+
+.experience-detail .coverage {
+    text-align: left;
+    font-size: 16pt;
+    list-style-type: none;
+    padding: 0;
+}
+
+
+
+
+.experience-detail .request-btn {
+    font-size: 16pt;
+    padding: 15px 20px;
+    color: black;
+    background-color: #f9f9f9;
+    border: 1px solid black;
+    border-radius: 50px;
+    cursor: pointer;
+    margin: 20px auto 0; 
+    display: block;      
+    transition: all 0.4s ease;
+    text-align: center;
+}
+
+
+.experience-detail .request-btn:hover {
+    border: none;
+    background-color: black;
+    color: #f9f9f9;
 }
 
 .experience-item.active .experience-detail {
   display: flex;
   opacity: 1;
-  width: 50%;
-  padding: 70px;
+  width: 60%;
+  padding: 73px;
 }
 
 .experience-item.active .experience-image {
   display: flex;
   opacity: 1;
-  width: 50%;
+  width: 40%;
 }
 
 
-.experience-item.active .experience-detail h3,
+/* .experience-item.active .experience-detail h3,
 .experience-item.active .experience-detail p {
   transform: translateY(0);
   opacity: 1;
-}
+} */
 
 .experience-item.active {
-  flex: 9;
+  flex: 13;
+  cursor: default;
 }
 
 .experience-wrapper.open .experience-item:not(.active) {
