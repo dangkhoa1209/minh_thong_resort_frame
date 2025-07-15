@@ -83,7 +83,7 @@
 @media (max-width: 1024px) {
   .slide-projects {
     height: 750px;
-    padding: 60px 40px;
+    padding: 60px 30px;
   }
 
   .swiper.swiper-projects {
@@ -109,7 +109,7 @@
 @media (max-width: 768px) {
   .slide-projects {
     height: 550px;
-    padding: 20px 20px;
+    padding: 10px 10px;
   }
 
   .swiper.swiper-projects {
