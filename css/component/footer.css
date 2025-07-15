@@ -1,0 +1,306 @@
+.footer {
+  background-color: var(--main-color-black);
+  font-family: var(--font-heading);
+  max-width: var(--page-max-width);
+  margin: auto;
+  color: var(--main-color-white);
+  padding: 60px 70px;
+  box-sizing: border-box;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.footer-column {
+  width: 100%;
+}
+
+.footer-column-2 {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* Menu */
+.footer-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+}
+
+.footer-menu li {
+  font-size: var(--font-size-sub-title);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Address & form */
+.footer-heading {
+  font-size:  var(--font-size-25);
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.footer-text {
+  font-size: var(--font-size-25);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.footer-block {
+  margin-bottom: 60px;
+}
+
+/* Email input */
+.footer-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--main-color-white);
+  border-radius: 100px;
+  padding: 20px 20px;
+  width: 100%;
+}
+
+.footer-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--main-color-white);
+  font-size: var(--font-size-25);
+  font-style: italic;
+  font-weight: 300;
+  outline: none;
+  padding-bottom: 5px;
+}
+
+.footer-arrow {
+  font-size: var(--font-size-30);
+  margin-left: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.footer-arrow .icon {
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
+
+.footer-arrow .icon:hover {
+  background: rgb(86, 86, 86);
+  fill: #000;
+}
+
+/* Social icons */
+.footer-social {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-icon {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.3s, color 0.3s;
+  color: white;
+}
+
+.footer-icon-ig {
+  border: 1.3px solid;
+}
+
+.footer-icon:hover {
+  background: rgb(86, 86, 86);
+}
+
+.footer-icon .icon {
+  width: 40px;
+  height: 40px;
+}
+
+.footer-icon .icon-ig {
+  width: 24px;
+  height: 24px;
+}
+
+.footer-logo {
+  width: 100%;
+  padding: 0px;
+  margin-top: 200px;
+  border-bottom: 1px solid;
+}
+
+.footer-logo img {
+  width: 100%;
+  height: 100%;
+  opacity: 20%;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 500;
+  gap: 10px;
+}
+
+/* Tablet (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .footer {
+    padding: 40px 40px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .footer-column,
+  .footer-column-2 {
+    width: 100%;
+  }
+
+  .footer-column-2 {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .footer-menu li {
+    margin-bottom: 8px;
+  }
+
+  .footer-heading {
+    margin-bottom: 20px;
+  }
+
+  .footer-text {
+    line-height: 1.3;
+  }
+
+  .footer-block {
+    margin-bottom: 40px;
+  }
+
+  .footer-input-wrapper {
+    padding: 15px 15px;
+  }
+
+  .footer-arrow .icon {
+    height: 32px;
+    width: 32px;
+  }
+
+  .footer-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .footer-icon .icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .footer-icon .icon-ig {
+    width: 20px;
+    height: 20px;
+  }
+
+  .footer-logo {
+    margin-top: 120px;
+  }
+
+  .footer-bottom {
+    font-size: 13px;
+    padding-top: 15px;
+    gap: 8px;
+  }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 20px;
+  }
+
+  .footer-container {
+    gap: 20px;
+  }
+
+  .footer-column,
+  .footer-column-2 {
+    width: 100%;
+  }
+
+  .footer-column-2 {
+    gap: 20px;
+  }
+
+  .footer-menu li {
+    margin-bottom: 6px;
+  }
+
+  .footer-heading {
+    margin-bottom: 15px;
+  }
+
+  .footer-text {
+    line-height: 1.2;
+  }
+
+  .footer-block {
+    margin-bottom: 30px;
+  }
+
+  .footer-input-wrapper {
+    padding: 10px 10px;
+  }
+
+  .footer-arrow .icon {
+    height: 28px;
+    width: 28px;
+  }
+
+  .footer-social {
+    gap: 12px;
+  }
+
+  .footer-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .footer-icon .icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .footer-icon .icon-ig {
+    width: 18px;
+    height: 18px;
+  }
+
+  .footer-logo {
+    margin-top: 80px;
+  }
+
+  .footer-bottom {
+    font-size: 11px;
+    padding-top: 10px;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+}
