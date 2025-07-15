@@ -29,19 +29,21 @@ const setBackground = (index) => {
 // ============================================
 // 4. Khởi tạo Swiper với hiệu ứng coverflow
 // ============================================
+const isMobile = window.innerWidth <= 768;
+
 const swiper = new Swiper(".swiper-projects", {
   effect: "coverflow",       // 👈 Kích hoạt hiệu ứng 3D coverflow
   grabCursor: true,          // 👈 Đổi con trỏ chuột khi kéo
   centeredSlides: true,      // 👈 Slide trung tâm sẽ nằm chính giữa
   loop: true,                // 👈 Cho phép lặp vô tận
-  spaceBetween: 120,         // 👈 Khoảng cách giữa các slide
-  slidesPerView: 3,          // 👈 Hiển thị 3 slide cùng lúc
+  spaceBetween: isMobile ? 20 : 120,
+  slidesPerView: isMobile ? 1.8 : 3,
   // Cấu hình hiệu ứng coverflow
   coverflowEffect: {
-    rotate: 30,              // 👈 Góc xoay của slide
-    stretch: 80,             // 👈 Khoảng cách ép ngang giữa các slide
-    depth: 300,              // 👈 Độ sâu không gian 3D
-    modifier: 0.5,           // 👈 Hệ số điều chỉnh tổng thể
+   rotate: isMobile ? 40 : 30,
+    stretch: isMobile ? 0 : 80,
+    depth: isMobile ? 100 : 300,
+    modifier: isMobile ? 1 : 0.5,
     slideShadows: false      // 👈 Tắt đổ bóng nếu không cần
   },
 

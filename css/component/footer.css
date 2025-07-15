@@ -1,11 +1,11 @@
 .footer {
-  background-color: #0f0f0f;
-  padding-top: 70px;
-  padding-bottom: 70px;
-  font-family: 'Montserrat', sans-serif;
-  max-width: 1920px;
+  background-color: var(--main-color-black);
+  font-family: var(--font-heading);
+  max-width: var(--page-max-width);
   margin: auto;
-  color: white;
+  color: var(--main-color-white);
+  padding: 60px 70px;
+  box-sizing: border-box;
 }
 
 .footer-container {
@@ -80,8 +80,7 @@
 }
 
 .footer-arrow {
-  font-size: 30pt;
-  /* vẫn giữ nếu bạn dùng icon font */
+  font-size: 30px;
   margin-left: 15px;
   display: flex;
   align-items: center;
@@ -93,14 +92,10 @@
   cursor: pointer;
 }
 
-footer-arrow .icon:hover {
+.footer-arrow .icon:hover {
   background: rgb(86, 86, 86);
   fill: #000;
 }
-
-/* .footer-arrow .icon path {
-    stroke: white;
-  } */
 
 /* Social icons */
 .footer-social {
@@ -118,13 +113,11 @@ footer-arrow .icon:hover {
   border-radius: 50%;
   transition: background 0.3s, color 0.3s;
   color: white;
-  /* mặc định logo trắng */
 }
 
 .footer-icon-ig {
   border: 1.3px solid;
 }
-
 
 .footer-icon:hover {
   background: rgb(86, 86, 86);
@@ -159,47 +152,25 @@ footer-arrow .icon:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  font-size: 15pt;
+  font-size: 15px;
   font-weight: 500;
   gap: 10px;
 }
 
+/* Tablet (max-width: 1024px) */
 @media (max-width: 1024px) {
-
-  .footer-menu li,
-  .footer-text,
-  .footer-input {
-    font-size: 20px;
+  .footer {
+    padding: 40px 40px;
   }
 
-  .footer-heading {
-    font-size: 20px;
-  }
-
-  .footer-input-wrapper {
-    padding: 15px 16px;
-  }
-
-  .footer-arrow .icon {
-    width: 30px;
-    height: 30px;
-  }
-
-  .footer-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 18pt;
-  }
-
-  .footer-logo {
-    margin-top: 120px;
-  }
-}
-
-@media (max-width: 768px) {
   .footer-container {
     flex-direction: column;
-    gap: 50px;
+    gap: 30px;
+  }
+
+  .footer-column,
+  .footer-column-2 {
+    width: 100%;
   }
 
   .footer-column-2 {
@@ -207,40 +178,151 @@ footer-arrow .icon:hover {
     gap: 30px;
   }
 
+  .footer-menu li {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .footer-heading {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .footer-text {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+  .footer-block {
+    margin-bottom: 40px;
+  }
+
   .footer-input-wrapper {
-    flex-direction: row;
-    align-items: center;
-    padding: 14px 16px;
+    padding: 15px 15px;
+  }
+
+  .footer-input {
+    font-size: 20px;
   }
 
   .footer-arrow {
-    margin-left: 10px;
+    font-size: 24px;
+  }
+
+  .footer-arrow .icon {
+    height: 32px;
+    width: 32px;
+  }
+
+  .footer-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .footer-icon .icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .footer-icon .icon-ig {
+    width: 20px;
+    height: 20px;
+  }
+
+  .footer-logo {
+    margin-top: 120px;
+  }
+
+  .footer-bottom {
+    font-size: 13px;
+    padding-top: 15px;
+    gap: 8px;
+  }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 20px;
+  }
+
+  .footer-container {
+    gap: 20px;
+  }
+
+  .footer-column,
+  .footer-column-2 {
+    width: 100%;
+  }
+
+  .footer-column-2 {
+    gap: 20px;
   }
 
   .footer-menu li {
-    font-size: 22px;
+    font-size: 24px;
+    margin-bottom: 6px;
   }
 
   .footer-heading {
     font-size: 18px;
+    margin-bottom: 15px;
   }
 
   .footer-text {
-    font-size: 16px;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .footer-block {
+    margin-bottom: 30px;
+  }
+
+  .footer-input-wrapper {
+    padding: 10px 10px;
   }
 
   .footer-input {
     font-size: 16px;
   }
 
-  .footer-bottom {
-    font-size: 14px;
-    flex-direction: column;
-    gap: 6px;
-    align-items: flex-start;
+  .footer-arrow {
+    font-size: 20px;
+  }
+
+  .footer-arrow .icon {
+    height: 28px;
+    width: 28px;
+  }
+
+  .footer-social {
+    gap: 12px;
+  }
+
+  .footer-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .footer-icon .icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .footer-icon .icon-ig {
+    width: 18px;
+    height: 18px;
   }
 
   .footer-logo {
     margin-top: 80px;
+  }
+
+  .footer-bottom {
+    font-size: 11px;
+    padding-top: 10px;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
   }
 }
