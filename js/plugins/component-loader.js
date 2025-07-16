@@ -1,12 +1,10 @@
 function loadComponent(url, containerId) {
-  const basePath = getBasePath()
-
-  console.log('basePath', basePath);
-  
-
   fetch(url)
     .then(res => res.text())
     .then(html => {
+      const basePath = getBasePath()
+      console.log('basePath', basePath);
+
       const container = document.getElementById(containerId);
       const temp = document.createElement('div');
       temp.innerHTML = html;
