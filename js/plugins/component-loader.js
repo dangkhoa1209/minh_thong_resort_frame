@@ -1,6 +1,6 @@
 
 function loadComponent(url, containerId) {
-  fetch(url)
+  fetch(url) // url tương đối tính từ bị trí file html
     .then(res => res.text())
     .then(html => {
 

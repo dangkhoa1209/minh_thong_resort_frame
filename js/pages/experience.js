@@ -1,4 +1,4 @@
-loadComponent('../../components/header/index.html', 'place-header')
+loadComponent('../components/header/index.html', 'place-header')
 
 const wrapper = document.querySelector('.experience-wrapper');
 const items = document.querySelectorAll('.experience-item');
