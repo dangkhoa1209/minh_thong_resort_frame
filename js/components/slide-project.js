@@ -5,17 +5,22 @@
 
 // Danh sách hình ảnh sử dụng làm nền khi chuyển slide
 const images = [
+  "/assets/images/ana-mandara/5.webp",
+  "/assets/images/binh-an/1.webp",
   "/assets/images/four-seasons-resort-the-nam-hai/1.webp",
-  "/assets/images/four-seasons-resort-the-nam-hai/2.webp",
-  "/assets/images/four-seasons-resort-the-nam-hai/3.webp",
-  "/assets/images/four-seasons-resort-the-nam-hai/4.webp",
-  "/assets/images/four-seasons-resort-the-nam-hai/5.webp",
-  "/assets/images/four-seasons-resort-the-nam-hai/6.webp",
-  "/assets/images/four-seasons-resort-the-nam-hai/7.webp",
-  "/assets/images/four-seasons-resort-the-nam-hai/8.webp",
-  "/assets/images/four-seasons-resort-the-nam-hai/9.webp",
-  "/assets/images/four-seasons-resort-the-nam-hai/10.webp"
+  "/assets/images/marriott-renaissance-hoi-an/1.webp",
+  "/assets/images/mercure-hotel/1.webp",
+  "/assets/images/the-pear-hoi-an/1.webp"
 ];
+
+const pages = [
+  "/pages/project/ana-mandara-villas-dalat.html",
+  "/pages/project/binh-an-village-dalat.html",
+  "/pages/project/four-seasons-resort-the-nam-hai.html",
+  "/pages/project/marriott-renaissance-hoi-an.html",
+  "/pages/project/mercure-hotel-vung-tau.html",
+  "/pages/project/mercure-hotel-vung-tau.html"
+]
 
 // Phần tử nền cần thay đổi ảnh nền
 const bg = document.getElementById('slideBackground');
@@ -24,8 +29,17 @@ const bg = document.getElementById('slideBackground');
 const basePathBackground = getBasePath()
 
 const setBackground = (index) => {
+  console.log('BGindex', index);
+
   bg.style.backgroundImage = `url(${basePathBackground}${images[index]})`;
 };
+
+const goToProject = (index) => {
+  const basePath = getBasePath()
+  // console.log('${basePath}/${pages[index]}', `${basePath}${pages[index]}`);
+   window.location.href = `${basePath}${pages[index]}`;
+};
+
 
 
 // ============================================
@@ -67,8 +81,13 @@ function initSwiper() {
         setBackground(swiper.realIndex);
       },
       click(swiper, event) {
-        console.log('clickedIndex', swiper.clickedIndex);
-        console.log('clickedSlide', swiper.clickedSlide);
+        const clickedSlide = swiper.clickedSlide;
+        if (!clickedSlide) return;
+
+        const originalIndex = parseInt(clickedSlide.dataset.index, 10);
+        if (isNaN(originalIndex)) return;
+
+        goToProject(originalIndex);
       }
     }
   });
@@ -78,7 +97,7 @@ function initSwiper() {
 
 
 function retryInitSwiper(retries = 50, delay = 100) {
-  const success = initSwiper();  
+  const success = initSwiper();
   if (!success && retries > 0) {
     setTimeout(() => retryInitSwiper(retries - 1, delay), delay);
   } else if (!success) {
