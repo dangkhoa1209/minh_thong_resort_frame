@@ -9,8 +9,9 @@ const logos = document.querySelectorAll('.logo')
 logos?.forEach(logo => {
   logo.addEventListener('click', () => {
 
+    const basePath = getBasePath()
 
-    window.location.href = '/';
+    window.location.href = basePath || '/';
     
     // if (barbaGoHeader) {
     //  barbaGoHeader('/');
