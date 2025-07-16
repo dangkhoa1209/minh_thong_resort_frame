@@ -1,7 +1,5 @@
 
 function loadComponent(url, containerId) {
-
-
   fetch(url)
     .then(res => res.text())
     .then(html => {
