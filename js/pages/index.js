@@ -1,15 +1,14 @@
 // ============================================
-// 1. Load footer HTML động
+//  Load footer HTML động
 // ============================================
 // Tải nội dung HTML từ /components/footer/index.html và chèn vào phần tử có id "place-footer"
-// loadComponent('./components/footer/index.html', 'place-footer')
 loadComponent('./components/header/index.html', 'place-header')
-
+loadComponent('./components/footer/index.html', 'place-footer')
 
 
 
 // ============================================
-// 2. Toggle mở/đóng các mục trong danh sách why choose us
+//  Toggle mở/đóng các mục trong danh sách why client choose us
 // ============================================
 document.querySelectorAll('.faq-item').forEach(faqItem => {
   faqItem.addEventListener('click', (event) => {
