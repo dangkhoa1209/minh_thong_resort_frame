@@ -1,6 +1,9 @@
 function loadComponent(url, containerId) {
   const basePath = getBasePath()
 
+  console.log('basePath', basePath);
+  
+
   fetch(url)
     .then(res => res.text())
     .then(html => {
