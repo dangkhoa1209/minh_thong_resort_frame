@@ -91,9 +91,17 @@ const items = document.querySelectorAll('.project');
 
 items.forEach(item => {
   const popup = item.querySelector('.project__inner');
-  const pageTo = popup.dataset.pageTo;
+  let pageTo = popup.dataset.pageTo;
 
   if (!pageTo) return;
+
+  const basePath = window.location.pathname.includes('/minh_thong_resort_frame/')
+  ? '/minh_thong_resort_frame'
+  : '';
+
+  if(basePath) {
+    pageTo = basePath + pageTo
+  }
 
   item.addEventListener('click', (e) => {
     e.stopPropagation();
