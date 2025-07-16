@@ -1,0 +1,107 @@
+.container {
+  max-width: 1920px;
+  margin: auto;
+}
+
+.title {
+  text-align: center;
+}
+
+.title h1 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--font-size-58);
+  margin: 0;
+}
+
+.title p {
+  font-weight: 300;
+  font-size: var(--font-size-30);
+  margin: 16px 0 0;
+  line-height: 1.5;
+}
+
+.products {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-80);
+}
+
+.product {
+  display: flex;
+  gap: var(--gap);
+}
+
+.product-item {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-container {
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--border-radius, 10px);
+}
+
+.product-description {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
+}
+
+.resort-name {
+  font-family: var(--font-heading);
+  font-weight: 400; 
+  font-size: var(--font-size-25);
+  text-transform: uppercase;
+  line-height: 30px;
+}
+
+.location {
+  font-weight: 300;
+  font-size: var(--font-size-23);
+  line-height: 30px;
+}
+
+/* Remove unused .grid and .project-card styles if not needed */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: var(--gap);
+  margin: 0 auto;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.project-card img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.project-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-location);
+}
+
+.project-name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: var(--font-resort);
+}

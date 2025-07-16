@@ -117,13 +117,14 @@
 
 /* Khung ảnh có aspect-ratio + fallback */
 .product-item {
-  flex: 1;
+    flex: 1;
   border-radius: var(--border-radius);
   overflow: hidden;
   /* luôn có khung nền */
   position: relative;
   cursor: pointer;
 }
+
 
 /* Giữ tỷ lệ bằng aspect-ratio */
 .ratio-3-4 {

@@ -35,6 +35,7 @@
   --font-size-45: 45px;
   --font-size-49: 49px;
   --font-size-58: 58px;
+   --font-size-30: 30px;
 }
 
 @media (max-width: 1024px) {
@@ -56,6 +57,7 @@
     --font-size-45: 36px;
     --font-size-49: 40px;
     --font-size-58: 48px;
+     --font-size-30: 26px;
   }
 }
 
@@ -79,6 +81,7 @@
     --font-size-45: 28px;
     --font-size-49: 32px;
     --font-size-58: 38px;
+     --font-size-30: 22px;
 
   }
 }
