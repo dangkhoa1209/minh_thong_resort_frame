@@ -94,7 +94,7 @@
 
 .footer-arrow .icon:hover {
   background: rgb(86, 86, 86);
-  fill: #000;
+  border-radius: 50%;
 }
 
 /* Social icons */

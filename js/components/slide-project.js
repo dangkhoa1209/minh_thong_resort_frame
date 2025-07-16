@@ -21,9 +21,8 @@ const images = [
 const bg = document.getElementById('slideBackground');
 
 // Hàm thay đổi ảnh nền theo chỉ số index
- const basePathBackground = getBasePath()   
- console.log('basePathBackground', basePathBackground);
-  
+const basePathBackground = getBasePath()
+
 const setBackground = (index) => {
   bg.style.backgroundImage = `url(${basePathBackground}${images[index]})`;
 };
@@ -34,43 +33,59 @@ const setBackground = (index) => {
 // ============================================
 const isMobile = window.innerWidth <= 768;
 
-const swiper = new Swiper(".swiper-projects", {
-  effect: "coverflow",       // 👈 Kích hoạt hiệu ứng 3D coverflow
-  grabCursor: true,          // 👈 Đổi con trỏ chuột khi kéo
-  centeredSlides: true,      // 👈 Slide trung tâm sẽ nằm chính giữa
-  loop: true,                // 👈 Cho phép lặp vô tận
-  spaceBetween: isMobile ? 20 : 120,
-  slidesPerView: isMobile ? 1.8 : 3,
-  // Cấu hình hiệu ứng coverflow
-  coverflowEffect: {
-   rotate: isMobile ? 40 : 30,
-    stretch: isMobile ? 0 : 80,
-    depth: isMobile ? 100 : 300,
-    modifier: isMobile ? 1 : 0.5,
-    slideShadows: false      // 👈 Tắt đổ bóng nếu không cần
-  },
-
-  // Sự kiện của Swiper
-  on: {
-    init(swiper) {
-      // Gán hình nền khi khởi tạo
-      setBackground(swiper.realIndex);
-    },
-    slideChange(swiper) {
-      // Gán lại hình nền khi chuyển slide
-      setBackground(swiper.realIndex);
-    },
-    click(swiper, event) {
-      const clickedIndex = swiper.clickedIndex;
-      const clickedSlide = swiper.clickedSlide;
-
-      console.log('clickedIndex', clickedIndex);
-      console.log('clickedSlide', clickedSlide);
-
-
-      // TODO: go to project
-    }
+function initSwiper() {
+  if (typeof Swiper === 'undefined') {
+    console.warn('🚫 Swiper chưa được load!');
+    return false;
   }
-});
+
+  const container = document.querySelector('.swiper-projects');
+  if (!container) {
+    console.warn('🚫 DOM .swiper-projects chưa có!');
+    return false;
+  }
+
+  const swiper = new Swiper(".swiper-projects", {
+    effect: "coverflow",
+    grabCursor: true,
+    centeredSlides: true,
+    loop: true,
+    spaceBetween: isMobile ? 20 : 120,
+    slidesPerView: isMobile ? 1.8 : 3,
+    coverflowEffect: {
+      rotate: isMobile ? 40 : 30,
+      stretch: isMobile ? 0 : 80,
+      depth: isMobile ? 100 : 300,
+      modifier: isMobile ? 1 : 0.5,
+      slideShadows: false
+    },
+    on: {
+      init(swiper) {
+        setBackground(swiper.realIndex);
+      },
+      slideChange(swiper) {
+        setBackground(swiper.realIndex);
+      },
+      click(swiper, event) {
+        console.log('clickedIndex', swiper.clickedIndex);
+        console.log('clickedSlide', swiper.clickedSlide);
+      }
+    }
+  });
+
+  return true;
+}
 
 
+function retryInitSwiper(retries = 20, delay = 500) {
+  const success = initSwiper();
+  console.log('success', success);
+  
+  if (!success && retries > 0) {
+    setTimeout(() => retryInitSwiper(retries - 1, delay), delay);
+  } else if (!success) {
+    console.error('❌ Không thể khởi tạo Swiper sau 20 lần thử.');
+  }
+}
+
+retryInitSwiper(); // Thử khởi tạo Swiper, nếu fail thì retry mỗi 500ms, tối đa 20 lần

@@ -2,6 +2,8 @@ loadComponent('../../components/header/index.html', 'place-header')
 loadComponent('../../components/footer/index.html', 'place-footer')
 loadComponent('../../components/slide-project/index.html', 'place-slide-project')
 
+//  () => {initSwiper()}
+
 
 // === CẤU HÌNH MỞ ẢNH PHÓNG TO TỪ THUMBNAIL ===
 const popup = document.getElementById("popup");          // Phần tử popup (dùng để hiển thị ảnh lớn)
