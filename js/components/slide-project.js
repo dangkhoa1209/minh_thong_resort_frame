@@ -21,9 +21,11 @@ const images = [
 const bg = document.getElementById('slideBackground');
 
 // Hàm thay đổi ảnh nền theo chỉ số index
- const basePath = getBasePath()    
+ const basePathBackground = getBasePath()   
+ console.log('basePathBackground', basePathBackground);
+  
 const setBackground = (index) => {
-  bg.style.backgroundImage = `url(${basePath}${images[index]})`;
+  bg.style.backgroundImage = `url(${basePathBackground}${images[index]})`;
 };
 
 
