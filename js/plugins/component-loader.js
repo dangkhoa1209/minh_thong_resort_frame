@@ -1,9 +1,13 @@
+
 function loadComponent(url, containerId) {
+
+
   fetch(url)
     .then(res => res.text())
     .then(html => {
-      const basePath = getBasePath()
 
+
+      const basePath = getBasePath()
       const container = document.getElementById(containerId);
       const temp = document.createElement('div');
       temp.innerHTML = html;
