@@ -3,7 +3,6 @@ function loadComponent(url, containerId) {
     .then(res => res.text())
     .then(html => {
       const basePath = getBasePath()
-      console.log('basePath', basePath);
 
       const container = document.getElementById(containerId);
       const temp = document.createElement('div');
