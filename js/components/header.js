@@ -10,5 +10,11 @@ logos?.forEach(logo => {
   logo.addEventListener('click', () => {
     const basePath = getBasePath()    
     window.location.href = basePath || '/';
+
+    // if (barbaGoHeader) {
+    //  barbaGoHeader('/');
+    // } else {
+    //   window.location.href = '/';
+    // }
   });
 });
