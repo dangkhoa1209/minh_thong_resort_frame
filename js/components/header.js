@@ -11,6 +11,9 @@ logos?.forEach(logo => {
 
     const basePath = getBasePath()
 
+    console.log('basePath logo', basePath);
+    
+
     window.location.href = basePath || '/';
     
     // if (barbaGoHeader) {
