@@ -199,7 +199,6 @@ body {
   width: 100%;
   aspect-ratio: 1366 / 778;
   max-height: calc(min(100vw, 1920px) * 778 / 1366);
-
 }
 
 .project-meta {

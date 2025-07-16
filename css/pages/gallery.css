@@ -47,9 +47,12 @@
 
 .image-container img {
   width: 100%;
-  aspect-ratio: 4 / 3;
   object-fit: cover;
+   transform-origin: center top;
   border-radius: var(--border-radius, 10px);
+   width: 100%;
+    aspect-ratio: 1366 / 778;
+  max-height: calc(min(100vw, 1920px) * 778 / 1366);
 }
 
 .product-description {
@@ -104,4 +107,19 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: var(--font-resort);
+}
+
+.expand-active {
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) scale(1) !important;
+  width: 100vw !important;
+  max-width: 1920px !important;
+  height: 100vh !important;
+  border-radius: 0 !important;
+  z-index: 9999 !important;
+  position: fixed !important;
+  scale: 1 !important;
+  filter: brightness(1) !important;
+
 }
