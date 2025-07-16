@@ -95,9 +95,7 @@ items.forEach(item => {
 
   if (!pageTo) return;
 
-  const basePath = window.location.pathname.includes('/minh_thong_resort_frame/')
-  ? '/minh_thong_resort_frame'
-  : '';
+  const basePath = getBasePath()
 
   if(basePath) {
     pageTo = basePath + pageTo

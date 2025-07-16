@@ -1,7 +1,5 @@
 function loadComponent(url, containerId) {
-  const basePath = window.location.pathname.includes('/minh_thong_resort_frame/')
-    ? '/minh_thong_resort_frame'
-    : '';
+  const basePath = getBasePath()
 
   fetch(url)
     .then(res => res.text())
