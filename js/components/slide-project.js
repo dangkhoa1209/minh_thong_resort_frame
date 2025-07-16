@@ -77,10 +77,8 @@ function initSwiper() {
 }
 
 
-function retryInitSwiper(retries = 20, delay = 500) {
-  const success = initSwiper();
-  console.log('success', success);
-  
+function retryInitSwiper(retries = 50, delay = 100) {
+  const success = initSwiper();  
   if (!success && retries > 0) {
     setTimeout(() => retryInitSwiper(retries - 1, delay), delay);
   } else if (!success) {
