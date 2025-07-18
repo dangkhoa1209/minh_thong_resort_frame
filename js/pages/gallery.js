@@ -1,10 +1,10 @@
-const items = document.querySelectorAll('.product');
+const items = document.querySelectorAll('.product-item');
 
 items.forEach(item => {
   const popup = item.querySelector('.image-container');
   let pageTo = popup.dataset.pageTo;
 
-  // if (!pageTo) return;
+  if (!pageTo) return;
 
   const basePath = getBasePath()
 
@@ -16,6 +16,7 @@ items.forEach(item => {
     e.stopPropagation();
 
     const rect = item.getBoundingClientRect();
+    
     document.body.style.overflow = 'hidden';
 
     popup.classList.remove('expand-active');

@@ -53,6 +53,7 @@
    width: 100%;
     aspect-ratio: 1366 / 778;
   max-height: calc(min(100vw, 1920px) * 778 / 1366);
+  transition: border-radius 0.5s ease;
 }
 
 .product-description {
@@ -121,5 +122,8 @@
   position: fixed !important;
   scale: 1 !important;
   filter: brightness(1) !important;
+}
 
+.image-container.expand-active img {
+  border-radius: 0px;
 }
