@@ -22,15 +22,21 @@
 }
 
 .products {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-80);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* mỗi hàng 2 item cố định */
+  column-gap: var(--gap, 40px);         /* khoảng cách ngang giữa item */
+  row-gap: var(--spacing-y, 60px);      /* khoảng cách dọc giữa các hàng */
+  margin-top: var(--spacing-y, 60px);   /* khoảng cách với phần trên */
 }
 
-.product {
-  display: flex;
-  gap: var(--gap);
-}
+/* .products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  column-gap: var(--gap, 40px);
+  row-gap: var(--spacing-y, 60px);
+  margin-top: var(--spacing-y, 60px);
+} */
+
 
 .product-item {
   flex: 1;
@@ -43,15 +49,17 @@
 
 .image-container {
   overflow: hidden;
+   width: 100%;
+  aspect-ratio: 1366 / 778;
 }
 
 .image-container img {
   width: 100%;
   object-fit: cover;
-   transform-origin: center top;
+  transform-origin: center top;
   border-radius: var(--border-radius, 10px);
-   width: 100%;
-    aspect-ratio: 1366 / 778;
+  width: 100%;
+  aspect-ratio: 1366 / 778;
   max-height: calc(min(100vw, 1920px) * 778 / 1366);
   transition: border-radius 0.5s ease;
 }
@@ -65,7 +73,7 @@
 
 .resort-name {
   font-family: var(--font-heading);
-  font-weight: 400; 
+  font-weight: 400;
   font-size: var(--font-size-25);
   text-transform: uppercase;
   line-height: 30px;

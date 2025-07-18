@@ -1,16 +1,39 @@
+// Show 6 items first
 const items = document.querySelectorAll('.product-item');
+    const loadMoreBtn = document.getElementById('load-more');
+    let visibleCount = 6;
+
+    items.forEach((item, index) => {
+      if (index >= visibleCount) item.style.display = 'none';
+    });
+
+    loadMoreBtn.addEventListener('click', () => {
+      const hiddenItems = [...items].slice(visibleCount, visibleCount + 6);
+      hiddenItems.forEach(item => item.style.display = 'flex');
+
+      visibleCount += hiddenItems.length;
+
+      if (visibleCount >= items.length) {
+        loadMoreBtn.style.display = 'none';
+      }
+    });
+
+
+/** open project */
+// const items = document.querySelectorAll('.product-item');
 
 items.forEach(item => {
   const popup = item.querySelector('.image-container');
   let pageTo = popup.dataset.pageTo;
 
-  if (!pageTo) return;
+  // if (!pageTo) return;
 
   const basePath = getBasePath()
 
   if(basePath) {
     pageTo = basePath + pageTo
   }
+  
 
   item.addEventListener('click', (e) => {
     e.stopPropagation();
