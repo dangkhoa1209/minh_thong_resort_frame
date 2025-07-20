@@ -45,8 +45,6 @@ const goToProject = (index) => {
 // ============================================
 // 4. Khởi tạo Swiper với hiệu ứng coverflow
 // ============================================
-const isMobile = window.innerWidth <= 768;
-
 function initSwiper() {
   if (typeof Swiper === 'undefined') {
     console.warn('🚫 Swiper chưa được load!');
@@ -59,18 +57,52 @@ function initSwiper() {
     return false;
   }
 
+  const width = window.innerWidth;
+
+  let slidesPerView, spaceBetween, rotate, stretch, depth, modifier;
+
+  if (width <= 768) { // Mobile
+    slidesPerView = 1.8;
+    spaceBetween = 20;
+    rotate = 40;
+    stretch = 0;
+    depth = 100;
+    modifier = 1;
+  } else if (width <= 1024) { // iPad
+    slidesPerView = 3;
+    spaceBetween = 60;
+    rotate = 35;
+    stretch = 40;
+    depth = 150;
+    modifier = 0.8;
+  } else if (width <= 1280) { // Macbook 13"
+    slidesPerView = 3;
+    spaceBetween = 80;
+    rotate = 30;
+    stretch = 60;
+    depth = 200;
+    modifier = 0.7;
+  } else { // Desktop lớn
+    slidesPerView = 3;
+    spaceBetween = 120;
+    rotate = 30;
+    stretch = 80;
+    depth = 300;
+    modifier = 0.5;
+  }
+
   const swiper = new Swiper(".swiper-projects", {
     effect: "coverflow",
     grabCursor: true,
     centeredSlides: true,
     loop: true,
-    spaceBetween: isMobile ? 20 : 120,
-    slidesPerView: isMobile ? 1.8 : 3,
+    spaceBetween: spaceBetween,
+    slidesPerView: slidesPerView,
     coverflowEffect: {
-      rotate: isMobile ? 40 : 30,
-      stretch: isMobile ? 0 : 80,
-      depth: isMobile ? 100 : 300,
-      modifier: isMobile ? 1 : 0.5,
+      rotate: rotate,
+      stretch: stretch,
+      depth: depth,
+      modifier: modifier,
       slideShadows: false
     },
     on: {
@@ -80,7 +112,7 @@ function initSwiper() {
       slideChange(swiper) {
         setBackground(swiper.realIndex);
       },
-      click(swiper, event) {
+      click(swiper) {
         const clickedSlide = swiper.clickedSlide;
         if (!clickedSlide) return;
 
