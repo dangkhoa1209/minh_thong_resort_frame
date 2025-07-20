@@ -325,6 +325,7 @@
   .experience-wrapper {
     flex-direction: column;
     height: auto;
+    min-height: 100vh; 
   }
 
   .experience-item {
@@ -336,7 +337,7 @@
   
   .experience-item.active {
     flex: 1 0 100%;
-    height: auto;
+    height: 100%;
     max-height: 100vh; 
     height: 100vh; 
   }
