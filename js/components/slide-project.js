@@ -19,7 +19,7 @@ const pages = [
   "/pages/project/four-seasons-resort-the-nam-hai.html",
   "/pages/project/marriott-renaissance-hoi-an.html",
   "/pages/project/mercure-hotel-vung-tau.html",
-  "/pages/project/mercure-hotel-vung-tau.html"
+  "/pages/project/the-pear-hoi-an.html"
 ]
 
 // Phần tử nền cần thay đổi ảnh nền
