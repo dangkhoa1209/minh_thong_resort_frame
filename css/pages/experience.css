@@ -329,7 +329,7 @@
 
   .experience-item {
     flex: 1 0 100%;
-    height: 300px; /* Fixed height for non-active items */
+    height: 100vh; /* Fixed height for non-active items */
     max-height: 100vh; /* Ensure max height is one screen */
   }
 
