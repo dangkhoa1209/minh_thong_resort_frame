@@ -185,6 +185,7 @@ body {
   aspect-ratio: 1366 / 778;
   overflow: hidden;
   margin-bottom: 20px;
+    transition: transform 0.8s ease, opacity 0.8s ease;
 
 }
 
@@ -270,6 +271,8 @@ body {
   transition: all 0.8s ease-in-out;
   pointer-events: none;
 }
+
+
 
 
 /* About Section */

@@ -88,6 +88,7 @@ window.addEventListener('load', updateScaleOnScroll);
 
 // Setup click để mở rộng project__inner như fullscreen
 const items = document.querySelectorAll('.project');
+const introduceSection = document.querySelector('#introduce');
 
 items.forEach(item => {
   const popup = item.querySelector('.project__inner');
@@ -103,26 +104,46 @@ items.forEach(item => {
 
     const currentIndex = parseInt(item.dataset.index, 10);
 
-    console.log('currentIndex', currentIndex);
-    
+    // Kiểm tra #introduce có đang trên màn hình không
+    let introduceInView = false;
+    let introduceTop = 0;
+    if (introduceSection) {
+      const rectIntro = introduceSection.getBoundingClientRect();
+      introduceInView =
+        rectIntro.top < window.innerHeight && rectIntro.bottom > 0;
+      introduceTop = rectIntro.top;
+    }
 
-    // Chỉ cho các project có index lớn hơn chạy khỏi màn hình
+    // Di chuyển các project sau
     items.forEach(other => {
       const otherIndex = parseInt(other.dataset.index, 10);
-
-      console.log('otherIndex', otherIndex);
-      
       if (otherIndex > currentIndex) {
-        other.classList.add('project-run-away');
+        if (introduceInView) {
+          // Tính khoảng cách di chuyển sao cho đáy .projects cách top introduce 20px
+          const projectRect = other.getBoundingClientRect();
+          const projectBottom = projectRect.bottom;
+          const targetBottom = introduceTop - 20;
+          const moveDistance = targetBottom - projectBottom;
+
+          // Nếu project hiện tại chạm trước thì chỉ di chuyển phần cần thiết
+          other.style.transform = `translateY(${moveDistance}px)`;
+          other.style.opacity = '0';
+        } else {
+          // Bay thẳng xuống ngoài màn hình (150vh)
+          other.style.transform = 'translateY(150vh)';
+          other.style.opacity = '0';
+        }
+        other.style.transition = 'all 0.8s ease-in-out';
+        other.style.pointerEvents = 'none';
       }
     });
 
+    // Xử lý mở rộng project được click
     const rect = item.getBoundingClientRect();
     document.body.style.overflow = 'hidden';
 
     popup.classList.remove('expand-active');
     popup.style.transition = 'none';
-
     popup.style.top = rect.top + 'px';
     popup.style.left = rect.left + 'px';
     popup.style.width = rect.width + 'px';
@@ -148,7 +169,6 @@ items.forEach(item => {
       popup.style.scale = '1';
       popup.style.filter = 'brightness(1)';
 
-      // Chuyển trang sau animation
       if (barbaGoProject) {
         barbaGoProject(pageTo, 1000);
       } else {
