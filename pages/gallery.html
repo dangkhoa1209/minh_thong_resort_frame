@@ -9,10 +9,10 @@
   <link rel="stylesheet" href="../css/pages/gallery.css">
 </head>
 
-<body>
+<body data-barba="wrapper">
   <div id="place-header"></div>
 
-  <div class="container">
+  <div class="container" data-barba="container">
     <div class="title">
       <h1>WHERE ATMOSPHERE MEETS ART</h1>
       <p>
@@ -85,8 +85,14 @@
     <button id="load-more" class="learn-more-button button">Learn More</button>
   </div>
 
+  <!-- move to new page not load -->
+  <script src="../js/plugins/barba/core.js"></script>
+  <script src="../js/plugins/barba/gsap.js"></script>
+  <script src="../js/plugins/barba/index.js"></script>
+
   <script src="../js/plugins/base-path.js"></script>
   <script src="../js/plugins/component-loader.js"></script>
+
   <script src="../js/pages/gallery.js"></script>
 </body>
 

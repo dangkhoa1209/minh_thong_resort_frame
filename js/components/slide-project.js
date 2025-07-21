@@ -29,8 +29,6 @@ const bg = document.getElementById('slideBackground');
 const basePathBackground = getBasePath()
 
 const setBackground = (index) => {
-  console.log('BGindex', index);
-
   bg.style.backgroundImage = `url(${basePathBackground}${images[index]})`;
 };
 
