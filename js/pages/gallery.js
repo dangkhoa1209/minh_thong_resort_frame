@@ -1,45 +1,48 @@
 // Show 6 items first
 const items = document.querySelectorAll('.product-item');
-    const loadMoreBtn = document.getElementById('load-more');
-    let visibleCount = 6;
+const loadMoreBtn = document.getElementById('load-more');
+let visibleCount = 6;
 
-    items.forEach((item, index) => {
-      if (index >= visibleCount) item.style.display = 'none';
-    });
+items.forEach((item, index) => {
+  if (index >= visibleCount) item.style.display = 'none';
+});
 
-    loadMoreBtn.addEventListener('click', () => {
-      const hiddenItems = [...items].slice(visibleCount, visibleCount + 6);
-      hiddenItems.forEach(item => item.style.display = 'flex');
+loadMoreBtn.addEventListener('click', () => {
+  const hiddenItems = [...items].slice(visibleCount, visibleCount + 6);
+  hiddenItems.forEach(item => item.style.display = 'flex');
 
-      visibleCount += hiddenItems.length;
+  visibleCount += hiddenItems.length;
 
-      if (visibleCount >= items.length) {
-        loadMoreBtn.style.display = 'none';
-      }
-    });
+  if (visibleCount >= items.length) {
+    loadMoreBtn.style.display = 'none';
+  }
+});
 
 
 /** open project */
 // const items = document.querySelectorAll('.product-item');
-const barbaGoGallery= window.barbaGo || null;   
+const barbaGoGallery = window.barbaGo || null;
 
 items.forEach(item => {
   const popup = item.querySelector('.image-container');
   let pageTo = popup.dataset.pageTo;
+
+
+
   if (!pageTo) return;
 
   const basePath = getBasePath()
 
-  if(basePath) {
+  if (basePath) {
     pageTo = basePath + pageTo
   }
-  
+
 
   item.addEventListener('click', (e) => {
     e.stopPropagation();
 
     const rect = item.getBoundingClientRect();
-    
+
     document.body.style.overflow = 'hidden';
     popup.classList.remove('expand-active');
     popup.style.transition = 'none';
@@ -71,6 +74,8 @@ items.forEach(item => {
 
       popup.style.scale = '1';
       popup.style.filter = 'brightness(1)';
+
+
 
       if (barbaGoGallery) {
         barbaGoGallery(pageTo, 1000);

@@ -255,7 +255,7 @@
 }
 
 /* Responsive Design */
-@media screen and (max-width: 1024px) {
+@media (max-width: 1024px) {
   .experience-item.active .experience-detail {
     width: 50%;
     padding: 40px;
@@ -321,7 +321,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media  (max-width: 768px) {
   .experience-wrapper {
     flex-direction: column;
     height: auto;
@@ -424,11 +424,11 @@
     right: 15px;
     width: 32px;
     height: 32px;
-    font-size: 18px;
+    font-size: 18px; 
   }
 }
 
-@media screen and (max-width: 480px) {
+@media  (max-width: 480px) {
   .experience-title .title {
     font-size: 32px;
   }

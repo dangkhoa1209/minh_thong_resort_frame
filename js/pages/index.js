@@ -25,3 +25,13 @@ document.querySelectorAll('.faq-item').forEach(faqItem => {
   });
 });
 
+
+ document.querySelectorAll('button[data-href]').forEach(button => {
+    button.addEventListener('click', () => {
+      const url = button.getAttribute('data-href');
+      const pathPage = getBasePath()
+      setTimeout(() => {
+        window.location.href = pathPage + url; 
+      }, 100);
+    });
+  });

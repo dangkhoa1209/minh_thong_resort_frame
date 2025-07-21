@@ -12,7 +12,7 @@
 <body data-barba="wrapper">
   <div id="place-header"></div>
 
-  <div class="container" data-barba="container">
+  <div class="container">
     <div class="title">
       <h1>WHERE ATMOSPHERE MEETS ART</h1>
       <p>
@@ -21,7 +21,7 @@
       </p>
     </div>
 
-    <section class="products px">
+    <section data-barba="container" data-barba-namespace="gallery" class="products px">
       <div class="product-item">
         <div class="image-container" data-page-to="/pages/project/four-seasons-resort-the-nam-hai.html">
           <img src="../assets/images/four-seasons-resort-the-nam-hai/1.webp" class="product-thumbnail" alt="Image 1">
@@ -50,9 +50,8 @@
         </div>
       </div>
       <div class="product-item">
-        <div class="image-container">
-          <img src="../assets/images/binh-an/4.webp" data-page-to="/pages/project/binh-an-village-dalat.html"
-            class="product-thumbnail" alt="Image 4">
+        <div class="image-container" data-page-to="/pages/project/binh-an-village-dalat.html">
+          <img src="../assets/images/binh-an/1.webp" class="product-thumbnail" alt="Image 4">
         </div>
         <div class="product-description">
           <p class="resort-name">RESORT BINH AN VILLAGE</p>
@@ -60,9 +59,8 @@
         </div>
       </div>
       <div class="product-item">
-        <div class="image-container">
-          <img src="../assets/images/ana-mandara/5.webp" data-page-to="/pages/project/ana-mandara-villas-dalat.html"
-            class="product-thumbnail" alt="Image 5">
+        <div class="image-container" data-page-to="/pages/project/ana-mandara-villas-dalat.html">
+          <img src="../assets/images/ana-mandara/5.webp" class="product-thumbnail" alt="Image 5">
         </div>
         <div class="product-description">
           <p class="resort-name">RESORT & SPA ANA MANDARA VILLAS</p>
@@ -71,9 +69,8 @@
       </div>
 
       <div class="product-item">
-        <div class="image-container">
-          <img src="../assets/images/mercure-hotel/1.webp" data-page-to="/pages/project/mercure-hotel-vung-tau.html"
-            class="product-thumbnail" alt="Image 5">
+        <div class="image-container" data-page-to="/pages/project/mercure-hotel-vung-tau.html">
+          <img src="../assets/images/mercure-hotel/1.webp" class="product-thumbnail" alt="Image 5">
         </div>
         <div class="product-description">
           <p class="resort-name">HOTEL MERCURE VUNG TAU</p>
@@ -85,15 +82,17 @@
     <button id="load-more" class="learn-more-button button">Learn More</button>
   </div>
 
-  <!-- move to new page not load -->
-  <script src="../js/plugins/barba/core.js"></script>
-  <script src="../js/plugins/barba/gsap.js"></script>
-  <script src="../js/plugins/barba/index.js"></script>
 
-  <script src="../js/plugins/base-path.js"></script>
-  <script src="../js/plugins/component-loader.js"></script>
-
-  <script src="../js/pages/gallery.js"></script>
 </body>
+
+<!-- move to new page not load -->
+<script src="../js/plugins/barba/core.js"></script>
+<script src="../js/plugins/barba/gsap.js"></script>
+<script src="../js/plugins/barba/index.js"></script>
+
+<script src="../js/plugins/base-path.js"></script>
+<script src="../js/plugins/component-loader.js"></script>
+
+<script src="../js/pages/gallery.js"></script>
 
 </html>

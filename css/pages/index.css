@@ -557,10 +557,13 @@ body {
 
 
 @media (max-width: 1024px) {
-
-
   .introduce-content {
     flex-direction: column;
+  }
+
+  .introduce-images,
+  .introduce-text-block {
+    width: 100%;
   }
 
   .faq-question {
@@ -594,8 +597,6 @@ body {
 }
 
 @media (max-width: 768px) {
-
-
   .faq-item {
     height: auto;
     padding: 16px;
