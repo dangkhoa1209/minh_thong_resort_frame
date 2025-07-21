@@ -264,6 +264,12 @@ body {
 
 }
 
+.project-run-away {
+  opacity: 0;
+  transform: translateY(150vh);
+  transition: all 0.8s ease-in-out;
+  pointer-events: none;
+}
 
 
 /* About Section */

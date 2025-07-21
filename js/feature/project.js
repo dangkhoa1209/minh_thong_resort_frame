@@ -95,14 +95,27 @@ items.forEach(item => {
 
   if (!pageTo) return;
 
-  const basePath = getBasePath()
-
-  if(basePath) {
-    pageTo = basePath + pageTo
-  }
+  const basePath = getBasePath();
+  if (basePath) pageTo = basePath + pageTo;
 
   item.addEventListener('click', (e) => {
     e.stopPropagation();
+
+    const currentIndex = parseInt(item.dataset.index, 10);
+
+    console.log('currentIndex', currentIndex);
+    
+
+    // Chỉ cho các project có index lớn hơn chạy khỏi màn hình
+    items.forEach(other => {
+      const otherIndex = parseInt(other.dataset.index, 10);
+
+      console.log('otherIndex', otherIndex);
+      
+      if (otherIndex > currentIndex) {
+        other.classList.add('project-run-away');
+      }
+    });
 
     const rect = item.getBoundingClientRect();
     document.body.style.overflow = 'hidden';
@@ -117,33 +130,31 @@ items.forEach(item => {
     popup.style.transform = 'translateX(0)';
     popup.style.zIndex = 9999;
 
-    // Lấy scale hiện tại của ảnh
     const img = popup.querySelector('img');
     const computedStyle = window.getComputedStyle(img);
     const currentTransform = computedStyle.transform;
-
-    // Áp lại scale hiện tại để không nhảy về scale(1) ngay lập tức
     img.style.transition = 'none';
     img.style.transform = currentTransform;
 
     void popup.offsetWidth;
 
-    // Animation mở rộng
     requestAnimationFrame(() => {
       popup.style.transition = 'all 0.8s ease-in-out';
       popup.classList.add('expand-active');
 
-      // Reset ảnh về scale(1) mượt
       img.style.transition = 'transform 0.5s ease';
       img.style.transform = 'scale(1)';
 
       popup.style.scale = '1';
       popup.style.filter = 'brightness(1)';
 
+      // Chuyển trang sau animation
       if (barbaGoProject) {
         barbaGoProject(pageTo, 1000);
       } else {
-        window.location.href = pageTo;
+        setTimeout(() => {
+          window.location.href = pageTo;
+        }, 1000);
       }
     });
   });
