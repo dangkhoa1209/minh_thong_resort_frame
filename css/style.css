@@ -48,6 +48,13 @@ body {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent; 
+}
+
+img, p, h1, h2, h3, span, textarea {
+  user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
 }
 
 * {

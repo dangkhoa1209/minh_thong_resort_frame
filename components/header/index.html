@@ -2,12 +2,28 @@
 
 <section class="header px py-small">
     <img src="/assets/svg/logo/logo-pro.svg" class=" logo" alt="">
-    <div class="menu">
+    <div id="header-menu" class="menu">
         <p>
             <span>Menu</span>
         </p>
         <img class="menu-icon" src="/assets/svg/menu-icon.svg" alt="">
     </div>
+
+    <!-- Drawer menu -->
+    <div class="header-drawer">
+        <div class="header-drawer__overlay"></div>
+        <div class="header-drawer__panel">
+            <button class="header-drawer__close">&times;</button>
+            <ul class="footer-menu">
+                <li><a href="/pages/about.html">ABOUT</a></li>
+                <li><a href="/pages/gallery.html">GALLERY</a></li>
+                <li><a href="/pages/experience.html">EXPERIENCES</a></li>
+                <li><a href="/pages/contact.html">CONTACT US</a></li>
+            </ul>
+        </div>
+    </div>
+
+
 </section>
 
 <script src="/js/plugins/base-path.js"></script>
