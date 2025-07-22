@@ -575,6 +575,11 @@ body {
 
 
 @media (max-width: 1024px) {
+
+  .faq-item {
+   height: 100px;
+  }
+
   .introduce-content {
     flex-direction: column;
   }
@@ -609,15 +614,12 @@ body {
 
 @media (max-width: 768px) {
   .faq-item {
-    height: auto;
+   height: 70px;
     padding: 16px;
   }
 
 
-  .faq-answer {
-   
-    max-height: none;
-  }
+ 
 
   .introduce-images {
     width: 100%;
@@ -641,7 +643,7 @@ body {
     padding-bottom: 40px;
   }
 
-  .partner-item{
+  .partner-item {
     width: 140px;
     height: 93px;         /* 140 / 93 ≈ 1.5  */
     margin-right: 24px;

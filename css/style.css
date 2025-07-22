@@ -172,6 +172,32 @@ h2.font-size-58 {
 
 }
 
+@media (max-width: 1280px) {
+  :root {
+    --spacing-x: 33px;
+    --spacing-y: 47px;
+    --spacing-y-small: 33px;
+    --gap: 33px;
+    --gap-80: 53px;
+    --absolute-top: 33px;
+    --absolute-bottom: 33px;
+    --absolute-left: 33px;
+    --absolute-right: 33px;
+    --border-radius: 13px;
+
+    --font-size-title: 47px;
+    --font-size-58: 39px;
+    --font-size-49: 33px;
+    --font-size-45: 30px;
+    --font-size-40: 27px;
+    --font-size-sub-title: 26px;
+    --font-size-30: 20px;
+    --font-size-25: 17px;
+    --font-size-23: 15px;
+  }
+}
+
+
 
 @media (max-width: 1024px) {
   :root {
