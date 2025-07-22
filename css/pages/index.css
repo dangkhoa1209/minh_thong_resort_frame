@@ -58,8 +58,8 @@ body {
 }
 
 .about-content {
-  font-size: 25pt;
-  line-height: 35pt;
+  font-size: var(--font-size-25);
+  line-height:  var(--font-size-35);
   font-weight: 300;
 }
 
@@ -501,7 +501,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 30px;
+  font-size: var(--font-size-30);
   font-weight: 300;
   color: inherit;
   transform: translateY(0);
@@ -523,12 +523,12 @@ body {
   stroke: currentColor;
   transition: opacity 0.5s ease;
   margin-left: auto;
-  width: 30px;
-  height: 30px;
+  width: var(--font-size-30);
+  height: var(--font-size-30);
 }
 
 .faq-answer {
-  font-size: 25px;
+  font-size: var(--font-size-25);
   font-weight: 200;
   color: #d1d5db;
   transform: translateY(10px);
@@ -557,7 +557,7 @@ body {
 
 .introduce-font-sample {
   display: block;
-  font-size: 25px;
+  font-size: var(--font-size-25);
   color: #dc2626;
   font-weight: 300;
   margin-top: 8px;
@@ -575,13 +575,6 @@ body {
     width: 100%;
   }
 
-  .faq-question {
-    font-size: 22px;
-  }
-
-  .faq-answer {
-    font-size: 18px;
-  }
 
   .introduce-text-block {
     padding-top: 20px;
@@ -611,12 +604,9 @@ body {
     padding: 16px;
   }
 
-  .faq-question {
-    font-size: 20px;
-  }
 
   .faq-answer {
-    font-size: 16px;
+   
     max-height: none;
   }
 
@@ -652,52 +642,6 @@ body {
 
 
 
-/* Contact Section */
-.contact-content {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-}
-
-.contact-info,
-.contact-form {
-  flex: 1;
-  min-width: 300px;
-}
-
-.contact-item {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 30px;
-}
-
-.contact-item i {
-  font-size: 1.5em;
-  color: #359381;
-  margin-right: 15px;
-  margin-top: 5px;
-}
-
-.contact-item h3 {
-  font-size: 1.2em;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-.contact-item p {
-  color: #666;
-}
-
-.contact-item a {
-  color: #359381;
-  text-decoration: none;
-  transition: color 0.5s;
-}
-
-.contact-item a:hover {
-  color: #2a7567;
-  text-decoration: underline;
-}
 
 .form-group {
   margin-bottom: 20px;
