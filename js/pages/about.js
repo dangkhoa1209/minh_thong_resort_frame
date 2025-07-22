@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (image && text) {
         const imageHeight = image.offsetHeight;
-        text.style.minHeight = imageHeight + "px";
+         text.style.minHeight = imageHeight + "px";
       }
     });
   }

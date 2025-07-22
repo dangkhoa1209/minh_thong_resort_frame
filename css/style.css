@@ -33,6 +33,7 @@
   --font-size-49: 49px;
   --font-size-58: 58px;
   --font-size-30: 30px;
+  --font-size-40: 40px;
 }
 
 
@@ -48,10 +49,16 @@ body {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  -webkit-tap-highlight-color: transparent; 
+  -webkit-tap-highlight-color: transparent;
 }
 
-img, p, h1, h2, h3, span, textarea {
+img,
+p,
+h1,
+h2,
+h3,
+span,
+textarea {
   user-select: text;
   -webkit-user-select: text;
   -ms-user-select: text;
@@ -185,6 +192,7 @@ h2.font-size-58 {
     --font-size-49: 40px;
     --font-size-58: 48px;
     --font-size-30: 26px;
+    --font-size-40: 21px;
   }
 
   .button {
@@ -214,7 +222,7 @@ h2.font-size-58 {
     --font-size-49: 32px;
     --font-size-58: 38px;
     --font-size-30: 22px;
-
+    --font-size-40: 16px;
   }
 
   .button {

@@ -2,7 +2,6 @@ body {
   background-color: #0f0f0f !important;
 }
 
-
 /* page setup */
 .container {
   max-width: 1920px;
@@ -38,7 +37,6 @@ body {
 }
 
 .about__info {
-  min-width: 400px;
   flex-shrink: 0;
   width: 35%;
 }
@@ -78,7 +76,6 @@ body {
   font-size: var(--font-size-30);
   font-weight: 400;
   line-height: var(--font-size-30);
-  text-align: center;
 }
 
 /* Team Section */
@@ -92,7 +89,7 @@ body {
 .team .title {
   font-size: var(--font-size-45);
   font-weight: 600;
-  margin-bottom: 60px;
+  margin-bottom: var(--spacing-y);
   text-transform: uppercase;
   letter-spacing: 2px;
   color: var(--main-color-white);
@@ -182,9 +179,9 @@ body {
 
 /* Title & Subtitle */
 .production__title {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-heading);
   font-weight: 600;
-  font-size: 40px;
+  font-size: var(--font-size-40);
   margin-bottom: 20px;
 }
 
@@ -199,7 +196,7 @@ body {
 
 .production__subtitle {
   font-family: 'Lato', sans-serif;
-  font-size: 25px;
+  font-size: var(--font-size-25);
   margin-bottom: 30px;
   font-weight: 400;
 }
@@ -224,9 +221,10 @@ body {
 }
 
 .production__image img {
-  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: var(--border-radius);
+  object-position: center;
+ border-radius: var(--border-radius);
   display: block;
   transform: scale(1.05);
   transition: all 0.4s ease;
@@ -253,12 +251,29 @@ body {
   }
 }
 
+@media (max-width: 1280px) {
+    .about__container {
+    gap: 50px;
+  }
+  .about__info {
+    width: 30%;
+  }
+}
 
 /* Responsive: tablet (2 cột) */
 @media (max-width: 1024px) {
   .team__container {
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
+  }
+
+  .about__container {
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  .about__info {
+    width: 100%;
   }
 }
 
@@ -275,5 +290,9 @@ body {
 
   .member .role {
     font-size: var(--font-size-18);
+  }
+
+    .about__container {
+    gap: 30px;
   }
 }
