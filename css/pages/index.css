@@ -565,6 +565,15 @@ body {
 
 
 
+@media (max-width: 1280px) {
+  .faq-item {
+   height: 110px;
+  }
+}
+
+
+
+
 @media (max-width: 1024px) {
   .introduce-content {
     flex-direction: column;
