@@ -5,6 +5,12 @@ let visibleCount = 6;
 
 items.forEach((item, index) => {
   if (index >= visibleCount) item.style.display = 'none';
+  console.log('index', index)
+
+  if(index >= visibleCount  - 1 ) {
+     loadMoreBtn.style.display = 'none';
+  }
+  
 });
 
 loadMoreBtn.addEventListener('click', () => {

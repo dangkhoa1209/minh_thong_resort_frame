@@ -140,6 +140,10 @@
   border-radius: 0px;
 }
 
+.load-more-button {
+  margin-top: var(--spacing-y);
+}
+
 
 
 @media (max-width: 768px) {
