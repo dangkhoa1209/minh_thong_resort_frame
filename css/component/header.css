@@ -15,7 +15,7 @@
 
 .header .logo {
   height: 24px;
-  fill: white;
+  fill: var(--main-color-white);
   margin: 0;
   padding: 0;
   cursor: pointer;
@@ -31,10 +31,22 @@
   line-height: 20px;
 }
 
+.header.dark  .menu{
+  color: var(--main-color-black);
+}
+
+.header.dark  .logo{
+  fill: var(--main-color-black);
+}
+
 .header .menu-icon {
   width: 24px;
   height: 24px;
   filter: invert(1);
+}
+
+.header.dark  .menu-icon {
+  filter: invert(0);
 }
 
 

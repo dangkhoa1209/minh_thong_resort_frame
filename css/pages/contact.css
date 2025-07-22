@@ -1,0 +1,127 @@
+.contact-container {
+  max-width: 1920px;
+  margin: auto;
+  margin: 150px;
+}
+
+.contact-container__title {
+  text-align: center;
+  font-weight: 600;
+  font-size: var(--font-size-58);
+  margin-bottom: 40px;
+}
+
+/* Bố cục 2 cột */
+.contact-container__content {
+  display: flex;
+  gap: var(--gap);
+  flex-wrap: wrap;
+}
+
+/* Mỗi cột chiếm đều */
+.contact-container__text,
+.contact-container__form {
+  flex: 1;
+  min-width: 300px; /* tránh vỡ layout */
+}
+
+.contact-container__subtitle {
+  font-size: var(--font-size-30);
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.contact-container__description {
+  font-size: var(--font-size-25);
+  font-weight: 300;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  color: #222;
+}
+
+.contact-container__info {
+  margin-top: 170px;
+}
+
+/* Thông tin liên hệ */
+.contact-container__info-title {
+  font-size:  var(--font-size-30);
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.contact-container__info-list {
+  padding: 0;
+  margin: 0;
+}
+
+.contact-container__info-item {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size:  var(--font-size-25);
+  margin-bottom: 16px;
+}
+
+.contact-container__info-item {
+  /* font-weight: 300; */
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--font-size-25);
+  margin-bottom: 16px;
+}
+
+/* Icon */
+.contact-container__icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: inline-block;
+}
+
+/* Form */
+.contact-container__form {
+  width: 775px;
+  max-width: 100%;
+}
+
+.contact-container__input,
+.contact-container__textarea {
+  width: 100%;
+  font-size:  var(--font-size-25);
+  font-weight: 400;
+  padding: 20px 30px;
+  border: 1px solid #ccc;
+  border-radius: 47px;
+  margin-bottom: 20px;
+  outline: none;
+  height: 94px;
+}
+
+
+.contact-container__textarea {
+  min-height: 300px;
+  resize: none; 
+  overflow-y: auto;
+}
+
+.contact-container__button {
+  display: block;
+  width: 100%;
+  height: 70px;
+  font-size: var(--font-size-23);
+  font-weight: 500;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 35px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.contact-container__button:hover {
+  background: #333;
+}
