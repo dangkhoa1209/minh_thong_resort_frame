@@ -182,6 +182,36 @@
   gap: 10px;
 }
 
+#footer-form-status {
+  margin-top: 16px;
+  font-size: var(--font-size-18);
+  line-height: 1.4;
+  min-height: 24px;  /* để giữ chỗ khi chưa có text */
+  transition: color 0.3s ease, opacity 0.3s ease;
+  opacity: 0; 
+   padding: 10px;
+  /* mặc định ẩn, hiện khi có trạng thái */
+}
+
+/* Khi hiển thị */
+#footer-form-status.active {
+  opacity: 1;
+}
+
+/* Trạng thái màu */
+#footer-form-status.loading {
+  color: #888;
+}
+
+#footer-form-status.success {
+  color: #28a745; /* xanh lá */
+}
+
+#footer-form-status.error {
+  color: #dc3545; /* đỏ */
+}
+
+
 /* Tablet (max-width: 1024px) */
 @media (max-width: 1024px) {
   .footer {

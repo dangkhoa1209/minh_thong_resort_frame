@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     status.textContent = "Sending...";
     status.style.color = "#888";
    status.classList.add('active');
-    console.log('status', status);
+    
     
 
     try {
