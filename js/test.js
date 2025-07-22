@@ -105,8 +105,8 @@ items.forEach(item => {
           <button class="close-btn">X</button>
           <div class="popup-content">
             <p><b>Chi tiết nè</b></p>
-            <img src="https://picsum.photos/522/693?random=11" />
-            <img src="https://picsum.photos/522/693?random=12" />
+            <img loading="lazy" src="https://picsum.photos/522/693?random=11" />
+            <img loading="lazy" src="https://picsum.photos/522/693?random=12" />
           </div>
         `);
 
@@ -142,7 +142,7 @@ function closePopup(item, popup) {
 
   setTimeout(() => {
     // Reset lại nội dung (chỉ giữ ảnh preview nếu muốn)
-    popup.innerHTML = `<img src="https://picsum.photos/522/693?random=1" class="preview-image">`;
+    popup.innerHTML = `<img loading="lazy" src="https://picsum.photos/522/693?random=1" class="preview-image">`;
     popup.removeAttribute('style');
   }, 400);
 }
