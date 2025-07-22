@@ -34,7 +34,6 @@ const setBackground = (index) => {
 
 const goToProject = (index) => {
   const basePath = getBasePath()
-  // console.log('${basePath}/${pages[index]}', `${basePath}${pages[index]}`);
    window.location.href = `${basePath}${pages[index]}`;
 };
 

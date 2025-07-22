@@ -136,6 +136,7 @@ body {
   font-size: var(--font-size-25);
   font-weight: 600;
   color: var(--main-color-white);
+
 }
 
 .member .role {
@@ -264,7 +265,7 @@ body {
 @media (max-width: 1024px) {
   .team__container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
+    gap: 50px;
   }
 
   .about__container {
@@ -281,17 +282,8 @@ body {
 @media (max-width: 768px) {
   .team__container {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 40px;
   }
-
-  .member .name {
-    font-size: var(--font-size-23);
-  }
-
-  .member .role {
-    font-size: var(--font-size-18);
-  }
-
     .about__container {
     gap: 30px;
   }

@@ -3,7 +3,6 @@
 try {
   document.querySelectorAll('a[href^="/"]').forEach(a => {
   const basePath = getBasePath()
-  console.log(a);
   
   const rawHref = a.getAttribute('href');
   a.href = basePath + rawHref;

@@ -13,8 +13,6 @@ window.addEventListener('scroll', function () {
 
 const productsContainer = document.querySelector('.products');
 
-console.log(productsContainer);
-
 const products = document.querySelectorAll('.product')
 productsContainer.style.setProperty('--products-count', products.length)
 productsContainer.style.setProperty(
@@ -29,8 +27,6 @@ Array.from(products).forEach((product, index) => {
         return
     }
     const toScale = 1 - (products.length - 1 - index) * 0.05
-
-    console.log('toScale', toScale);
     
     const nextProduct = products[index + 1]
     const productInner = product.querySelector('.product__inner')
