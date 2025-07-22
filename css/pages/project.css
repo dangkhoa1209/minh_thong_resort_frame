@@ -27,7 +27,7 @@
 }
 
 
-.about__header {
+/* .about__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -59,7 +59,7 @@
   width: 20pt;
   height: 20pt;
   filter: invert(0);
-}
+} */
 
 .about__container {
   display: flex;
