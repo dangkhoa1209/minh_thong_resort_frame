@@ -83,7 +83,7 @@
 
 .about__title--bold {
   font-weight: 600;
-  font-size: var(--font-size-title);
+  font-size: var(--font-size-70);
 }
 
 .about__meta {

@@ -27,6 +27,7 @@
   --border-radius: 20px;
   --line-height: 1.54;
 
+   --font-size-70: 70px;
    --font-size-title: 60px;
   --font-size-58: 58px;
   --font-size-49: 49px;
@@ -200,6 +201,7 @@ h2.font-size-58 {
     --absolute-right: 33px;
     --border-radius: 13px;
   --spacing-y-large: 80px;
+    --font-size-70: 60px;
 
     --font-size-title: 47px;
     --font-size-58: 39px;
@@ -228,7 +230,8 @@ h2.font-size-58 {
     --absolute-left: 30px;
     --absolute-right: 30px;
     --border-radius: 12px;
-  
+      --font-size-70: 50px;
+
       --font-size-title: 37px;
     --font-size-58: 31px;
     --font-size-49: 26px;
@@ -262,6 +265,7 @@ h2.font-size-58 {
     --absolute-right: 16px;
     --border-radius: 12px;
     --spacing-y-large: 50px;
+    --font-size-70: 40px;
 
     
    --font-size-title: 28px;

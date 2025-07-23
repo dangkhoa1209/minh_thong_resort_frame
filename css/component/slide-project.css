@@ -32,7 +32,7 @@
 }
 
 .slide-projects .title {
-  font-size: 45pt;
+  font-size: var(--font-size-45);
   z-index: 10;
   text-transform: uppercase;
   text-align: center;
@@ -93,10 +93,6 @@
   .swiper-slide-prev,
   .swiper-slide-next {
     width: 200px;
-  }
-
-  .slide-projects .title {
-    font-size: 24px;
   }
 
   .slide-projects .view-more {
