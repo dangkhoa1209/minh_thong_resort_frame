@@ -361,7 +361,7 @@ body {
 }
 
 .introduce-header p {
-  font-size: var(--font-size-title);
+  font-size: var(--font-size-45);
   color: var(--main-color-black);
   text-transform: uppercase;
   font-weight: 600;
@@ -395,7 +395,7 @@ body {
 
 /* Mỗi item */
 .partner-item {
-  flex: 0 0 18%; /* 5 logo vừa đủ 90% (còn 10% cho gap) */
+  flex: 0 0 15%; /* 5 logo vừa đủ 90% (còn 10% cho gap) */
   display: flex;
   justify-content: center;
   align-items: center;

@@ -40,9 +40,15 @@
 }
 
 
+.font-italic, .italic {
+  font-style: italic;
+}
 .font-style-montserrat {
   font-family: 'Montserrat', sans-serif;
+ 
 }
+
+
 
 body {
   background: var(--main-color-white);

@@ -1,11 +1,15 @@
 .footer {
   background-color: var(--main-color-black);
-  font-family: var(--font-heading);
+  /* font-family: var(--font-heading); */
   max-width: var(--page-max-width);
   margin: auto;
   color: var(--main-color-white);
   padding: 60px 70px;
   box-sizing: border-box;
+}
+
+.footer, .footer * {
+  font-family: var(--font-heading) !important;
 }
 
 .footer-container {
@@ -36,7 +40,7 @@
 
 .footer-menu li {
   font-size: var(--font-size-sub-title);
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 10px;
 }
 
@@ -68,7 +72,7 @@
 /* Address & form */
 .footer-heading {
   font-size:  var(--font-size-25);
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 30px;
 }
 
@@ -181,10 +185,6 @@
   font-weight: 500;
   gap: 10px;
   
-}
-
-.footer-bottom p {
-font-family: var(--font-heading) ;
 }
 
 #footer-form-status {

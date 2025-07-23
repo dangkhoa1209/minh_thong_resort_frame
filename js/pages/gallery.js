@@ -1,4 +1,5 @@
 loadComponent('../components/header/index.html', 'place-header', 'dark')
+loadComponent('../components/footer/index.html', 'place-footer', 'dark')
 
 
 // Show 6 items first
@@ -10,9 +11,6 @@ items.forEach((item, index) => {
   if (index >= visibleCount) item.style.display = 'none';
   console.log('index', index)
 
-  if(index >= visibleCount  - 1 ) {
-     loadMoreBtn.style.display = 'none';
-  }
   
 });
 
