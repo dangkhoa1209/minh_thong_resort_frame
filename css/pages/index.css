@@ -528,7 +528,7 @@ body {
 
 .faq-answer {
   font-size: var(--font-size-25);
-  font-weight: 200;
+  font-weight: 300;
   color: #d1d5db;
   transform: translateY(10px);
   opacity: 0;
