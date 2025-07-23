@@ -1,7 +1,7 @@
 .contact-container {
   max-width: 1920px;
   margin: auto;
-  margin-top: 120px;
+  /* margin-top: 120px; */
 }
 
 .contact-container__title {
@@ -144,7 +144,7 @@
 /* ≤1280px */
 @media (max-width: 1280px) {
   .contact-container {
-    margin: 100px 60px;
+    /* margin: 100px 60px; */
   }
 
   .contact-container__input,
@@ -169,7 +169,7 @@
 /* ≤1024px */
 @media (max-width: 1024px) {
   .contact-container {
-    margin: 80px 40px;
+    /* margin: 80px 40px; */
   }
 
    .contact-container__input,
@@ -195,7 +195,7 @@
 /* ≤678px (mobile) */
 @media (max-width: 678px) {
   .contact-container {
-    margin: 60px 20px;
+    /* margin: 60px 20px; */
   }
 
    .contact-container__input,

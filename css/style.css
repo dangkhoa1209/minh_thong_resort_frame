@@ -15,7 +15,7 @@
   --font-body: 'Lato', sans-serif;
   --spacing-x: 50px;
   --spacing-y: 70px;
-  --spacing-y-large: 80px;
+  --spacing-y-large: 120px;
   --spacing-y-small: 50px;
   --gap: 50px;
   --gap-80: 80px;
@@ -36,6 +36,7 @@
   --font-size-30: 30px;
   --font-size-25: 25px;
   --font-size-23: 23px;
+  --font-size-15: 15px;
 }
 
 
@@ -192,6 +193,7 @@ h2.font-size-58 {
     --absolute-left: 33px;
     --absolute-right: 33px;
     --border-radius: 13px;
+  --spacing-y-large: 80px;
 
     --font-size-title: 47px;
     --font-size-58: 39px;
@@ -202,6 +204,7 @@ h2.font-size-58 {
     --font-size-30: 20px;
     --font-size-25: 17px;
     --font-size-23: 15px;
+
   }
 }
 
@@ -229,6 +232,8 @@ h2.font-size-58 {
     --font-size-30: 16px;
     --font-size-25: 13px;
     --font-size-23: 12px;
+    --spacing-y-large: 70px;
+
   }
 
   .button {
@@ -250,6 +255,8 @@ h2.font-size-58 {
     --absolute-left: 16px;
     --absolute-right: 16px;
     --border-radius: 12px;
+    --spacing-y-large: 50px;
+
     
    --font-size-title: 28px;
     --font-size-58: 23px;
