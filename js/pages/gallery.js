@@ -1,3 +1,6 @@
+loadComponent('../components/header/index.html', 'place-header', 'dark')
+
+
 // Show 6 items first
 const items = document.querySelectorAll('.product-item');
 const loadMoreBtn = document.getElementById('load-more');

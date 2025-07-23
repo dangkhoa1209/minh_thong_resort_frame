@@ -15,6 +15,7 @@
   --font-body: 'Lato', sans-serif;
   --spacing-x: 50px;
   --spacing-y: 70px;
+  --spacing-y-large: 80px;
   --spacing-y-small: 50px;
   --gap: 50px;
   --gap-80: 80px;
@@ -93,6 +94,11 @@ textarea {
   padding-bottom: var(--spacing-y);
 }
 
+.py-xl {
+  padding-top: var(--spacing-y-large);
+  padding-bottom: var(--spacing-y-large);
+}
+
 .pt {
   padding-top: var(--spacing-y);
 }
@@ -140,12 +146,14 @@ h2.font-size-58 {
   padding: 0 32px;
   font-size: var(--font-size-23);
   color: var(--main-color-white);
-  border: 2px solid var(--main-color-white);
+  border: 1px solid var(--main-color-white);
   background-color: transparent;
   border-radius: 9999px;
   text-decoration: none;
   transition: all 0.3s ease;
   white-space: nowrap;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-23);
 }
 
 .button:hover {
@@ -224,7 +232,7 @@ h2.font-size-58 {
   }
 
   .button {
-    height: 56px;
+    height: 46px;
     padding: 0 24px;
   }
 }
@@ -255,7 +263,7 @@ h2.font-size-58 {
   }
 
   .button {
-    height: 45px;
+    height: 38px;
     padding: 0 8px;
   }
 }
