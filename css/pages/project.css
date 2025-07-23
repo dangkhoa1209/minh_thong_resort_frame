@@ -67,7 +67,6 @@
 }
 
 .about__info {
-  min-width: 400px;
   flex-shrink: 0;
 }
 
