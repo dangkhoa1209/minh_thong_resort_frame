@@ -46,14 +46,22 @@
   justify-content: center;    /* Canh giữa theo chiều ngang */
 }
 
-.experience-image-box img {
-  /* max-width: 100%;            */
+/* .experience-image-box img {
   max-height: 100%;
-  object-fit: contain;        /* Giữ nguyên tỉ lệ, không cắt */
-  object-position: center;    /* Đảm bảo ảnh nằm giữa */
+  object-fit: contain;       
+  object-position: center;
   display: block;
   opacity: 0.8;
   transition: opacity 0.4s ease;
+} */
+
+.experience-image-box img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;       
+  object-position: center;    
+  display: block;
+  opacity: 0.8;
 }
 
 .experience-title {
@@ -178,8 +186,15 @@
 .experience-detail .coverage {
   text-align: left;
   font-size: var(--font-size-16);
-  list-style-type: none;
   padding: 0;
+  list-style: disc;
+   padding-left: 20px;
+}
+
+.experience-detail .coverage li {
+  list-style-position: outside;
+   padding-left: 5px;
+   text-indent: -1em;
 }
 
 .experience-detail .request-btn {
@@ -222,35 +237,47 @@
 
 .experience-wrapper.open .experience-item:not(.active) {
   flex: 0.5;
-  transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease;
+  /* transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease; */
 }
 
 .close-btn {
   position: absolute;
-  bottom: 20px; /* Moved to bottom-right */
+  bottom: 20px;
   right: 20px;
-  width: 40px; /* Larger size for better visibility */
-  height: 40px;
-  background: #fff;
-  border: 2px solid #000; /* Added border for style */
-  border-radius: 50%; /* Circular button */
-  font-size: 24px; /* Larger icon */
-  color: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: var(--main-color-white);
+  font-size: 40px;
+  line-height: 1;
   cursor: pointer;
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
   z-index: 10;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
 }
 
-.close-btn:hover {
-  background: #000; /* Invert colors on hover */
-  color: #fff;
-  transform: scale(1.1); /* Slight scale effect */
+.close-btn:focus,
+.close-btn:active {
+  outline: none;
+  box-shadow: none;
 }
+
+.close-btn::before {
+  content: "×";
+  display: block;
+  font-size: 50px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Hiệu ứng hover */
+.close-btn:hover::before {
+  transform: rotate(90deg) scale(1.2);  /* xoay 90 độ và phóng to */
+  
+}
+
 
 .experience-item.active .close-btn {
   opacity: 1;
@@ -305,11 +332,11 @@
     padding: 12px 18px;
   }
 
-  .close-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 20px;
-  }
+  .close-btn::before {
+
+  font-size: 40px;
+ 
+}
 }
 
 /* Responsive Design */
@@ -344,11 +371,11 @@
     padding: 12px 18px;
   }
 
-  .close-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 20px;
-  }
+  .close-btn::before {
+
+  font-size: 40px;
+ 
+}
 }
 
 @media  (max-width: 768px) {
@@ -411,39 +438,11 @@
 }
 
 
-  .close-btn {
-    bottom: 15px;
-    right: 15px;
-    width: 32px;
-    height: 32px;
-    font-size: 18px; 
-  }
+ .close-btn::before {
+  color: var(--main-color-black);
+  font-size: 40px;
+ 
 }
 
-@media  (max-width: 480px) {
 
-
-  .experience-detail .coverage {
-    font-size: 10pt;
-  }
-
-  .experience-detail .request-btn {
-    padding: 8px 14px;
-  }
-
-  .experience-item.active .experience-detail {
-    padding: 20px;
-  }
-
-  .experience-item.active .experience-image {
-    height: 200px;
-  }
-
-  .close-btn {
-    bottom: 10px;
-    right: 10px;
-    width: 28px;
-    height: 28px;
-    font-size: 16px;
-  }
 }
