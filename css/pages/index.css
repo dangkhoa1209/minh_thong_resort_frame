@@ -29,38 +29,39 @@ body {
  width: 100%;
 }
 
-/* Nền (scale 1.1 → 1) */
 .banner__img.gb {
   z-index: -2;
-  animation: nonbgAppear 0.8s ease-in-out ;
+  transform: scale(1.3) translateY(14%);
+  animation: nonbgAppear 0.8s ease-in-out;
 }
 
 /* Foreground (trượt từ -50px → 0) */
 .banner__img.nonbg {
   z-index: 0;
+   transform: scale(1.3) translateY(14%);
   animation: scaleUp 0.8s ease-in-out;
 }
 
 /* Logo (trượt từ dưới lên + bounce) */
 .banner__img.logo {
-  width: 70%;
+   width: 70%;
   height: auto;
-  top: 27.5%;
+  top: 43%;
   left: 50%;
-  transform: translate(-50%, -50%);
   z-index: -1;
-  animation: logoBounceUp 1.5s ease-in-out;
+  transform: translate(-50%, -50%);
+   animation: logoBounceUp 1.5s ease-in-out;
 }
 
 /* Keyframes */
 @keyframes scaleUp {
-  from {  transform: scale(1.1); }
-  to   {  transform: scale(1); }
+  from {  transform: scale(1.4) translateY(14%); }
+  to   {  transform:scale(1.3) translateY(14%); }
 }
 
 @keyframes nonbgAppear {
-  from {  transform: translateY(50px) scale(1.1);; }
-  to   {   transform: translateY(0) scale(1);}
+  from {  transform:  scale(1.4) translateY(14%); }
+  to   {   transform: scale(1.3) translateY(14%);}
 }
 
 /* Logo bounce: trượt lên + nảy nhẹ */

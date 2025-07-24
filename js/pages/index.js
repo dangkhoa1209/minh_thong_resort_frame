@@ -47,10 +47,17 @@ logo.addEventListener('animationend', () => {
 });
 
 window.addEventListener('scroll', () => {
-  if (!logo.classList.contains('animation-done')) return; // chưa xong animation thì bỏ qua
+  if (!logo.classList.contains('animation-done')) return;
+
   const scrollY = window.scrollY;
-  bg.style.transform = `translateY(${scrollY * 0.3}px)`;
-  nonbg.style.transform = `translateY(${scrollY * -0.1}px)`;
-  logo.style.transform = `translate(-50%, calc(-50% + ${scrollY * 0.8}px)) scale(1)`;
-  
+
+  const maxPercent = 14; // giới hạn ±10%
+  const bgOffsetPercent = Math.min(scrollY * 0.05, maxPercent);     // nền đi xuống
+  const nonbgOffsetPercent = Math.max(scrollY * -0.02, -maxPercent); // foreground đi lên
+
+  // Giữ nguyên scale 1.3, chỉ cộng thêm translateY
+  bg.style.transform = `scale(1.3) translateY(${14 + bgOffsetPercent}%)`;
+  nonbg.style.transform = `scale(1.3) translateY(${14 + nonbgOffsetPercent}%)`;
+
+  logo.style.transform = `translate(-50%, calc(-50% + ${scrollY * 0.8}px))`;
 });
