@@ -3,13 +3,14 @@ body {
 }
 
 .container {
-  max-width: 1920px;
+  max-width: var(--max-width-page);
   margin: auto;
 }
 
 .banner {
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 .header-about {
@@ -101,20 +102,17 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  aspect-ratio: 1920 / 1080;
   overflow: hidden;
-  padding-top: 80px;
+  padding-top: 0; /* bỏ padding nếu không cần */
 }
 
-.banner-box img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  pointer-events: none;
-  object-fit: cover;
+.banner-box .img {
+  display: block;
+  width: 100%;       
+  height: auto;    
+  object-fit: contain;
+  position: relative;
 }
-
 
 /* Fallback cho trình duyệt không hỗ trợ aspect-ratio */
 @supports not (aspect-ratio: 1366 / 778) {
@@ -172,7 +170,7 @@ body {
 .projects {
   display: block;
   width: 100%;
-  max-width: 1920px;
+  max-width: var(--max-width-page);
   width: 100%;
   margin: 0 auto;
 }
@@ -283,7 +281,7 @@ body {
 }
 
 .container {
-  max-width: 1920px;
+  max-width: var(--max-width-page);
   margin: 0 auto;
 }
 
@@ -347,7 +345,7 @@ body {
 
 /* Introduce */
 #introduce {
-  max-width: 1920px;
+  max-width: var(--max-width-page);
   width: 100%;
   margin: 0 auto;
   background-color: var(--main-color-white);

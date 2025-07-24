@@ -1,5 +1,5 @@
 .header {
-  max-width: 1920px;
+  max-width: var(--max-width-page);
   width: 100%;
   margin: 0 auto;
   position: absolute;
