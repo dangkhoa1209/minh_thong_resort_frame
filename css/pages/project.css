@@ -26,44 +26,9 @@
   width: 100%;
 }
 
-
-/* .about__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 50px;
-  z-index: 10;
-}
-
-.about__header__logo {
-  font-size: 20pt;
-  color: #359381;
-  margin: 0;
-  padding: 0;
-  pointer-events: none;
-}
-
-.about__header__menu {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: black;
-}
-
-
-.about__header__menu span {
-  text-transform: uppercase;
-}
-
-.about__header__menu-icon {
-  width: 20pt;
-  height: 20pt;
-  filter: invert(0);
-} */
-
 .about__container {
   display: flex;
-  gap: 150px;
+  gap: 100px;
 }
 
 .about__info {
@@ -82,8 +47,13 @@
 
 .about__title--bold {
   font-weight: 600;
+  font-size: var(--font-size-title);
+}
+
+.about__title--bold.the-nam-hai {
   font-size: var(--font-size-70);
 }
+
 
 .about__meta {
   margin-top: 20px;
@@ -197,6 +167,20 @@
   margin-top: 70px;
 }
 
+
+
+@media (max-width: 1280px) {
+   .about__container {
+    gap: 70px;
+  }
+
+ .about__title--bold.the-nam-hai {
+  font-size: 50px;
+} 
+}
+
+
+
 @media (max-width: 1024px) {
   .about__container {
     flex-direction: column;
@@ -208,6 +192,10 @@
   .about__container {
     gap: 30px;
   }
+
+   .about__title--bold.the-nam-hai {
+  font-size: 43px;
+} 
 }
 
 
