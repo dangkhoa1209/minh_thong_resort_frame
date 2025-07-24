@@ -11,7 +11,7 @@
   --main-color: #f9f9f9;
   --main-color-white: #f9f9f9;
   --main-color-black: #0f0f0f;
-  --font-heading: 'Montserrat', sans-serif;
+  --font-heading: 'Montserrat', 'Lato', sans-serif;
   --font-body: 'Lato', sans-serif;
   --spacing-x: 50px;
   --spacing-y: 70px;
@@ -48,7 +48,7 @@
 }
 
 .font-style-montserrat {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', 'Lato', sans-serif;
 
 }
 

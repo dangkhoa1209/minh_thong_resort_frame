@@ -4,6 +4,10 @@
   /* margin-top: 120px; */
 }
 
+.contact-container,
+contact-container * {
+  font-family: var(--font-heading) !important;
+}
 .contact-container__title {
   text-align: center;
   font-weight: 600;
