@@ -2,7 +2,7 @@
   max-width: var(--max-width-page);
   width: 100%;
   margin: 0 auto;
-  position: absolute;
+ position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -11,6 +11,11 @@
   justify-content: space-between;
   align-items: center;
   z-index: 10;
+   transition: transform 0.4s ease-in-out;
+}
+
+.header.hide {
+  transform: translateY(-150%);
 }
 
 .header .logo-dark {
