@@ -26,9 +26,8 @@
   --absolute-right: 50px;
   --border-radius: 20px;
   --line-height: 1.54;
-
-   --font-size-70: 70px;
-   --font-size-title: 60px;
+  --font-size-70: 70px;
+  --font-size-title: 60px;
   --font-size-58: 58px;
   --font-size-49: 49px;
   --font-size-45: 45px;
@@ -41,12 +40,14 @@
 }
 
 
-.font-italic, .italic {
+.font-italic,
+.italic {
   font-style: italic;
 }
+
 .font-style-montserrat {
   font-family: 'Montserrat', sans-serif;
- 
+
 }
 
 
@@ -200,18 +201,18 @@ h2.font-size-58 {
     --absolute-left: 33px;
     --absolute-right: 33px;
     --border-radius: 13px;
-  --spacing-y-large: 80px;
+    --spacing-y-large: 80px;
     --font-size-70: 60px;
-
     --font-size-title: 47px;
-    --font-size-58: 39px;
-    --font-size-49: 33px;
-    --font-size-45: 30px;
-    --font-size-40: 27px;
-    --font-size-sub-title: 26px;
-    --font-size-30: 20px;
-    --font-size-25: 17px;
-    --font-size-23: 15px;
+    --font-size-58: 42px;
+    --font-size-49: 36px;
+    --font-size-45: 33px;
+    --font-size-40: 30px;
+    --font-size-sub-title: 28px;
+    --font-size-30: 22px;
+    --font-size-25: 19px;
+    --font-size-23: 18px;
+    --font-size-15: 13px;
 
   }
 }
@@ -223,6 +224,7 @@ h2.font-size-58 {
     --spacing-x: 30px;
     --spacing-y: 50px;
     --spacing-y-small: 30px;
+    --spacing-y-large: 70px;
     --gap: 30px;
     --gap-80: 60px;
     --absolute-top: 30px;
@@ -230,18 +232,18 @@ h2.font-size-58 {
     --absolute-left: 30px;
     --absolute-right: 30px;
     --border-radius: 12px;
-      --font-size-70: 50px;
+    --font-size-70: 50px;
+    --font-size-title: 37px;
+    --font-size-58: 42px;
+    --font-size-49: 36px;
+    --font-size-45: 33px;
+    --font-size-40: 30px;
+    --font-size-sub-title: 28px;
+    --font-size-30: 22px;
+    --font-size-25: 19px;
+    --font-size-23: 18px;
+    --font-size-15: 13px;
 
-      --font-size-title: 37px;
-    --font-size-58: 31px;
-    --font-size-49: 26px;
-    --font-size-45: 24px;
-    --font-size-40: 21px;
-    --font-size-sub-title: 21px;
-    --font-size-30: 16px;
-    --font-size-25: 13px;
-    --font-size-23: 12px;
-    --spacing-y-large: 70px;
 
   }
 
@@ -266,17 +268,16 @@ h2.font-size-58 {
     --border-radius: 12px;
     --spacing-y-large: 50px;
     --font-size-70: 40px;
-
-    
-   --font-size-title: 28px;
-    --font-size-58: 23px;
-    --font-size-49: 20px;
-    --font-size-45: 18px;
-    --font-size-40: 16px;
-    --font-size-sub-title: 16px;
-    --font-size-30: 12px;
-    --font-size-25: 10px;
-    --font-size-23: 9px;
+    --font-size-title: 28px;
+    --font-size-58: 34px;
+    --font-size-49: 30px;
+    --font-size-45: 28px;
+    --font-size-40: 26px;
+    --font-size-sub-title: 24px;
+    --font-size-30: 18px;
+    --font-size-25: 16px;
+    --font-size-23: 15px;
+    --font-size-15: 12px;
   }
 
   .button {

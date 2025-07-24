@@ -63,21 +63,21 @@
   color: white;
   transition: all 0.6s ease;
   white-space: nowrap;
-  top: 40%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%);
+  transform: translate(-50%) translateY(-50%);
   text-align: center;
 }
 
 .experience-title .title {
-  font-size: 65px;
-  font-weight: 600;
+  font-size: 50px;
+  font-weight: 700;
 }
 
 .experience-title-footer {
   position: absolute;
-  font-size: 36px;
-  font-weight: light;
+  font-size: 30px;
+  font-weight: 300;
   color: white;
   transition: all 0.6s ease;
   white-space: nowrap;
@@ -96,14 +96,14 @@
   white-space: nowrap;
   top: 50%;
   left: 50%;
-  transform: translate(-50%) rotate(-90deg);
+  transform: translate(-50%) translateY(-50%) rotate(-90deg);
   text-align: center;
   display: none;
 }
 
 .experience-title .collection {
-  font-size: 50px;
-  font-weight: 300;
+  font-size: 35px;
+  font-weight: 400;
 }
 
 .experience-wrapper.open .experience-title,
@@ -254,6 +254,74 @@
   opacity: 1;
 }
 
+@media (max-width: 1280px) {
+  .experience-item.active .experience-detail {
+    width: 50%;
+    padding: 40px;
+  }
+
+  .experience-item.active .experience-image {
+    width: 50%;
+  }
+
+  .experience-title .title {
+    font-size: 50px;
+  }
+
+
+
+ .experience-image-box{
+  min-height: 100vh;
+}
+
+  .experience-image-box img {
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  object-fit: cover; /* Đây là key để cover vùng chứa */
+  object-position: center; /* căn giữa hình ảnh */
+  display: block; /* xoá khoảng trống dưới img */
+}
+
+  .experience-title .collection {
+    font-size: 40px;
+  }
+
+  .experience-title-footer {
+    font-size: 28px;
+     font-weight: 300px;
+  }
+
+  .experience-detail .title {
+    font-size: 48px;
+   
+  }
+
+  .experience-detail .subtitle {
+    font-size: 28px;
+  }
+
+  .experience-detail .description {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .experience-detail .coverage {
+    font-size: 14pt;
+  }
+
+  .experience-detail .request-btn {
+    font-size: 14pt;
+    padding: 12px 18px;
+  }
+
+  .close-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .experience-item.active .experience-detail {
@@ -290,10 +358,12 @@
 
   .experience-title-footer {
     font-size: 28px;
+     font-weight: 300px;
   }
 
   .experience-detail .title {
     font-size: 48px;
+   
   }
 
   .experience-detail .subtitle {
