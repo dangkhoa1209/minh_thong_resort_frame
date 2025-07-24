@@ -58,6 +58,5 @@ window.addEventListener('scroll', () => {
   // Giữ nguyên scale 1.3, chỉ cộng thêm translateY
   bg.style.transform = `scale(1.3) translateY(${11 + bgOffsetPercent}%)`;
   nonbg.style.transform = `scale(1.3) translateY(${11 + nonbgOffsetPercent}%)`;
-
   logo.style.transform = `translate(-50%, calc(-50% + ${scrollY * 0.8}px))`;
 });
