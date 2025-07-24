@@ -51,13 +51,13 @@ window.addEventListener('scroll', () => {
 
   const scrollY = window.scrollY;
 
-  const maxPercent = 14; // giới hạn ±10%
+  const maxPercent = 11; // giới hạn ±10%
   const bgOffsetPercent = Math.min(scrollY * 0.05, maxPercent);     // nền đi xuống
   const nonbgOffsetPercent = Math.max(scrollY * -0.02, -maxPercent); // foreground đi lên
 
   // Giữ nguyên scale 1.3, chỉ cộng thêm translateY
-  bg.style.transform = `scale(1.3) translateY(${14 + bgOffsetPercent}%)`;
-  nonbg.style.transform = `scale(1.3) translateY(${14 + nonbgOffsetPercent}%)`;
+  bg.style.transform = `scale(1.3) translateY(${11 + bgOffsetPercent}%)`;
+  nonbg.style.transform = `scale(1.3) translateY(${11 + nonbgOffsetPercent}%)`;
 
   logo.style.transform = `translate(-50%, calc(-50% + ${scrollY * 0.8}px))`;
 });
