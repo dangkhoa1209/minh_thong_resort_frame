@@ -33,10 +33,12 @@
   --font-size-45: 45px;
   --font-size-40: 40px;
   --font-size-sub-title: 39px;
+  --font-size-36: 36px;
   --font-size-30: 30px;
   --font-size-25: 25px;
   --font-size-23: 23px;
   --font-size-15: 15px;
+  --font-size-16: 16px;
 }
 
 
@@ -209,9 +211,11 @@ h2.font-size-58 {
     --font-size-45: 33px;
     --font-size-40: 30px;
     --font-size-sub-title: 28px;
+    --font-size-36: 25px;
     --font-size-30: 22px;
     --font-size-25: 19px;
     --font-size-23: 18px;
+    --font-size-16: 14px;
     --font-size-15: 13px;
 
   }
@@ -239,9 +243,11 @@ h2.font-size-58 {
     --font-size-45: 33px;
     --font-size-40: 30px;
     --font-size-sub-title: 28px;
+    --font-size-36: 25px;
     --font-size-30: 22px;
     --font-size-25: 19px;
     --font-size-23: 18px;
+    --font-size-16: 14px;
     --font-size-15: 13px;
 
 
@@ -274,9 +280,11 @@ h2.font-size-58 {
     --font-size-45: 28px;
     --font-size-40: 26px;
     --font-size-sub-title: 24px;
+    --font-size-36: 21px;
     --font-size-30: 18px;
     --font-size-25: 16px;
     --font-size-23: 15px;
+    --font-size-16: 13px;
     --font-size-15: 12px;
   }
 

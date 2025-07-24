@@ -70,13 +70,13 @@
 }
 
 .experience-title .title {
-  font-size: 50px;
+  font-size: var(--font-size-50);
   font-weight: 700;
 }
 
 .experience-title-footer {
   position: absolute;
-  font-size: 30px;
+  font-size: var(--font-size-30);
   font-weight: 300;
   color: white;
   transition: all 0.6s ease;
@@ -89,7 +89,7 @@
 
 .experience-title-mini {
   position: absolute;
-  font-size: 24px;
+  font-size: var(--font-size-24);
   font-weight: bold;
   color: white;
   transition: all 0.6s ease;
@@ -102,7 +102,7 @@
 }
 
 .experience-title .collection {
-  font-size: 35px;
+  font-size: var(--font-size-35);
   font-weight: 400;
 }
 
@@ -120,12 +120,14 @@
   background: var(--main-color-white);
   padding: 0px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: column; 
+  /* justify-content: center; */
   opacity: 0;
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in-out, padding 0.6s ease;
-  overflow: hidden;
+  /* transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in-out, padding 0.6s ease; */
+  overflow-y: scroll;
   text-align: left;
+  height: 100vh;
+  max-height: 100vh;
 }
 
 .experience-detail .top {
@@ -147,21 +149,21 @@
 .experience-detail .title {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 60px;
+  font-size: var(--font-size-title);
   margin: 0;
 }
 
 .experience-detail .subtitle {
-  font-size: 36px;
+  font-size: var(--font-size-36);
   font-weight: 300;
   margin: 10px 0;
 }
 
 .experience-detail .description {
-  font-size: 25px;
+  font-size: var(--font-size-25);
   margin: 10px 0;
   display: flex;
-  line-height: 35px;
+  line-height: 30px;
 }
 
 .description .des-title {
@@ -175,13 +177,12 @@
 
 .experience-detail .coverage {
   text-align: left;
-  font-size: 16pt;
+  font-size: var(--font-size-16);
   list-style-type: none;
   padding: 0;
 }
 
 .experience-detail .request-btn {
-  font-size: 16pt;
   padding: 15px 20px;
   color: black;
   background-color: var(--main-color-white);
@@ -256,62 +257,50 @@
 
 @media (max-width: 1280px) {
   .experience-item.active .experience-detail {
-    width: 50%;
-    padding: 40px;
+    width: 60%;
+    padding:20px;
   }
 
   .experience-item.active .experience-image {
-    width: 50%;
+    width: 40%;
   }
 
-  .experience-title .title {
-    font-size: 50px;
+  .experience-detail .description {
+    line-height: 25px;
   }
-
 
 
  .experience-image-box{
   min-height: 100vh;
 }
 
-  .experience-image-box img {
-  height: 100%;
-  width: 100%;
-  min-height: 100vh;
-  object-fit: cover; /* Đây là key để cover vùng chứa */
-  object-position: center; /* căn giữa hình ảnh */
-  display: block; /* xoá khoảng trống dưới img */
+    .experience-image-box img {
+    height: 100%;
+    width: 100%;
+    min-height: 100vh;
+    object-fit: cover; /* Đây là key để cover vùng chứa */
+    object-position: center; /* căn giữa hình ảnh */
+    display: block; /* xoá khoảng trống dưới img */
+  }
+
+  .experience-detail .top {
+  padding-bottom: 20px;
 }
 
-  .experience-title .collection {
-    font-size: 40px;
-  }
+.experience-detail .purpose {
+  padding-bottom: 15px;
+}
 
-  .experience-title-footer {
-    font-size: 28px;
-     font-weight: 300px;
-  }
+.experience-detail .coverage-box {
+  padding-bottom: 15px;
+}
 
-  .experience-detail .title {
-    font-size: 48px;
-   
-  }
+.experience-detail .bottom {
+  padding-bottom: 15px;
+}
 
-  .experience-detail .subtitle {
-    font-size: 28px;
-  }
-
-  .experience-detail .description {
-    font-size: 20px;
-    line-height: 30px;
-  }
-
-  .experience-detail .coverage {
-    font-size: 14pt;
-  }
 
   .experience-detail .request-btn {
-    font-size: 14pt;
     padding: 12px 18px;
   }
 
@@ -325,23 +314,19 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .experience-item.active .experience-detail {
-    width: 50%;
+    width: 70%;
     padding: 40px;
   }
 
   .experience-item.active .experience-image {
-    width: 50%;
-  }
-
-  .experience-title .title {
-    font-size: 50px;
+    width: 30%;
   }
 
 
 
  .experience-image-box{
-  min-height: 100vh;
-}
+    min-height: 100vh;
+  }
 
   .experience-image-box img {
   height: 100%;
@@ -352,35 +337,9 @@
   display: block; /* xoá khoảng trống dưới img */
 }
 
-  .experience-title .collection {
-    font-size: 40px;
-  }
 
-  .experience-title-footer {
-    font-size: 28px;
-     font-weight: 300px;
-  }
-
-  .experience-detail .title {
-    font-size: 48px;
-   
-  }
-
-  .experience-detail .subtitle {
-    font-size: 28px;
-  }
-
-  .experience-detail .description {
-    font-size: 20px;
-    line-height: 30px;
-  }
-
-  .experience-detail .coverage {
-    font-size: 14pt;
-  }
 
   .experience-detail .request-btn {
-    font-size: 14pt;
     padding: 12px 18px;
   }
 
@@ -428,47 +387,13 @@
     object-fit: cover; /* Ensure image fits properly */
   }
 
-  .experience-title .title {
-    font-size: 40px;
-  }
-
-  .experience-title .collection {
-    font-size: 32px;
-  }
-
-  .experience-title-footer {
-    font-size: 24px;
-  }
-
-  .experience-title-mini {
-    font-size: 20px;
-  }
-
-  .experience-detail .title {
-    font-size: 36px;
-  }
-
-  .experience-detail .subtitle {
-    font-size: 24px;
-  }
-
-  .experience-detail .description {
-    font-size: 18px;
-    line-height: 28px;
-    flex-direction: column;
-  }
-
   .description .des-title {
     min-width: auto;
     margin-bottom: 10px;
   }
 
-  .experience-detail .coverage {
-    font-size: 12pt;
-  }
 
   .experience-detail .request-btn {
-    font-size: 12pt;
     padding: 10px 16px;
   }
 
@@ -477,10 +402,6 @@
 }
 
 .experience-detail .purpose {
-  padding-bottom: 15px;
-}
-
-.experience-detail .coverage-box {
   padding-bottom: 15px;
 }
 
@@ -499,41 +420,13 @@
 }
 
 @media  (max-width: 480px) {
-  .experience-title .title {
-    font-size: 32px;
-  }
 
-  .experience-title .collection {
-    font-size: 28px;
-  }
-
-  .experience-title-footer {
-    font-size: 20px;
-  }
-
-  .experience-title-mini {
-    font-size: 18px;
-  }
-
-  .experience-detail .title {
-    font-size: 28px;
-  }
-
-  .experience-detail .subtitle {
-    font-size: 20px;
-  }
-
-  .experience-detail .description {
-    font-size: 16px;
-    line-height: 24px;
-  }
 
   .experience-detail .coverage {
     font-size: 10pt;
   }
 
   .experience-detail .request-btn {
-    font-size: 10pt;
     padding: 8px 14px;
   }
 
