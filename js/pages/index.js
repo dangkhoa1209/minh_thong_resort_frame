@@ -42,15 +42,16 @@ const bg = document.querySelector('.banner__img.gb');
 const logo = document.querySelector('.banner__img.logo');
 const nonbg = document.querySelector('.banner__img.nonbg');
 
+logo.addEventListener('animationend', () => {
+  logo.classList.add('animation-done');
+});
+
 window.addEventListener('scroll', () => {
+  if (!logo.classList.contains('animation-done')) return; // chưa xong animation thì bỏ qua
+
   const scrollY = window.scrollY;
-
-  // Nền (di chuyển chậm)
   bg.style.transform = `translateY(${scrollY * 0.3}px)`;
-
-  // Logo (giữ giữa nhưng di chuyển xuống theo cuộn)
-  logo.style.transform = `translate(-50%, calc(-50% + ${scrollY * 0.5}px))`;
-
-  // Lớp trước (foreground di chuyển nhanh hơn)
-  // nonbg.style.transform = `translateY(${scrollY * 0.3}px)`;
+  nonbg.style.transform = `translateY(${scrollY * -0.1}px)`;
+  logo.style.transform = `translate(-50%, calc(-50% + ${scrollY * 0.8}px)) scale(1)`;
+  
 });
