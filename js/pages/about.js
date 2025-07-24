@@ -5,14 +5,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const blocks = document.querySelectorAll(".production__block");
 
   function adjustHeights() {
+
+
+
+
+
     blocks.forEach(block => {
+
+
       const image = block.querySelector(".production__image");
       const text = block.querySelector(".production__text");
 
+
       if (image && text) {
-        const imageHeight = image.offsetHeight;
-         text.style.minHeight = imageHeight + "px";
+
+        if (window.innerWidth <= 1024) {
+          text.style.minHeight = 0 + "px";
+          return
+        } else {
+          const imageHeight = image.offsetHeight;
+          text.style.minHeight = imageHeight + "px";
+        }
       }
+
+
+
     });
   }
 
