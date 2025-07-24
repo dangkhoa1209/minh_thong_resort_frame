@@ -51,9 +51,9 @@ window.addEventListener('scroll', () => {
 
   const scrollY = window.scrollY;
 
-  const maxPercent = 11; // giới hạn ±10%
+  const maxPercent = 20; // giới hạn ±10%
   const bgOffsetPercent = Math.min(scrollY * 0.05, maxPercent);     // nền đi xuống
-  const nonbgOffsetPercent = Math.max(scrollY * -0.02, -maxPercent); // foreground đi lên
+  const nonbgOffsetPercent = Math.max(scrollY * -0.03, -maxPercent); // foreground đi lên
 
   // Giữ nguyên scale 1.3, chỉ cộng thêm translateY
   bg.style.transform = `scale(1.3) translateY(${11 + bgOffsetPercent}%)`;
