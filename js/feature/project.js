@@ -52,6 +52,7 @@ Array.from(projects).forEach((project, index) => {
 const projects2 = document.querySelectorAll('.project');
 
 function updateScaleOnScroll() {
+  
   const windowHeight = window.innerHeight;
 
   projects2.forEach(project => {

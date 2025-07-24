@@ -48,7 +48,6 @@ logo.addEventListener('animationend', () => {
 
 window.addEventListener('scroll', () => {
   if (!logo.classList.contains('animation-done')) return; // chưa xong animation thì bỏ qua
-
   const scrollY = window.scrollY;
   bg.style.transform = `translateY(${scrollY * 0.3}px)`;
   nonbg.style.transform = `translateY(${scrollY * -0.1}px)`;

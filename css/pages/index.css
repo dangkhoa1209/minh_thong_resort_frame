@@ -26,18 +26,18 @@ body {
 .banner__img {
   position: absolute;
   will-change: transform, opacity;
-  animation-fill-mode: ;
+ width: 100%;
 }
 
 /* Nền (scale 1.1 → 1) */
 .banner__img.gb {
-  z-index: 5;
+  z-index: -2;
   animation: nonbgAppear 0.8s ease-in-out ;
 }
 
 /* Foreground (trượt từ -50px → 0) */
 .banner__img.nonbg {
-  z-index: 15;
+  z-index: 0;
   animation: scaleUp 0.8s ease-in-out;
 }
 
@@ -45,10 +45,10 @@ body {
 .banner__img.logo {
   width: 70%;
   height: auto;
-  top: 29%;
+  top: 27.5%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: -1;
   animation: logoBounceUp 1.5s ease-in-out;
 }
 
@@ -130,6 +130,7 @@ body {
   max-width: var(--max-width-page);
   width: 100%;
   margin: 0 auto;
+  z-index: 20;
 }
 
 .project {
@@ -155,6 +156,7 @@ body {
   width: 100%;
   aspect-ratio: 1366 / 778;
   max-height: calc(min(100vw, 1920px) * 778 / 1366);
+  z-index: 20;
 }
 
 .project-meta {
@@ -183,7 +185,7 @@ body {
 
 .project__inner img {
   transform: scale(1.2);
-  transition: transform 0.3s ease-in-out;
+  /* transition: transform 0.3s ease-in-out; */
 }
 
 
