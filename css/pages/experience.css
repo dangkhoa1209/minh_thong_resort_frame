@@ -139,6 +139,16 @@
   max-height: 100vh;
 }
 
+.experience-detail * {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.experience-item.show-content .experience-detail * {
+  opacity: 1;
+}
+
+
 .experience-detail .top {
   padding-bottom: 30px;
 }
