@@ -41,6 +41,11 @@
   --font-size-23: 23px;
   --font-size-15: 15px;
   --font-size-16: 16px;
+
+  /* home */
+  --font-size-home-sub-title: 39px;
+  --font-size-home-title: 60px;
+  --font-size-home-title-the-nam-hai: 70px;
 }
 
 
@@ -222,6 +227,11 @@ h2.font-size-58 {
     --font-size-16: 14px;
     --font-size-15: 13px;
 
+     /* home */
+    --font-size-home-sub-title: 25px;
+    --font-size-home-title: 40px;
+    --font-size-home-title-the-nam-hai: 44px;
+
   }
 }
 
@@ -256,6 +266,10 @@ h2.font-size-58 {
     --font-size-16: 14px;
     --font-size-15: 13px;
 
+     /* home */
+    --font-size-home-sub-title: 18px;
+    --font-size-home-title: 28px;
+    --font-size-home-title-the-nam-hai: 32px;
 
   }
 
@@ -295,7 +309,14 @@ h2.font-size-58 {
     --font-size-23: 15px;
     --font-size-16: 13px;
     --font-size-15: 12px;
+
+     --font-size-home-sub-title: 16px;
+    --font-size-home-title: 22px;
+    --font-size-home-title-the-nam-hai: 28px;
   }
+  
+
+  
 
   .button {
     height: 38px;
