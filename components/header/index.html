@@ -2,15 +2,23 @@
 
 <section class="header px py-small">
     <img loading="lazy" src="/assets/svg/logo/logo-pro.svg" class="logo logo-line" alt="">
-    <img loading="lazy" src="/assets/svg/logo/logo-pro-dark.svg" class=" logo logo-dark" alt="">
+    <img loading="lazy" src="/assets/svg/logo/logo-pro-dark.svg" class="logo logo-dark" alt="">
+
+    <!-- Menu item (ẩn mặc định) -->
+    <ul class="desktop-menu">
+        <li><a href="/pages/about.html">ABOUT</a></li>
+        <li><a href="/pages/gallery.html">GALLERY</a></li>
+        <li><a href="/pages/experience.html">EXPERIENCES</a></li>
+        <li><a href="/pages/contact.html">CONTACT US</a></li>
+    </ul>
+
+    <!-- Nút Menu góc phải -->
     <div id="header-menu" class="menu">
-        <p>
-            <span>Menu</span>
-        </p>
+        <p><span>Menu</span></p>
         <img class="menu-icon" src="/assets/svg/menu-icon.svg" alt="">
     </div>
 
-    <!-- Drawer menu -->
+    <!-- Drawer (mobile) -->
     <div class="header-drawer">
         <div class="header-drawer__overlay"></div>
         <div class="header-drawer__panel">
@@ -24,6 +32,8 @@
         </div>
     </div>
 </section>
+
+
 
 <script src="/js/plugins/base-path.js"></script>
 <script src="/js/components/header.js"></script>

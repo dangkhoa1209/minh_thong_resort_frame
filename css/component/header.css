@@ -192,6 +192,95 @@
   color: #ff6600;
 }
 
+
+/* Menu ngang trong header (desktop) */
+/* Menu ngang trong header (desktop) */
+.desktop-menu {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-left: auto;        /* đẩy về phải */
+  margin-right: 30px;       /* chừa khoảng cách với nút Menu */
+  transform: translateX(100%);  /* Ẩn: dịch ra ngoài phải */
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.4s ease;
+  pointer-events: none;
+}
+
+
+.desktop-menu.active {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Các mục menu */
+.desktop-menu li {
+  list-style: none;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+.desktop-menu.active li {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger animation (mỗi item trễ 0.05s) */
+.desktop-menu.active li:nth-child(1) { transition-delay: 0.05s; }
+.desktop-menu.active li:nth-child(2) { transition-delay: 0.1s; }
+.desktop-menu.active li:nth-child(3) { transition-delay: 0.15s; }
+.desktop-menu.active li:nth-child(4) { transition-delay: 0.2s; }
+
+
+.desktop-menu li {
+  font-weight: 600;
+}
+
+.desktop-menu li a {
+  position: relative; 
+   text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--main-color-white);
+  transition: color 0.3s ease;
+}
+
+.desktop-menu li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 2px;
+  background: var(--main-color-white);
+  transition: width 0.3s ease;
+}
+
+
+.desktop-menu li a:hover::after {
+  width: 100%;
+}
+
+
+.header.dark .desktop-menu li a {
+  color: var(--main-color-black) !important;
+}
+
+.header.dark .desktop-menu li a::after {
+  background: var(--main-color-black) !important;
+}
+
+
+/* Ẩn trên mobile */
+@media (max-width: 1024px) {
+  .desktop-menu {
+    display: none !important;
+  }
+}
+
+
 @media (max-width: 1024px) {
   .header .menu {
     font-size: 18px;

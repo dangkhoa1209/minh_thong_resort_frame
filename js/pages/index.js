@@ -41,11 +41,6 @@ document.querySelectorAll('button[data-href]').forEach(button => {
   // Đợi logo chạy xong (~1.2s) rồi ẩn preloader
   setTimeout(() => {
     preloader.classList.add('hidden');
-
-    // Bật lại animation banner (nếu trước đó bị pause)
-    bannerImgs.forEach(img => {
-      img.style.animationPlayState = 'running';
-    });
   }, 1300);
 
 
