@@ -56,7 +56,7 @@ window.addEventListener('scroll', () => {
   const nonbgOffsetPercent = Math.max(scrollY * -0.03, -maxPercent); // foreground đi lên
 
   // Giữ nguyên scale 1.3, chỉ cộng thêm translateY
-  bg.style.transform = `scale(1.3) translateY(${11 + bgOffsetPercent}%)`;
-  nonbg.style.transform = `scale(1.3) translateY(${11 + nonbgOffsetPercent}%)`;
+  bg.style.transform = `scale(1) translateY(${0 + bgOffsetPercent}%)`;
+  nonbg.style.transform = `scale(1) translateY(${0 + nonbgOffsetPercent}%)`;
   logo.style.transform = `translate(-50%, calc(-50% + ${scrollY * 0.8}px))`;
 });
