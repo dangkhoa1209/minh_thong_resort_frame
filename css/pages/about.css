@@ -30,12 +30,6 @@ body {
   color: var(--main-color-white);
 }
 
-.about, 
-.about * {
-  font-family: var(--font-heading) !important;
-}
-
-
 .about__container {
   display: flex;
   gap: 150px;
@@ -162,11 +156,12 @@ body {
 }
 
 .behind .behind-content {
-  padding-top: var(--spacing-y-small);
+  padding-top: 20px;
   font-size: var(--font-size-30);
   font-weight: 300;
    color: var(--main-color-white);
    text-align: center;
+   line-height: 1.5;
 }
 
 
