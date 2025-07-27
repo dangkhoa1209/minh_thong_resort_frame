@@ -37,6 +37,18 @@ document.querySelectorAll('button[data-href]').forEach(button => {
 });
 
 
+ const preloader = document.getElementById('preloader');
+  // Đợi logo chạy xong (~1.2s) rồi ẩn preloader
+  setTimeout(() => {
+    preloader.classList.add('hidden');
+
+    // Bật lại animation banner (nếu trước đó bị pause)
+    bannerImgs.forEach(img => {
+      img.style.animationPlayState = 'running';
+    });
+  }, 1300);
+
+
 
 const bg = document.querySelector('.banner__img.gb');
 const logo = document.querySelector('.banner__img.logo');
