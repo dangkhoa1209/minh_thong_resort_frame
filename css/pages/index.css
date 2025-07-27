@@ -538,7 +538,6 @@ body {
   opacity: 0;
   transition: opacity 0.5s ease, transform 0.5s ease;
   max-height: 0;
-  overflow: hidden;
   text-align: left;
 }
 
@@ -621,7 +620,7 @@ body {
 
 @media (max-width: 768px) {
   .faq-item {
-   height: 70px;
+   height: 80px;
     padding: 16px;
   }
 
