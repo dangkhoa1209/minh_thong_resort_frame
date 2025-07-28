@@ -29,7 +29,7 @@ const startAutoCloseTimer = () => {
     closeDrawer();
     desktopMenu?.classList.remove("active");
     menuTrigger?.classList.remove("open");
-  }, 2000); // 20 giây
+  }, 20000); // 20 giây
 };
 
 /**
