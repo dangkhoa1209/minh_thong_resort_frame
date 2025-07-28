@@ -21,7 +21,7 @@
   background-size: cover;
   background-position: center;
   z-index: 1;
-  background-color: blue;
+  background-color: var(--main-color-black);
 }
 
 .slide-projects .background::after {
