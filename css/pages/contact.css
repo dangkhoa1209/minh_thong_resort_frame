@@ -70,10 +70,28 @@ contact-container * {
 
 /* Icon */
 .contact-container__icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  display: inline-block;
+   width: 40px;
+  height: 40px;
+  padding: 8px 0px;
+  box-sizing: border-box;
+  background: transparent;
+  border-radius: 50%;
+  transition: background 0.3s, color 0.3s;
+  color: var(--main-color-black);
+  border: 1px solid var(--main-color-black);
+}
+
+.contact-container__info-item {
+  user-select: text !important;           /* Cho phép bôi đen/copy text */
+  cursor: text !important;                /* Đổi con trỏ khi hover */
+  -webkit-user-select: text !important;   /* Cho Safari */
+  -moz-user-select: text !important;      /* Cho Firefox */
+  -ms-user-select: text !important;       /* Cho IE/Edge cũ */
+}
+
+.contact-container__info-item a {
+  user-select: none;           /* Giữ nguyên cho icon (không cần copy) */
+  cursor: pointer;
 }
 
 /* Form */
