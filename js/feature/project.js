@@ -24,7 +24,7 @@ Array.from(projects).forEach((project, index) => {
     return;
   }
 
-  const toScale = 0.85; // Tỷ lệ thu nhỏ khi scroll
+  const toScale = 0.9; // Tỷ lệ thu nhỏ khi scroll
   const nextproject = projects[index + 1];
   const projectInner = project.querySelector('.project__inner');
 
