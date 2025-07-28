@@ -1,6 +1,6 @@
 // ************** HEADER SCRIPT (DESKTOP + MOBILE) **************
 
-// Logo -> về home
+// Logo -> click về home
 const logos = document.querySelectorAll('.logo');
 logos?.forEach(logo => {
   logo.addEventListener('click', () => {
@@ -17,23 +17,69 @@ const overlay = document.querySelector(".header-drawer__overlay");
 const desktopMenu = document.querySelector(".desktop-menu");
 const isDesktop = () => window.innerWidth > 1024;
 
-// Drawer (mobile)
+// ================== AUTO CLOSE MENU (20s INACTIVITY) ==================
+let autoCloseTimer;
+
+/**
+ * Khởi động bộ đếm 20s, nếu hết 20s không có tương tác trong menu thì đóng menu.
+ */
+const startAutoCloseTimer = () => {
+  clearAutoCloseTimer();
+  autoCloseTimer = setTimeout(() => {
+    closeDrawer();
+    desktopMenu?.classList.remove("active");
+    menuTrigger?.classList.remove("open");
+  }, 2000); // 20 giây
+};
+
+/**
+ * Xoá timer khi đóng menu hoặc khi cần reset.
+ */
+const clearAutoCloseTimer = () => {
+  if (autoCloseTimer) clearTimeout(autoCloseTimer);
+};
+
+/**
+ * Reset timer chỉ khi người dùng tương tác trong **vùng menu** (drawer hoặc desktopMenu).
+ */
+const resetIfMenuActive = () => {
+  if (drawer.classList.contains('active') || desktopMenu?.classList.contains('active')) {
+    startAutoCloseTimer();
+  }
+};
+
+// Gán sự kiện vào **menu khu vực** thay vì toàn document
+['click', 'mousemove', 'scroll', 'keydown', 'touchstart'].forEach(event => {
+  desktopMenu?.addEventListener(event, resetIfMenuActive);
+  drawer?.addEventListener(event, resetIfMenuActive);
+});
+
+// ================== MOBILE DRAWER ==================
 const openDrawer = () => {
   drawer.classList.add("active");
   document.body.style.overflow = "hidden";
+  startAutoCloseTimer(); // Bắt đầu đếm khi mở
 };
 const closeDrawer = () => {
   drawer.classList.remove("active");
   document.body.style.overflow = "";
+  clearAutoCloseTimer(); // Xoá timer khi đóng
 };
 
-// Toggle menu (desktop slide-in từ trái)
+// ================== DESKTOP MENU (SLIDE-IN) ==================
 const toggleDesktopMenu = () => {
   desktopMenu.classList.toggle("active");
   menuTrigger.classList.toggle("open");
+
+  if (desktopMenu.classList.contains("active")) {
+    startAutoCloseTimer(); // Bắt đầu đếm khi mở
+  } else {
+    clearAutoCloseTimer(); // Xoá timer khi đóng
+  }
 };
 
-// Click Menu
+// ================== EVENT HANDLERS ==================
+// Click menu trigger
 if (menuTrigger) {
   menuTrigger.addEventListener("click", () => {
     if (isDesktop()) {
@@ -44,20 +90,22 @@ if (menuTrigger) {
   });
 }
 
-// Click ngoài -> đóng menu (desktop)
+// Click ngoài menu (desktop) -> đóng
 document.addEventListener("click", (e) => {
   if (isDesktop() && !desktopMenu?.contains(e.target) && !menuTrigger.contains(e.target)) {
     desktopMenu.classList.remove("active");
     menuTrigger.classList.remove("open");
+    clearAutoCloseTimer();
   }
 });
 
-// ESC -> đóng mọi thứ
+// ESC -> đóng tất cả
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closeDrawer();
     desktopMenu.classList.remove("active");
     menuTrigger.classList.remove("open");
+    clearAutoCloseTimer();
   }
 });
 
@@ -65,7 +113,7 @@ document.addEventListener("keydown", (e) => {
 if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
 if (overlay) overlay.addEventListener("click", closeDrawer);
 
-// Header hide/show khi scroll
+// ================== HEADER SCROLL HIDE/SHOW ==================
 let lastScrollY = window.scrollY;
 const header = document.querySelector('.header');
 

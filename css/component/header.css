@@ -199,12 +199,13 @@
   display: flex;
   align-items: center;
   gap: 30px;
-  margin-left: auto;        /* đẩy về phải */
-  margin-right: 30px;       /* chừa khoảng cách với nút Menu */
-  transform: translateX(100%);  /* Ẩn: dịch ra ngoài phải */
+  margin-left: auto;       
+  margin-right: 30px;      
+  transform: translateX(100%);  
   opacity: 0;
   transition: transform 0.5s ease, opacity 0.4s ease;
   pointer-events: none;
+  overflow: hidden;
 }
 
 
