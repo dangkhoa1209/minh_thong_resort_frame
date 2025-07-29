@@ -2,7 +2,6 @@
 
 // Logo -> click về home
 // const logos = document.querySelectorAll('.main-logo');
-// console.log('logos', logos);
 
 // logos?.forEach(logo => {
 //   logo.addEventListener('click', () => {

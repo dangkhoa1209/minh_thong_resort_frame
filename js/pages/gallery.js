@@ -8,10 +8,7 @@ const loadMoreBtn = document.getElementById('load-more');
 let visibleCount = 6;
 
 items.forEach((item, index) => {
-  if (index >= visibleCount) item.style.display = 'none';
-  console.log('index', index)
-
-  
+  if (index >= visibleCount) item.style.display = 'none';  
 });
 
 loadMoreBtn.addEventListener('click', () => {
