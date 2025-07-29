@@ -66,9 +66,7 @@ window.addEventListener('scroll', () => {
   }
 });
 
-function updateScrollEffects() {
-  console.log('ádfádf');
-  
+function updateScrollEffects() {  
   const scrollY = window.scrollY;
 
   const maxPercent = 20; // giới hạn ±20%
