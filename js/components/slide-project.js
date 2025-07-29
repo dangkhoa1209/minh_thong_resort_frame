@@ -23,13 +23,16 @@ const pages = [
 ]
 
 // Phần tử nền cần thay đổi ảnh nền
-const bg = document.getElementById('slideBackground');
+let bg = document.getElementById('slideBackground');
 
 // Hàm thay đổi ảnh nền theo chỉ số index
 const basePathBackground = getBasePath()
 
 const setBackground = (index) => {
-  bg.style.backgroundImage = `url(${basePathBackground}${images[index]})`;
+  if(!bg) {
+    bg = document.getElementById('slideBackground');
+  }
+  bg?.style?.backgroundImage = `url(${basePathBackground}${images[index]})`;
 };
 
 const goToProject = (index) => {
@@ -88,7 +91,7 @@ function initSwiper() {
     modifier = 0.5;
   }
 
-  const swiper = new Swiper(".swiper-projects", {
+  new Swiper(".swiper-projects", {
     effect: "coverflow",
     grabCursor: true,
     centeredSlides: true,
@@ -125,7 +128,7 @@ function initSwiper() {
 }
 
 
-function retryInitSwiper(retries = 50, delay = 100) {
+function retryInitSwiper(retries = 50, delay = 300) {
   const success = initSwiper();
   if (!success && retries > 0) {
     setTimeout(() => retryInitSwiper(retries - 1, delay), delay);
