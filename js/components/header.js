@@ -1,13 +1,15 @@
 // ************** HEADER SCRIPT (DESKTOP + MOBILE) **************
 
 // Logo -> click về home
-const logos = document.querySelectorAll('.logo');
-logos?.forEach(logo => {
-  logo.addEventListener('click', () => {
-    const basePath = typeof getBasePath === 'function' ? getBasePath() : '/';
-    window.location.href = basePath || '/';
-  });
-});
+// const logos = document.querySelectorAll('.main-logo');
+// console.log('logos', logos);
+
+// logos?.forEach(logo => {
+//   logo.addEventListener('click', () => {
+//     const basePath = typeof getBasePath === 'function' ? getBasePath() : '/';
+//     window.location.href = basePath || '/';
+//   });
+// });
 
 // Các phần tử chính
 const menuTrigger = document.querySelector("#header-menu");
