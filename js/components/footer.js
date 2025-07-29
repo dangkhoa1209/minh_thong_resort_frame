@@ -45,6 +45,7 @@ function start() {
         statusFeild.style.color = "green";
         input.value = "";
       } else {
+        throw new Error("Server error");
       }
     } catch (error) {
       statusFeild.textContent = "Failed to send. Please try again.";
