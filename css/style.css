@@ -72,6 +72,9 @@ body, * {
   -moz-user-select: none !important;
   -ms-user-select: none !important;
   -webkit-tap-highlight-color: transparent;
+
+  -webkit-font-smoothing: antialiased; /* hoặc subpixel-antialiased */
+  -moz-osx-font-smoothing: grayscale;
 }
 img,
 p,
