@@ -1,129 +1,145 @@
-// ************** HEADER SCRIPT (DESKTOP + MOBILE) **************
-
-// Logo -> click về home
-// const logos = document.querySelectorAll('.main-logo');
-
-// logos?.forEach(logo => {
-//   logo.addEventListener('click', () => {
-//     const basePath = typeof getBasePath === 'function' ? getBasePath() : '/';
-//     window.location.href = basePath || '/';
-//   });
-// });
-
-// Các phần tử chính
-const menuTrigger = document.querySelector("#header-menu");
-const drawer = document.querySelector(".header-drawer");
-const closeBtn = document.querySelector(".header-drawer__close");
-const overlay = document.querySelector(".header-drawer__overlay");
-const desktopMenu = document.querySelector(".desktop-menu");
+// Lấy các phần tử (có thể null nếu DOM chưa có)
+let menuTrigger = document.querySelector("#header-menu");
+let drawer = document.querySelector(".header-drawer");
+let closeBtn = document.querySelector(".header-drawer__close");
+let overlay = document.querySelector(".header-drawer__overlay");
+let desktopMenu = document.querySelector(".desktop-menu");
+let header = document.querySelector('.header');
 const isDesktop = () => window.innerWidth > 1024;
 
-// ================== AUTO CLOSE MENU (20s INACTIVITY) ==================
-let autoCloseTimer;
 
-/**
- * Khởi động bộ đếm 20s, nếu hết 20s không có tương tác trong menu thì đóng menu.
- */
-const startAutoCloseTimer = () => {
-  clearAutoCloseTimer();
-  autoCloseTimer = setTimeout(() => {
-    closeDrawer();
-    desktopMenu?.classList.remove("active");
-    menuTrigger?.classList.remove("open");
-  }, 20000); // 20 giây
-};
 
-/**
- * Xoá timer khi đóng menu hoặc khi cần reset.
- */
-const clearAutoCloseTimer = () => {
-  if (autoCloseTimer) clearTimeout(autoCloseTimer);
-};
+if (!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay) {
 
-/**
- * Reset timer chỉ khi người dùng tương tác trong **vùng menu** (drawer hoặc desktopMenu).
- */
-const resetIfMenuActive = () => {
-  if (drawer.classList.contains('active') || desktopMenu?.classList.contains('active')) {
+  setTimeout(() => {
+    menuTrigger = document.querySelector("#header-menu");
+    drawer = document.querySelector(".header-drawer");
+    closeBtn = document.querySelector(".header-drawer__close");
+    overlay = document.querySelector(".header-drawer__overlay");
+    desktopMenu = document.querySelector(".desktop-menu");
+    header = document.querySelector('.header');
+
+    console.log('(!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay)', (!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay));
+    
+
+    if (!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay) {
+      return
+    }
+
+    start()
+  }, 500)
+}else {
+  start()
+}
+
+
+function start() {
+  // ================== AUTO CLOSE MENU (20s INACTIVITY) ==================
+  let autoCloseTimer;
+
+  const clearAutoCloseTimer = () => {
+    if (autoCloseTimer) clearTimeout(autoCloseTimer);
+  };
+
+  const closeDrawer = () => {
+    if (!drawer) return;
+    drawer.classList.remove("active");
+    document.body.style.overflow = "";
+    clearAutoCloseTimer();
+  };
+
+  const startAutoCloseTimer = () => {
+    clearAutoCloseTimer();
+    autoCloseTimer = setTimeout(() => {
+      closeDrawer();
+      desktopMenu?.classList.remove("active");
+      menuTrigger?.classList.remove("open");
+    }, 20000); // 20 giây
+  };
+
+  const resetIfMenuActive = () => {
+    if (
+      (drawer && drawer.classList.contains("active")) ||
+      (desktopMenu && desktopMenu.classList.contains("active"))
+    ) {
+      startAutoCloseTimer();
+    }
+  };
+
+  // Gán sự kiện an toàn (nếu element tồn tại)
+  ['click', 'mousemove', 'scroll', 'keydown', 'touchstart'].forEach(event => {
+    desktopMenu?.addEventListener(event, resetIfMenuActive);
+    drawer?.addEventListener(event, resetIfMenuActive);
+  });
+
+  // ================== MOBILE DRAWER ==================
+  const openDrawer = () => {
+    if (!drawer) return;
+    drawer.classList.add("active");
+    document.body.style.overflow = "hidden";
     startAutoCloseTimer();
-  }
-};
+  };
 
-// Gán sự kiện vào **menu khu vực** thay vì toàn document
-['click', 'mousemove', 'scroll', 'keydown', 'touchstart'].forEach(event => {
-  desktopMenu?.addEventListener(event, resetIfMenuActive);
-  drawer?.addEventListener(event, resetIfMenuActive);
-});
+  // ================== DESKTOP MENU (SLIDE-IN) ==================
+  const toggleDesktopMenu = () => {
+    if (!desktopMenu || !menuTrigger) return;
+    desktopMenu.classList.toggle("active");
+    menuTrigger.classList.toggle("open");
+    if (desktopMenu.classList.contains("active")) {
+      startAutoCloseTimer();
+    } else {
+      clearAutoCloseTimer();
+    }
+  };
 
-// ================== MOBILE DRAWER ==================
-const openDrawer = () => {
-  drawer.classList.add("active");
-  document.body.style.overflow = "hidden";
-  startAutoCloseTimer(); // Bắt đầu đếm khi mở
-};
-const closeDrawer = () => {
-  drawer.classList.remove("active");
-  document.body.style.overflow = "";
-  clearAutoCloseTimer(); // Xoá timer khi đóng
-};
-
-// ================== DESKTOP MENU (SLIDE-IN) ==================
-const toggleDesktopMenu = () => {
-  desktopMenu.classList.toggle("active");
-  menuTrigger.classList.toggle("open");
-
-  if (desktopMenu.classList.contains("active")) {
-    startAutoCloseTimer(); // Bắt đầu đếm khi mở
-  } else {
-    clearAutoCloseTimer(); // Xoá timer khi đóng
-  }
-};
-
-// ================== EVENT HANDLERS ==================
-// Click menu trigger
-if (menuTrigger) {
-  menuTrigger.addEventListener("click", () => {
+  // ================== EVENT HANDLERS ==================
+  menuTrigger?.addEventListener("click", () => {
     if (isDesktop()) {
       toggleDesktopMenu();
     } else {
       openDrawer();
     }
   });
+
+  // Click ngoài menu (desktop) -> đóng
+  document.addEventListener("click", (e) => {
+    if (
+      isDesktop() &&
+      desktopMenu &&
+      !desktopMenu.contains(e.target) &&
+      !menuTrigger?.contains(e.target)
+    ) {
+      desktopMenu.classList.remove("active");
+      menuTrigger?.classList.remove("open");
+      clearAutoCloseTimer();
+    }
+  });
+
+  // ESC -> đóng tất cả
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeDrawer();
+      desktopMenu?.classList.remove("active");
+      menuTrigger?.classList.remove("open");
+      clearAutoCloseTimer();
+    }
+  });
+
+  // Drawer close buttons
+  closeBtn?.addEventListener("click", closeDrawer);
+  overlay?.addEventListener("click", closeDrawer);
+
+  // ================== HEADER SCROLL HIDE/SHOW ==================
+  let lastScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    if (!header) return;
+    const currentScrollY = window.scrollY;
+    if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      header.classList.add('hide');
+    } else {
+      header.classList.remove('hide');
+    }
+    lastScrollY = currentScrollY;
+  });
 }
 
-// Click ngoài menu (desktop) -> đóng
-document.addEventListener("click", (e) => {
-  if (isDesktop() && !desktopMenu?.contains(e.target) && !menuTrigger.contains(e.target)) {
-    desktopMenu.classList.remove("active");
-    menuTrigger.classList.remove("open");
-    clearAutoCloseTimer();
-  }
-});
-
-// ESC -> đóng tất cả
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    closeDrawer();
-    desktopMenu.classList.remove("active");
-    menuTrigger.classList.remove("open");
-    clearAutoCloseTimer();
-  }
-});
-
-// Drawer close buttons
-if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
-if (overlay) overlay.addEventListener("click", closeDrawer);
-
-// ================== HEADER SCROLL HIDE/SHOW ==================
-let lastScrollY = window.scrollY;
-const header = document.querySelector('.header');
-
-window.addEventListener('scroll', () => {
-  const currentScrollY = window.scrollY;
-  if (currentScrollY > lastScrollY && currentScrollY > 100) {
-    header.classList.add('hide');
-  } else {
-    header.classList.remove('hide');
-  }
-  lastScrollY = currentScrollY;
-});
