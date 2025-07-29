@@ -53,17 +53,33 @@ logo.addEventListener('animationend', () => {
   logo.classList.add('animation-done');
 });
 
+// Biến để tránh update quá nhiều frame
+let ticking = false;
+
 window.addEventListener('scroll', () => {
   if (!logo.classList.contains('animation-done')) return;
 
+  if (!ticking) {
+   
+    requestAnimationFrame(updateScrollEffects);
+     ticking = true;
+  }
+});
+
+function updateScrollEffects() {
+  console.log('ádfádf');
+  
   const scrollY = window.scrollY;
 
-  const maxPercent = 20; // giới hạn ±10%
+  const maxPercent = 20; // giới hạn ±20%
   const bgOffsetPercent = Math.min(scrollY * 0.05, maxPercent);     // nền đi xuống
   const nonbgOffsetPercent = Math.max(scrollY * -0.03, -maxPercent); // foreground đi lên
+  const logoOffset = scrollY * 0.8;
 
-  // Giữ nguyên scale 1.3, chỉ cộng thêm translateY
-  bg.style.transform = `scale(1) translateY(${0 + bgOffsetPercent}%)`;
-  nonbg.style.transform = `scale(1) translateY(${0 + nonbgOffsetPercent}%)`;
-  logo.style.transform = `translate(-50%, calc(-50% + ${scrollY * 0.8}px))`;
-});
+  // Dùng translate3d để bật GPU, scale đặt sẵn bằng CSS
+  bg.style.transform = `translate3d(0, ${bgOffsetPercent}%, 0) scale(1)`;
+  nonbg.style.transform = `translate3d(0, ${nonbgOffsetPercent}%, 0) scale(1)`;
+  logo.style.transform = `translate3d(-50%, calc(-50% + ${logoOffset}px), 0)`;
+
+  ticking = false;
+}

@@ -80,6 +80,14 @@ body {
   animation: nonbgAppear 0.8s ease-in-out  1.3s;
 }
 
+.banner__img.bg,
+.banner__img.logo,
+.banner__img.nonbg {
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
 /* Logo (trượt từ dưới lên + bounce) */
 .banner__img.logo {
    width: 70%;
