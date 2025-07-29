@@ -32,7 +32,10 @@ const setBackground = (index) => {
   if(!bg) {
     bg = document.getElementById('slideBackground');
   }
-  bg?.style?.backgroundImage = `url(${basePathBackground}${images[index]})`;
+  if(!bg){
+    return
+  }
+  bg.style.backgroundImage = `url(${basePathBackground}${images[index]})`;
 };
 
 const goToProject = (index) => {
@@ -91,7 +94,7 @@ function initSwiper() {
     modifier = 0.5;
   }
 
-  new Swiper(".swiper-projects", {
+  const swiper = new Swiper(".swiper-projects", {
     effect: "coverflow",
     grabCursor: true,
     centeredSlides: true,
@@ -133,8 +136,8 @@ function retryInitSwiper(retries = 50, delay = 300) {
   if (!success && retries > 0) {
     setTimeout(() => retryInitSwiper(retries - 1, delay), delay);
   } else if (!success) {
-    console.error('❌ Không thể khởi tạo Swiper sau 20 lần thử.');
+    console.error('❌ Không thể khởi tạo Swiper sau 50 lần thử.');
   }
 }
 
-retryInitSwiper(); // Thử khởi tạo Swiper, nếu fail thì retry mỗi 500ms, tối đa 20 lần
+retryInitSwiper(); 
