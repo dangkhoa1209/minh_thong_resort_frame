@@ -62,6 +62,8 @@
   margin-top: 80px;
    -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
+  z-index: 1;
+  overflow: visible; 
 }
 
 .swiper-slide {
@@ -72,8 +74,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
    -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  -webkit-transform: translateZ(0); /* ép Safari render 3D */
+  transform: translateZ(0);
+  will-change: transform;
+  position: relative;
+  z-index: 2;
+
+}
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  z-index: 1;
+  -webkit-transform: scale(0.9) translateZ(-100px);
+  transform: scale(0.9) translateZ(-100px);
+  opacity: 1;
+}
+
+.swiper-slide-active {
+  z-index: 3;
+  -webkit-transform: scale(1) translateZ(0);
+  transform: scale(1) translateZ(0);
+  opacity: 1;
 }
 
 .swiper-slide img {
