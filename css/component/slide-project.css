@@ -82,15 +82,17 @@
   will-change: transform;
   position: relative;
   z-index: 2;
+  pointer-events: auto;
 
 }
 
 .swiper-slide-prev,
 .swiper-slide-next {
   z-index: 1;
-  -webkit-transform: scale(0.9) translateZ(-100px);
+  -webkit-transform: scale(0.9) translateZ(-100px) ;
   transform: scale(0.9) translateZ(-100px);
   opacity: 1;
+  pointer-events: auto;
 }
 
 .swiper-slide-active {
