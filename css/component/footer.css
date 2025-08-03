@@ -84,6 +84,9 @@
   margin-bottom: 60px;
 }
 
+.footer-block-2 {
+ padding-top: 68px;
+}
 /* Email input */
 .footer-input-wrapper {
   display: flex;
@@ -215,6 +218,12 @@
 }
 
 
+@media (max-width: 1280px) {
+  .footer-block-2 {
+    padding-top: 33px;
+  }
+}
+
 /* Tablet (max-width: 1024px) */
 @media (max-width: 1024px) {
   .footer {
@@ -287,6 +296,11 @@
      flex-direction: column;
     
   }
+
+  .footer-block-2 {
+    padding-top: 0px;
+  }
+
 }
 
 /* Mobile (max-width: 768px) */
