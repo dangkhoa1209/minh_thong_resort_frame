@@ -1,0 +1,85 @@
+.container {
+  max-width: var(--max-width-page);
+  overflow-x: hidden;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.container .gallery {
+  width: 45%;
+  
+}
+
+.gallery .line-1,
+.gallery .line-2,
+.gallery .line-3 {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.gallery .line-3 {
+  justify-content: flex-end;
+}
+
+.gallery .img {
+  border-radius: 20px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.line-1 .img1{
+ width: calc(100vw * 308 / 1920);
+ height: calc(100vw * 316 / 1920);
+ aspect-ratio: 308 / 316;
+ overflow: hidden;
+
+}
+.line-1 .img2{
+  width: calc(100vw * 413 / 1920);
+ height: calc(100vw * 316 / 1920);
+ aspect-ratio: 413 / 316;
+ overflow: hidden;
+}
+
+.line-2 .img1,
+.line-2 .img3{
+   width: calc(100vw * 228 / 1920);
+  height: calc(100vw * 284 / 1920);
+  aspect-ratio: 228 / 284;
+  overflow: hidden;
+}
+
+.line-2 .img2{
+   width: calc(100vw * 386 / 1920);
+  height: calc(100vw * 284 / 1920);
+  aspect-ratio: 386 / 284;
+  overflow: hidden;
+}
+
+
+.line-3 .img1{
+   width: calc(100vw * 372 / 1920);
+  height: calc(100vw * 259 / 1920);
+  aspect-ratio: 372 / 259;
+  overflow: hidden;
+}
+
+.line-3 .img2{
+   width: calc(100vw * 372 / 1920);
+  height: calc(100vw * 259 / 1920);
+  aspect-ratio: 372 / 259;
+  overflow: hidden;
+}
+
+
+
+.container .info {
+  width: 37%;
+}
+
+
