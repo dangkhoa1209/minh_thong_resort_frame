@@ -36,6 +36,7 @@
   display: flex;
   gap: 15px;
   flex-direction: column;
+  text-transform: uppercase;
 }
 
 .footer-menu li {
@@ -62,13 +63,10 @@
   transition: width 0.3s ease;
 }
 
-.footer-menu li a:hover {
-  color: #f2f2f2; /* đổi chút màu nếu muốn */
-}
-
 .footer-menu li a:hover::after {
   width: 100%;
 }
+
 /* Address & form */
 .footer-heading {
   font-size:  var(--font-size-25);
