@@ -114,8 +114,8 @@
 .content {
   font-size: var(--font-size-18);
   font-weight: 300;
-  line-height: 1.6;
-  margin-bottom: 20px;
+  line-height: 1.5;
+  margin-bottom: 15px;
    color: var( --main-color-black);
 }
 
@@ -130,7 +130,7 @@ ul li {
 }
 
 .info .boximg {
-  margin-top: 30px;
+  margin-top: 34px;
   width: calc(100vw * 717 / 1920);
   height: calc(100vw * 259 / 1920);
   aspect-ratio: 717 / 259;
@@ -154,6 +154,32 @@ ul li {
   transform: scale(1);
 }
 
+@media (max-width: 1280px) {
+  .title { 
+      font-size: 30px;
+  }
+
+  .sub-title {
+  font-size: 16px;
+    margin-bottom: 15px;
+  }
+
+  .content {
+    font-size: 14px;
+      line-height: 1.4;
+  margin-bottom: 10px;
+  }
+
+  ul {
+  margin-bottom: 15px;
+}
+
+ul li {
+  margin-bottom: 10px;
+}
+
+      
+}
 
 @media (max-width: 1024px) {
 
@@ -207,4 +233,7 @@ ul li {
      height: calc(100vw * 259 / 717);
      width: 100%;
   }
+
+
+ 
 }
