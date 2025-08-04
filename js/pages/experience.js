@@ -6,16 +6,20 @@ const placeHeader = document.getElementById('place-header');
 
 items.forEach(item => {
   item.addEventListener('click', () => {
+    // Nếu item đã active thì không làm gì cả
+    if (item.classList.contains('active')) return;
+
     // Xóa trạng thái trước đó
     items.forEach(i => i.classList.remove('active', 'show-content'));
 
     item.classList.add('active');
-    wrapper.classList.add('open');
-    placeHeader.style.display = 'none';
+    if (window.innerWidth > 768) {
+      wrapper.classList.add('open');
+    }
 
+    placeHeader.style.display = 'none';
     // Chờ animation flex/width xong mới show content
     const onTransitionEnd = (e) => {
-      // Kiểm tra đúng property kết thúc (flex hoặc width)
       if (e.propertyName === 'flex' || e.propertyName === 'flex-grow' || e.propertyName === 'width') {
         item.classList.add('show-content');
         item.removeEventListener('transitionend', onTransitionEnd);
@@ -24,6 +28,7 @@ items.forEach(item => {
     item.addEventListener('transitionend', onTransitionEnd);
   });
 });
+
 
 const closeButtons = document.querySelectorAll('.close-btn');
 closeButtons.forEach(btn => {
