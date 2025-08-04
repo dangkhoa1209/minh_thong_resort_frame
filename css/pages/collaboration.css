@@ -125,12 +125,14 @@ ul {
   padding-left: 20px;
 }
 
-ul li {
-  margin-bottom: 15px;
+
+ul li .content,
+.ul-content {
+  margin-bottom: 0px;
 }
 
 .info .boximg {
-  margin-top: 34px;
+  margin-top: 75px;
   width: calc(100vw * 717 / 1920);
   height: calc(100vw * 259 / 1920);
   aspect-ratio: 717 / 259;
@@ -154,6 +156,38 @@ ul li {
   transform: scale(1);
 }
 
+@media (max-width: 1680px) {
+  .title { 
+      font-size: 35px;
+  }
+
+  .sub-title {
+  font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .content {
+    font-size: 16px;
+      line-height: 1.4;
+  margin-bottom: 10px;
+  }
+
+  ul {
+    margin-bottom: 10px;
+  }
+
+      ul li .content,
+.ul-content {
+  margin-bottom: 0px;
+}
+
+
+.info .boximg {
+  margin-top: 50px;
+}
+}
+
+
 @media (max-width: 1280px) {
   .title { 
       font-size: 30px;
@@ -171,14 +205,18 @@ ul li {
   }
 
   ul {
-  margin-bottom: 15px;
+    margin-bottom: 10px;
+  }
+
+      ul li .content,
+.ul-content {
+  margin-bottom: 0px;
 }
 
-ul li {
-  margin-bottom: 10px;
-}
 
-      
+.info .boximg {
+  margin-top: 25px;
+}
 }
 
 @media (max-width: 1024px) {
