@@ -41,6 +41,7 @@
   --font-size-23: 23px;
   --font-size-15: 15px;
   --font-size-16: 16px;
+  --font-size-18: 18px;
 
   /* home */
   --font-size-home-sub-title: 39px;
@@ -230,7 +231,7 @@ h2.font-size-58 {
     --font-size-23: 18px;
     --font-size-16: 14px;
     --font-size-15: 13px;
-
+    --font-size-18: 16px;
      /* home */
     --font-size-home-sub-title: 25px;
     --font-size-home-title: 40px;
@@ -269,7 +270,7 @@ h2.font-size-58 {
     --font-size-23: 18px;
     --font-size-16: 14px;
     --font-size-15: 13px;
-
+  --font-size-18: 16px;
      /* home */
     --font-size-home-sub-title: 18px;
     --font-size-home-title: 28px;
@@ -313,7 +314,7 @@ h2.font-size-58 {
     --font-size-23: 15px;
     --font-size-16: 13px;
     --font-size-15: 12px;
-
+    --font-size-18: 15px;
      --font-size-home-sub-title: 16px;
     --font-size-home-title: 22px;
     --font-size-home-title-the-nam-hai: 28px;

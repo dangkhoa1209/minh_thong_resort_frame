@@ -103,7 +103,7 @@
 }
 
 .sub-title {
-  font-size: 25px;
+  font-size: var(--font-size-25);
   font-weight: 300;
   text-transform: uppercase;
   margin-bottom: 30px;
@@ -112,7 +112,7 @@
 }
 
 .content {
-  font-size: 18px;
+  font-size: var(--font-size-18);
   font-weight: 300;
   line-height: 1.6;
   margin-bottom: 20px;
