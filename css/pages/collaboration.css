@@ -10,7 +10,7 @@
 
 .container .gallery {
   width: 45%;
-
+  
 }
 
 .gallery .line-1,
@@ -36,8 +36,8 @@
   transform: scale(1.05);
 }
 
-.gallery .boximg {
-  border-radius: var(--border-radius);
+.gallery .boximg{
+  border-radius: var( --border-radius);
   overflow: hidden;
 }
 
@@ -99,7 +99,7 @@
   margin-bottom: 10px;
   text-transform: uppercase;
   text-align: center;
-  color: var(--main-color-black);
+  color: var( --main-color-black);
 }
 
 .sub-title {
@@ -108,7 +108,7 @@
   text-transform: uppercase;
   margin-bottom: 30px;
   text-align: center;
-  color: var(--main-color-black);
+    color: var( --main-color-black);
 }
 
 .content {
@@ -116,7 +116,7 @@
   font-weight: 300;
   line-height: 1.6;
   margin-bottom: 20px;
-  color: var(--main-color-black);
+   color: var( --main-color-black);
 }
 
 
@@ -131,12 +131,13 @@ ul li {
 
 .info .boximg {
   margin-top: 30px;
-  width: 100%;
-  object-fit: cover;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  height: calc(100vw * 259 / 717);
+  width: calc(100vw * 717 / 1920);
+  height: calc(100vw * 259 / 1920);
   aspect-ratio: 717 / 259;
+  overflow: hidden;
+  border-radius: var( --border-radius);
+  overflow: hidden;
+
 
 }
 
@@ -159,8 +160,7 @@ ul li {
   .container {
     flex-direction: column-reverse
   }
-
-  .container .gallery {
+  .container .gallery{
     margin-top: 10px;
   }
 
@@ -175,9 +175,8 @@ ul li {
     aspect-ratio: 308 / 316;
     height: auto;
   }
-
   .line-1 .boximg2 {
-    width: 54%;
+     width: 54%;
     aspect-ratio: 413 / 316;
     height: auto;
   }
@@ -189,10 +188,8 @@ ul li {
     aspect-ratio: 228 / 284;
     height: auto;
   }
-
   .line-2 .boximg2 {
-    flex: 0 0 45.6%;
-    /* 386 / tổng */
+    flex: 46%;
     aspect-ratio: 386 / 284;
     height: auto;
   }
@@ -203,5 +200,11 @@ ul li {
     width: 46%;
     aspect-ratio: 372 / 259;
     height: auto;
+  }
+  
+
+  .info .boximg { 
+     height: calc(100vw * 259 / 717);
+     width: 100%;
   }
 }
