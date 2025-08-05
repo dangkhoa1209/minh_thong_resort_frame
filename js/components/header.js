@@ -17,10 +17,7 @@ if (!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay)
     closeBtn = document.querySelector(".header-drawer__close");
     overlay = document.querySelector(".header-drawer__overlay");
     desktopMenu = document.querySelector(".desktop-menu");
-    header = document.querySelector('.header');
-
-    console.log('(!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay)', (!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay));
-    
+    header = document.querySelector('.header');    
 
     if (!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay) {
       return
