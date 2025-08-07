@@ -55,17 +55,23 @@
   overflow: hidden;
   width: 100%;
   aspect-ratio: 1366 / 778;
+  border-radius: var(--border-radius, 10px);
 }
 
 .image-container img {
   width: 100%;
   object-fit: cover;
   transform-origin: center top;
-  border-radius: var(--border-radius, 10px);
+
   width: 100%;
   aspect-ratio: 1366 / 778;
   max-height: calc(min(100vw, 1920px) * 778 / 1366);
-  transition: border-radius 0.5s ease;
+  transition: border-radius 0.5s ease, transform 0.4s ease;
+  transform: scale(1.05);
+}
+
+.image-container img:hover {
+  transform: scale(1);
 }
 
 .product-description {
