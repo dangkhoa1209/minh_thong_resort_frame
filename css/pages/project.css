@@ -112,6 +112,10 @@
   aspect-ratio: 16 / 9;
 }
 
+.ratio-855-1068 {
+  aspect-ratio: 855 / 1068;
+}
+
 
 /* Ảnh bên trong khung */
 .product-thumbnail {
