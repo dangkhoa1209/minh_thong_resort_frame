@@ -10,7 +10,7 @@ const images = [
   "/assets/images/four-seasons-resort-the-nam-hai/1.webp",
   "/assets/images/marriott-renaissance-hoi-an/1.webp",
   "/assets/images/mercure-hotel/1.webp",
-  "/assets/images/the-pear-hoi-an/1.webp"
+  "/assets/images/pear-hoi-an/1.webp"
 ];
 
 const pages = [
@@ -19,7 +19,7 @@ const pages = [
   "/pages/project/four-seasons-resort-the-nam-hai.html",
   "/pages/project/marriott-renaissance-hoi-an.html",
   "/pages/project/mercure-hotel-vung-tau.html",
-  "/pages/project/the-pear-hoi-an.html"
+  "/pages/project/pear-hoi-an.html"
 ]
 
 // Phần tử nền cần thay đổi ảnh nền
