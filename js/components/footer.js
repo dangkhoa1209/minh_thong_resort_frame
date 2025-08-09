@@ -14,17 +14,23 @@ if (!arrow || !input || !statusFeild) {
 
     start()
   }, 500)
+}else {
+   start()
 }
 function start() {
+  
   arrow.addEventListener("click", async () => {
     const email = input.value.trim();
+
+    console.log('email', email);
+    
 
     statusFeild.textContent = "Sending...";
     statusFeild.style.color = "#888";
     statusFeild.classList.add('active');
 
     // Validate email
-    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+    if (!email) {
       statusFeild.textContent = "Please enter a valid email.";
       statusFeild.style.color = "red";
       return;
@@ -34,7 +40,7 @@ function start() {
 
     try {
       // Gửi request tới server (thay URL bằng API thật)
-      const response = await fetch("https://your-backend.com/newsletter", {
+      const response = await fetch("http://localhost:3001/api/mail/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

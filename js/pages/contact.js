@@ -9,19 +9,26 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault(); // chặn reload    
 
-    // Lấy dữ liệu từ form
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+  const name = document.getElementById("contact-form-name");
+  const email = document.getElementById("contact-form-email");
+  const description = document.getElementById("contact-form-description");
+
+    const data = {
+      name: name.value,
+      email: email.value,
+      description: description.value
+    };
+
 
     status.textContent = "Sending...";
     status.style.color = "#888";
    status.classList.add('active');
     
+    console.log('data', data);
     
 
     try {
-      // Gửi dữ liệu (thay URL bằng API backend của bạn)
-      const response = await fetch("https://your-backend.com/contact", {
+      const response = await fetch("http://localhost:3001/api/mail/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify(data),
       });
 
+      
       if (response.ok) {
         status.textContent = "Thank you! Your message has been sent.";
         status.style.color = "green";
