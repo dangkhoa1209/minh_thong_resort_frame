@@ -14,7 +14,8 @@ if (!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay)
   console.log('aádfasdfs');
   
   setTimeout(() => {
-    menuTrigger = document.querySelector("#header-menu");
+   try {
+     menuTrigger = document.querySelector("#header-menu");
     drawer = document.querySelector(".header-drawer");
     closeBtn = document.querySelector(".header-drawer__close");
     overlay = document.querySelector(".header-drawer__overlay");
@@ -32,6 +33,10 @@ if (!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay)
     }
 
     start()
+   } catch (error) {
+    console.log(error);
+    
+   }
   }, 500)
 }else {
     console.log('ok');
