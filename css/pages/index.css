@@ -3,6 +3,11 @@ body {
 }
 
 
+ body.no-scroll {
+    overflow: hidden;
+  }
+  
+
 .container {
   max-width: var(--max-width-page);
   margin: auto;

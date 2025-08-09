@@ -37,10 +37,19 @@ document.querySelectorAll('button[data-href]').forEach(button => {
 });
 
 
+  const body = document.body;
+  body.classList.add('no-scroll');
+
+
  const preloader = document.getElementById('preloader');
   // Đợi logo chạy xong (~1.2s) rồi ẩn preloader
   setTimeout(() => {
     preloader.classList.add('hidden');
+
+    // Sau khi ẩn + 0.8s mới cho cuộn (đợi chạy animation đầu trang)
+    setTimeout(() => {
+      body.classList.remove('no-scroll');
+    }, 1000);
   }, 1300);
 
 
