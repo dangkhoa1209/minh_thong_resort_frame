@@ -11,6 +11,8 @@ const isDesktop = () => window.innerWidth > 1024;
 
 if (!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay) {
 
+  console.log('aádfasdfs');
+  
   setTimeout(() => {
     menuTrigger = document.querySelector("#header-menu");
     drawer = document.querySelector(".header-drawer");
@@ -20,18 +22,25 @@ if (!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay)
     header = document.querySelector('.header');    
 
     if (!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay) {
+      console.log('menuTrigger', menuTrigger);
+      console.log('drawer', drawer);
+      console.log('desktopMenu', desktopMenu);
+      console.log('header', header);
+      console.log('closeBtn', closeBtn);
+      console.log('overlay', overlay);
       return
     }
 
     start()
   }, 500)
 }else {
+    console.log('ok');
+
   start()
 }
 
 
 function start() {
-  // ================== AUTO CLOSE MENU (20s INACTIVITY) ==================
   let autoCloseTimer;
 
   const clearAutoCloseTimer = () => {
