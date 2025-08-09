@@ -1,51 +1,30 @@
-// Lấy các phần tử (có thể null nếu DOM chưa có)
-let menuTrigger = document.querySelector("#header-menu");
-let drawer = document.querySelector(".header-drawer");
-let closeBtn = document.querySelector(".header-drawer__close");
-let overlay = document.querySelector(".header-drawer__overlay");
-let desktopMenu = document.querySelector(".desktop-menu");
-let header = document.querySelector('.header');
 const isDesktop = () => window.innerWidth > 1024;
 
+// Hàm đợi cho đến khi đủ element mới chạy callback
+const waitForElements = (callback, retries = 10, interval = 300) => {
+  const check = () => {
+    let menuTrigger = document.querySelector("#header-menu");
+    let drawer = document.querySelector(".header-drawer");
+    let closeBtn = document.querySelector(".header-drawer__close");
+    let overlay = document.querySelector(".header-drawer__overlay");
+    let desktopMenu = document.querySelector(".desktop-menu");
+    let header = document.querySelector('.header');
 
-
-if (!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay) {
-
-  console.log('aádfasdfs');
-  
-  setTimeout(() => {
-   try {
-     menuTrigger = document.querySelector("#header-menu");
-    drawer = document.querySelector(".header-drawer");
-    closeBtn = document.querySelector(".header-drawer__close");
-    overlay = document.querySelector(".header-drawer__overlay");
-    desktopMenu = document.querySelector(".desktop-menu");
-    header = document.querySelector('.header');    
-
-    if (!menuTrigger || !drawer || !desktopMenu || !header || !closeBtn || !overlay) {
-      console.log('menuTrigger', menuTrigger);
-      console.log('drawer', drawer);
-      console.log('desktopMenu', desktopMenu);
-      console.log('header', header);
-      console.log('closeBtn', closeBtn);
-      console.log('overlay', overlay);
-      return
+    if (menuTrigger && drawer && desktopMenu && header && closeBtn && overlay) {
+      callback({ menuTrigger, drawer, closeBtn, overlay, desktopMenu, header });
+    } else if (retries > 0) {
+      setTimeout(() => check(--retries), interval);
+    } else {
+      console.error("Không tìm thấy đủ element sau khi chờ!");
     }
+  };
 
-    start()
-   } catch (error) {
-    console.log(error);
-    
-   }
-  }, 500)
-}else {
-    console.log('ok');
+  check();
+};
 
-  start()
-}
+waitForElements(start);
 
-
-function start() {
+function start({ menuTrigger, drawer, closeBtn, overlay, desktopMenu, header }) {
   let autoCloseTimer;
 
   const clearAutoCloseTimer = () => {
@@ -53,7 +32,6 @@ function start() {
   };
 
   const closeDrawer = () => {
-    if (!drawer) return;
     drawer.classList.remove("active");
     document.body.style.overflow = "";
     clearAutoCloseTimer();
@@ -63,29 +41,25 @@ function start() {
     clearAutoCloseTimer();
     autoCloseTimer = setTimeout(() => {
       closeDrawer();
-      desktopMenu?.classList.remove("active");
-      menuTrigger?.classList.remove("open");
+      desktopMenu.classList.remove("active");
+      menuTrigger.classList.remove("open");
     }, 20000); // 20 giây
   };
 
   const resetIfMenuActive = () => {
-    if (
-      (drawer && drawer.classList.contains("active")) ||
-      (desktopMenu && desktopMenu.classList.contains("active"))
-    ) {
+    if (drawer.classList.contains("active") || desktopMenu.classList.contains("active")) {
       startAutoCloseTimer();
     }
   };
 
-  // Gán sự kiện an toàn (nếu element tồn tại)
+  // Gán sự kiện reset timer
   ['click', 'mousemove', 'scroll', 'keydown', 'touchstart'].forEach(event => {
-    desktopMenu?.addEventListener(event, resetIfMenuActive);
-    drawer?.addEventListener(event, resetIfMenuActive);
+    desktopMenu.addEventListener(event, resetIfMenuActive);
+    drawer.addEventListener(event, resetIfMenuActive);
   });
 
   // ================== MOBILE DRAWER ==================
   const openDrawer = () => {
-    if (!drawer) return;
     drawer.classList.add("active");
     document.body.style.overflow = "hidden";
     startAutoCloseTimer();
@@ -93,7 +67,6 @@ function start() {
 
   // ================== DESKTOP MENU (SLIDE-IN) ==================
   const toggleDesktopMenu = () => {
-    if (!desktopMenu || !menuTrigger) return;
     desktopMenu.classList.toggle("active");
     menuTrigger.classList.toggle("open");
     if (desktopMenu.classList.contains("active")) {
@@ -104,7 +77,7 @@ function start() {
   };
 
   // ================== EVENT HANDLERS ==================
-  menuTrigger?.addEventListener("click", () => {
+  menuTrigger.addEventListener("click", () => {
     if (isDesktop()) {
       toggleDesktopMenu();
     } else {
@@ -114,14 +87,9 @@ function start() {
 
   // Click ngoài menu (desktop) -> đóng
   document.addEventListener("click", (e) => {
-    if (
-      isDesktop() &&
-      desktopMenu &&
-      !desktopMenu.contains(e.target) &&
-      !menuTrigger?.contains(e.target)
-    ) {
+    if (isDesktop() && !desktopMenu.contains(e.target) && !menuTrigger.contains(e.target)) {
       desktopMenu.classList.remove("active");
-      menuTrigger?.classList.remove("open");
+      menuTrigger.classList.remove("open");
       clearAutoCloseTimer();
     }
   });
@@ -130,20 +98,19 @@ function start() {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closeDrawer();
-      desktopMenu?.classList.remove("active");
-      menuTrigger?.classList.remove("open");
+      desktopMenu.classList.remove("active");
+      menuTrigger.classList.remove("open");
       clearAutoCloseTimer();
     }
   });
 
   // Drawer close buttons
-  closeBtn?.addEventListener("click", closeDrawer);
-  overlay?.addEventListener("click", closeDrawer);
+  closeBtn.addEventListener("click", closeDrawer);
+  overlay.addEventListener("click", closeDrawer);
 
   // ================== HEADER SCROLL HIDE/SHOW ==================
   let lastScrollY = window.scrollY;
   window.addEventListener('scroll', () => {
-    if (!header) return;
     const currentScrollY = window.scrollY;
     if (currentScrollY > lastScrollY && currentScrollY > 100) {
       header.classList.add('hide');
@@ -153,4 +120,3 @@ function start() {
     lastScrollY = currentScrollY;
   });
 }
-
