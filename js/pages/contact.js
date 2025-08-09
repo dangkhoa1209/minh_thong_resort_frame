@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
 
     try {
-      const response = await fetch("http://localhost:3001/api/mail/send", {
+      const response = await fetch("https://abeldang.com/api/api/mail/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

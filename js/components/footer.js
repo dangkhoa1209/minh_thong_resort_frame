@@ -40,7 +40,7 @@ function start() {
 
     try {
       // Gửi request tới server (thay URL bằng API thật)
-      const response = await fetch("http://localhost:3001/api/mail/send", {
+      const response = await fetch("https://abeldang.com/api/api/mail/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
