@@ -88,7 +88,7 @@ function initSwiper() {
   } else { // Desktop lớn
     slidesPerView = 3;
     spaceBetween = 120;
-    rotate = 30;
+    rotate = 40;
     stretch = 80;
     depth = 300;
     modifier = 0.5;
@@ -101,6 +101,7 @@ function initSwiper() {
     loop: true,
     spaceBetween: spaceBetween,
     slidesPerView: slidesPerView,
+      watchSlidesProgress: true,
     coverflowEffect: {
       rotate: rotate,
       stretch: stretch,
