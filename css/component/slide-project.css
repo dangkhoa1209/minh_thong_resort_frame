@@ -87,6 +87,10 @@ display: block;
     padding: 20px 10px;
   }
 
+   .swiper.swiper-projects {
+    margin-top: 40px;
+  }
+
   .slide-projects .view-more {
     margin-top: 40px;
   }
