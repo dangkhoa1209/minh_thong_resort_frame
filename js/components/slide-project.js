@@ -29,10 +29,10 @@ let bg = document.getElementById('slideBackground');
 const basePathBackground = getBasePath()
 
 const setBackground = (index) => {
-  if(!bg) {
+  if (!bg) {
     bg = document.getElementById('slideBackground');
   }
-  if(!bg){
+  if (!bg) {
     return
   }
   bg.style.backgroundImage = `url(${basePathBackground}${images[index]})`;
@@ -40,7 +40,7 @@ const setBackground = (index) => {
 
 const goToProject = (index) => {
   const basePath = getBasePath()
-   window.location.href = `${basePath}${pages[index]}`;
+  window.location.href = `${basePath}${pages[index]}`;
 };
 
 
@@ -101,7 +101,8 @@ function initSwiper() {
     loop: true,
     spaceBetween: spaceBetween,
     slidesPerView: slidesPerView,
-      watchSlidesProgress: true,
+    watchSlidesProgress: true,
+    slideToClickedSlide: true,
     coverflowEffect: {
       rotate: rotate,
       stretch: stretch,
@@ -116,13 +117,29 @@ function initSwiper() {
       slideChange(swiper) {
         setBackground(swiper.realIndex);
       },
-      click(swiper) {
-        const clickedSlide = swiper.clickedSlide;
-        if (!clickedSlide) return;
+      click(swiper, event) {
+        // Fallback to event.target if clickedSlide is undefined
+        let clickedSlide = swiper.clickedSlide;
 
+        if (!clickedSlide) {
+          // Find the closest slide element from the event target
+          clickedSlide = event.target.closest('.swiper-slide');
+        }
+
+        if (!clickedSlide) {
+          console.warn('⚠️ No valid slide found for click event');
+          return;
+        }
+
+        // Get the data-index attribute
         const originalIndex = parseInt(clickedSlide.dataset.index, 10);
-        if (isNaN(originalIndex)) return;
 
+        if (isNaN(originalIndex)) {
+          console.warn('⚠️ Invalid data-index for clicked slide:', clickedSlide);
+          return;
+        }
+
+        console.log('Clicked slide index:', originalIndex);
         goToProject(originalIndex);
       }
     }

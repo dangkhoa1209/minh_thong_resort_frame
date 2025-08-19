@@ -64,7 +64,8 @@
   transform: translate3d(0,0,0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-
+pointer-events: auto !important;
+ will-change: transform;
    /* aspect-ratio: 522 / 690*/
 }
 
@@ -75,10 +76,6 @@ display: block;
   height: auto;
   object-fit: cover;
   border-radius: var(--border-radius);
-}
-
-.swiper-slide {
-  will-change: transform;
 }
 
 /* Mobile */
