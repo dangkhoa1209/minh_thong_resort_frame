@@ -101,8 +101,8 @@ function initSwiper() {
     loop: true,
     spaceBetween: spaceBetween,
     slidesPerView: slidesPerView,
-    watchSlidesProgress: true,
-    slideToClickedSlide: true,
+    // watchSlidesProgress: true,
+    // slideToClickedSlide: true,
     coverflowEffect: {
       rotate: rotate,
       stretch: stretch,
