@@ -1,161 +1,107 @@
-
-// ============================================
-//  Cài đặt hình nền động theo từng slide Swiper
-// ============================================
-
-// Danh sách hình ảnh sử dụng làm nền khi chuyển slide
-const images = [
-  "/assets/images/ana-mandara/5.webp",
-  "/assets/images/binh-an/1.webp",
-  "/assets/images/four-seasons-resort-the-nam-hai/1.webp",
-  "/assets/images/marriott-renaissance-hoi-an/1.webp",
-  "/assets/images/mercure-hotel/1.webp",
-  "/assets/images/pear-hoi-an/1.webp"
+const fallbackSlides = [
+  { image_1: "/assets/images/ana-mandara/5.webp", project_url: "/pages/project/ana-mandara-villas-dalat.html" },
+  { image_1: "/assets/images/binh-an/1.webp", project_url: "/pages/project/binh-an-village-dalat.html" },
+  { image_1: "/assets/images/four-seasons-resort-the-nam-hai/1.webp", project_url: "/pages/project/four-seasons-resort-the-nam-hai.html" },
+  { image_1: "/assets/images/marriott-renaissance-hoi-an/1.webp", project_url: "/pages/project/marriott-renaissance-hoi-an.html" },
+  { image_1: "/assets/images/mercure-hotel/1.webp", project_url: "/pages/project/mercure-hotel-vung-tau.html" },
+  { image_1: "/assets/images/pear-hoi-an/1.webp", project_url: "/pages/project/pear-hoi-an.html" },
 ];
 
-const pages = [
-  "/pages/project/ana-mandara-villas-dalat.html",
-  "/pages/project/binh-an-village-dalat.html",
-  "/pages/project/four-seasons-resort-the-nam-hai.html",
-  "/pages/project/marriott-renaissance-hoi-an.html",
-  "/pages/project/mercure-hotel-vung-tau.html",
-  "/pages/project/pear-hoi-an.html"
-]
+let slidesData = [...fallbackSlides];
+let bg = document.getElementById("slideBackground");
 
-// Phần tử nền cần thay đổi ảnh nền
-let bg = document.getElementById('slideBackground');
+function getCurrentProjectSlug() {
+  const fileName = window.location.pathname.split("/").pop() || "";
+  return fileName.replace(".html", "");
+}
 
-// Hàm thay đổi ảnh nền theo chỉ số index
-const basePathBackground = getBasePath()
+function setBackground(index) {
+  if (!bg) bg = document.getElementById("slideBackground");
+  if (!bg || !slidesData[index]) return;
+  bg.style.backgroundImage = `url(${getBasePath()}${slidesData[index].image_1})`;
+}
 
-const setBackground = (index) => {
-  if (!bg) {
-    bg = document.getElementById('slideBackground');
+function goToProject(index) {
+  const item = slidesData[index];
+  if (!item) return;
+  window.location.href = `${getBasePath()}${item.project_url}`;
+}
+
+function renderSlides() {
+  const wrapper = document.querySelector(".swiper-projects .swiper-wrapper");
+  if (!wrapper) return;
+  wrapper.innerHTML = slidesData
+    .map(
+      (item, index) =>
+        `<div class="swiper-slide" data-index="${index}"><img src="${getBasePath()}${item.image_1}" /></div>`
+    )
+    .join("");
+}
+
+async function loadOtherProjectsFromApi() {
+  const slug = getCurrentProjectSlug();
+  if (!slug) return;
+  try {
+    const response = await fetch(`${getBasePath()}/api/public/projects/${slug}/other-projects?limit=6`);
+    if (!response.ok) return;
+    const payload = await response.json();
+    if (Array.isArray(payload?.data) && payload.data.length > 0) {
+      slidesData = payload.data;
+    }
+  } catch (_error) {
+    // Keep fallback.
   }
-  if (!bg) {
-    return
-  }
-  bg.style.backgroundImage = `url(${basePathBackground}${images[index]})`;
-};
+}
 
-const goToProject = (index) => {
-  const basePath = getBasePath()
-  window.location.href = `${basePath}${pages[index]}`;
-};
-
-
-
-// ============================================
-// 4. Khởi tạo Swiper với hiệu ứng coverflow
-// ============================================
 function initSwiper() {
-  if (typeof Swiper === 'undefined') {
-    console.warn('🚫 Swiper chưa được load!');
-    return false;
-  }
-
-  const container = document.querySelector('.swiper-projects');
-  if (!container) {
-    console.warn('🚫 DOM .swiper-projects chưa có!');
-    return false;
-  }
+  if (typeof Swiper === "undefined") return false;
+  const container = document.querySelector(".swiper-projects");
+  if (!container) return false;
 
   const width = window.innerWidth;
-
-  let slidesPerView, spaceBetween, rotate, stretch, depth, modifier;
-
-  if (width <= 768) { // Mobile
-    slidesPerView = 1.8;
-    spaceBetween = 20;
-    rotate = 40;
-    stretch = 0;
-    depth = 100;
-    modifier = 1;
-  } else if (width <= 1024) { // iPad
-    slidesPerView = 3;
-    spaceBetween = 60;
-    rotate = 35;
-    stretch = 40;
-    depth = 150;
-    modifier = 0.8;
-  } else if (width <= 1280) { // Macbook 13"
-    slidesPerView = 3;
-    spaceBetween = 80;
-    rotate = 30;
-    stretch = 60;
-    depth = 200;
-    modifier = 0.7;
-  } else { // Desktop lớn
-    slidesPerView = 3;
-    spaceBetween = 120;
-    rotate = 40;
-    stretch = 80;
-    depth = 300;
-    modifier = 0.5;
+  let slidesPerView; let spaceBetween; let rotate; let stretch; let depth; let modifier;
+  if (width <= 768) {
+    slidesPerView = 1.8; spaceBetween = 20; rotate = 40; stretch = 0; depth = 100; modifier = 1;
+  } else if (width <= 1024) {
+    slidesPerView = 3; spaceBetween = 60; rotate = 35; stretch = 40; depth = 150; modifier = 0.8;
+  } else if (width <= 1280) {
+    slidesPerView = 3; spaceBetween = 80; rotate = 30; stretch = 60; depth = 200; modifier = 0.7;
+  } else {
+    slidesPerView = 3; spaceBetween = 120; rotate = 40; stretch = 80; depth = 300; modifier = 0.5;
   }
 
-  const swiper = new Swiper(".swiper-projects", {
+  new Swiper(".swiper-projects", {
     effect: "coverflow",
     grabCursor: true,
     centeredSlides: true,
     loop: true,
-    spaceBetween: spaceBetween,
-    slidesPerView: slidesPerView,
-    // watchSlidesProgress: true,
-    // slideToClickedSlide: true,
-    coverflowEffect: {
-      rotate: rotate,
-      stretch: stretch,
-      depth: depth,
-      modifier: modifier,
-      slideShadows: false
-    },
+    spaceBetween,
+    slidesPerView,
+    coverflowEffect: { rotate, stretch, depth, modifier, slideShadows: false },
     on: {
-      init(swiper) {
-        setBackground(swiper.realIndex);
-      },
-      slideChange(swiper) {
-        setBackground(swiper.realIndex);
-      },
+      init(swiper) { setBackground(swiper.realIndex); },
+      slideChange(swiper) { setBackground(swiper.realIndex); },
       click(swiper, event) {
-        // Fallback to event.target if clickedSlide is undefined
-        let clickedSlide = swiper.clickedSlide;
-
-        if (!clickedSlide) {
-          // Find the closest slide element from the event target
-          clickedSlide = event.target.closest('.swiper-slide');
-        }
-
-        if (!clickedSlide) {
-          console.warn('⚠️ No valid slide found for click event');
-          return;
-        }
-
-        // Get the data-index attribute
+        const clickedSlide = swiper.clickedSlide || event.target.closest(".swiper-slide");
+        if (!clickedSlide) return;
         const originalIndex = parseInt(clickedSlide.dataset.index, 10);
-
-        if (isNaN(originalIndex)) {
-          console.warn('⚠️ Invalid data-index for clicked slide:', clickedSlide);
-          return;
-        }
-
-        console.log('Clicked slide index:', originalIndex);
-        goToProject(originalIndex);
-      }
-    }
+        if (!Number.isNaN(originalIndex)) goToProject(originalIndex);
+      },
+    },
   });
 
   return true;
 }
 
-
 function retryInitSwiper(retries = 50, delay = 300) {
   const success = initSwiper();
   if (!success && retries > 0) {
     setTimeout(() => retryInitSwiper(retries - 1, delay), delay);
-  } else if (!success) {
-    console.error('❌ Không thể khởi tạo Swiper sau 50 lần thử.');
   }
 }
 
-retryInitSwiper(); 
+(async function bootstrapSlideProjects() {
+  await loadOtherProjectsFromApi();
+  renderSlides();
+  retryInitSwiper();
+})();

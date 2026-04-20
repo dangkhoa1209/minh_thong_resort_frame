@@ -1,117 +1,51 @@
-loadComponent('../../components/header/index.html', 'place-header')
-loadComponent('../../components/footer/index.html', 'place-footer')
-loadComponent('../../components/slide-project/index.html', 'place-slide-project')
+loadComponent("../../components/header/index.html", "place-header");
+loadComponent("../../components/footer/index.html", "place-footer");
+loadComponent("../../components/slide-project/index.html", "place-slide-project");
 
-//  () => {initSwiper()}
+const popup = document.getElementById("popup");
 
+function getCurrentProjectSlug() {
+  const fileName = window.location.pathname.split("/").pop() || "";
+  return fileName.replace(".html", "");
+}
 
-// === CẤU HÌNH MỞ ẢNH PHÓNG TO TỪ THUMBNAIL ===
-const popup = document.getElementById("popup");          // Phần tử popup (dùng để hiển thị ảnh lớn)
-const popupClose = document.getElementById("popupClose"); // Nút đóng popup (sẽ được gán lại động sau)
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
-// Lặp qua từng thumbnail có class "product-thumbnail"
-document.querySelectorAll(".product-thumbnail").forEach((img, index) => {
-  img.dataset.thumbId = `thumb-${index}`; // Gán ID riêng cho mỗi ảnh để tracking
+function ratioToClass(layout, ratio) {
+  if (ratio && /^(\d+):(\d+)$/.test(ratio)) {
+    const [w, h] = ratio.split(":");
+    return `ratio-${w}-${h}`;
+  }
+  return layout === 2 ? "ratio-4-3" : "ratio-16-9";
+}
 
-  img.addEventListener("click", () => {
-    const rect = img.getBoundingClientRect();  // Lấy vị trí/size hiện tại của ảnh thumbnail
-    const clone = img.cloneNode();             // Clone ảnh để tạo hiệu ứng
-    clone.classList.remove("product-thumbnail"); // Gỡ class thumbnail khỏi bản clone
-
-    // Tính tỉ lệ khung ảnh gốc (dựa trên kích thước thật)
-    const naturalW = img.naturalWidth;
-    const naturalH = img.naturalHeight;
-    const aspectRatio = naturalW / naturalH;
-
-    // Tính kích thước tối đa ảnh sẽ phóng (chiếm 95% màn hình)
-    const maxW = window.innerWidth * 0.95;
-    const maxH = window.innerHeight * 0.95;
-
-    let targetW = maxW;
-    let targetH = maxW / aspectRatio;
-
-    // Nếu ảnh vượt chiều cao, scale lại theo chiều cao
-    if (targetH > maxH) {
-      targetH = maxH;
-      targetW = maxH * aspectRatio;
-    }
-
-    // Tính vị trí để căn giữa popup
-    const targetLeft = (window.innerWidth - targetW) / 2;
-    const targetTop = (window.innerHeight - targetH) / 2;
-
-    // Gán style ban đầu cho ảnh clone (nằm đúng vị trí ảnh gốc)
-    Object.assign(clone.style, {
-      position: "fixed",
-      left: `${rect.left}px`,
-      top: `${rect.top}px`,
-      width: `${rect.width}px`,
-      height: `${rect.height}px`,
-      objectFit: "contain",      // hoặc cover tùy ý
-      objectPosition: "center",
-      zIndex: "9999",
-      borderRadius: "20px",
-      transformOrigin: "top left",
-      transform: "scale(1)",
-      transition: "all 0.5s ease-in-out"
-    });
-
-    document.body.appendChild(clone); // Thêm vào DOM
-    void clone.offsetWidth;           // Force reflow (đảm bảo animation chạy)
-
-    // Bắt đầu animation chuyển về vị trí chính giữa + scale lên
-    requestAnimationFrame(() => {
-      Object.assign(clone.style, {
-        left: `${targetLeft}px`,
-        top: `${targetTop}px`,
-        width: `${targetW}px`,
-        height: `${targetH}px`,
-        transform: "scale(1)",
-        borderRadius: "0px"
-      });
-    });
-
-    // Sau khi chuyển động hoàn tất (500ms), hiển thị vào popup
-    setTimeout(() => {
-      clone.dataset.sourceId = img.dataset.thumbId;
-      clone.classList.add("popup-img");
-
-      // Gán lại nội dung popup, thêm nút close
-      popup.innerHTML = '<span class="popup-close" id="popupClose">✕</span>';
-      popup.appendChild(clone);
-      popup.style.display = "flex";
-
-      // Gắn sự kiện đóng popup
-      document.getElementById("popupClose").addEventListener("click", closePopup);
-    }, 500);
+function bindThumbIds() {
+  document.querySelectorAll(".product-thumbnail").forEach((img, index) => {
+    img.dataset.thumbId = `thumb-${index}`;
   });
-});
+}
 
-
-// === ĐÓNG POPUP VÀ ANIMATION THU NHỎ VỀ ẢNH GỐC ===
 function closePopup() {
-  const popupImg = popup.querySelector(".popup-img");  // Ảnh lớn đang hiển thị
+  const popupImg = popup.querySelector(".popup-img");
   if (!popupImg) return;
 
   const sourceId = popupImg.dataset.sourceId;
   const original = document.querySelector(`.product-thumbnail[data-thumb-id="${sourceId}"]`);
   if (!original) return;
 
-  const toRect = original.getBoundingClientRect();     // Vị trí thumbnail
-  const fromRect = popupImg.getBoundingClientRect();   // Vị trí ảnh lớn
+  const toRect = original.getBoundingClientRect();
+  const fromRect = popupImg.getBoundingClientRect();
+  const scale = Math.min(toRect.width / fromRect.width, toRect.height / fromRect.height);
 
-  // Tính tỉ lệ scale ngược về thumbnail
-  const scaleX = toRect.width / fromRect.width;
-  const scaleY = toRect.height / fromRect.height;
-  const scale = Math.min(scaleX, scaleY);              // Scale đồng đều theo chiều nhỏ hơn
-
-  const targetLeft = toRect.left;
-  const targetTop = toRect.top;
-
-  // Clone lại ảnh lớn để thực hiện animation
   const clone = popupImg.cloneNode();
   clone.classList.remove("popup-img");
-
   Object.assign(clone.style, {
     position: "fixed",
     left: `${fromRect.left}px`,
@@ -123,35 +57,144 @@ function closePopup() {
     borderRadius: "0px",
     transformOrigin: "top left",
     transform: "scale(1)",
-    transition: "all 0.5s ease-in-out"
+    transition: "all 0.5s ease-in-out",
   });
 
   document.body.appendChild(clone);
   popup.style.display = "none";
-  popup.innerHTML = ""; // Clear nội dung popup
-
-  // Force reflow để chuẩn bị cho animation
+  popup.innerHTML = "";
   void clone.offsetWidth;
 
-  // Animate thu nhỏ lại về vị trí ảnh thumbnail
   Object.assign(clone.style, {
-    left: `${targetLeft}px`,
-    top: `${targetTop}px`,
+    left: `${toRect.left}px`,
+    top: `${toRect.top}px`,
     transform: `scale(${scale})`,
-    borderRadius: "20px"
+    borderRadius: "20px",
   });
 
-  // Xóa ảnh clone sau animation
-  setTimeout(() => {
-    clone.remove();
-  }, 500);
+  setTimeout(() => clone.remove(), 500);
 }
 
+function initPopupPreview() {
+  bindThumbIds();
 
-// === ĐÓNG POPUP KHI CLICK NỀN ĐEN ===
-popup.addEventListener("click", e => {
-  if (e.target === popup) closePopup();
-});
+  document.addEventListener("click", (event) => {
+    const img = event.target.closest(".product-thumbnail");
+    if (!img) return;
 
+    const rect = img.getBoundingClientRect();
+    const clone = img.cloneNode();
+    clone.classList.remove("product-thumbnail");
 
+    const naturalW = img.naturalWidth || 16;
+    const naturalH = img.naturalHeight || 9;
+    const aspectRatio = naturalW / naturalH;
+    const maxW = window.innerWidth * 0.95;
+    const maxH = window.innerHeight * 0.95;
+    let targetW = maxW;
+    let targetH = maxW / aspectRatio;
 
+    if (targetH > maxH) {
+      targetH = maxH;
+      targetW = maxH * aspectRatio;
+    }
+
+    Object.assign(clone.style, {
+      position: "fixed",
+      left: `${rect.left}px`,
+      top: `${rect.top}px`,
+      width: `${rect.width}px`,
+      height: `${rect.height}px`,
+      objectFit: "contain",
+      objectPosition: "center",
+      zIndex: "9999",
+      borderRadius: "20px",
+      transformOrigin: "top left",
+      transform: "scale(1)",
+      transition: "all 0.5s ease-in-out",
+    });
+
+    document.body.appendChild(clone);
+    void clone.offsetWidth;
+
+    requestAnimationFrame(() => {
+      Object.assign(clone.style, {
+        left: `${(window.innerWidth - targetW) / 2}px`,
+        top: `${(window.innerHeight - targetH) / 2}px`,
+        width: `${targetW}px`,
+        height: `${targetH}px`,
+        borderRadius: "0px",
+      });
+    });
+
+    setTimeout(() => {
+      clone.dataset.sourceId = img.dataset.thumbId;
+      clone.classList.add("popup-img");
+      popup.innerHTML = '<span class="popup-close" id="popupClose">✕</span>';
+      popup.appendChild(clone);
+      popup.style.display = "flex";
+      document.getElementById("popupClose").addEventListener("click", closePopup);
+    }, 500);
+  });
+
+  popup.addEventListener("click", (event) => {
+    if (event.target === popup) closePopup();
+  });
+}
+
+function renderProjectDetail(data) {
+  const bannerImg = document.querySelector(".banner .banner__img");
+  if (bannerImg && data.banner_image) {
+    bannerImg.src = data.banner_image;
+  }
+
+  const thinTitle = document.querySelector(".about__title--thin");
+  const boldTitle = document.querySelector(".about__title--bold");
+  const contentNode = document.querySelector(".about__content p");
+  if (thinTitle) thinTitle.textContent = data.banner_subtitle || "";
+  if (boldTitle) boldTitle.textContent = data.banner_title || data.title || "";
+  if (contentNode) contentNode.textContent = data.content || "";
+
+  const productsContainer = document.querySelector(".products");
+  if (!productsContainer || !Array.isArray(data.image_rows) || data.image_rows.length === 0) {
+    return;
+  }
+
+  productsContainer.innerHTML = data.image_rows
+    .map((row) => {
+      const className = ratioToClass(row.layout, row.ratio);
+      const images = (row.images || [])
+        .map((item) => {
+          const url = typeof item === "string" ? item : item.url;
+          return `
+            <div class="product-item ${className}">
+              <img loading="lazy" src="${escapeHtml(url)}" class="product-thumbnail" alt="">
+            </div>
+          `;
+        })
+        .join("");
+      return `<div class="product">${images}</div>`;
+    })
+    .join("");
+
+  bindThumbIds();
+}
+
+async function loadProjectDetail() {
+  const slug = getCurrentProjectSlug();
+  if (!slug) return;
+
+  try {
+    const response = await fetch(`${getBasePath()}/api/public/projects/${slug}`);
+    if (!response.ok) return;
+    const payload = await response.json();
+    if (payload?.data) {
+      renderProjectDetail(payload.data);
+    }
+  } catch (_error) {
+    // Keep fallback static HTML when API fails.
+  }
+}
+
+initPopupPreview();
+loadProjectDetail();
