@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getLogo, updateLogo } from "../../services/setting.api";
 import { notifyError, notifySuccess } from "../../utils/notify";
 import { ImageUploader } from "../projects/ImageUploader";
+import { DEFAULT_LOGOS, normalizeLogoData, writeLogoCache } from "../../utils/logo-cache";
 
 function LogoSettingForm() {
   const [form] = Form.useForm();
@@ -13,7 +14,10 @@ function LogoSettingForm() {
       setLoading(true);
       try {
         const result = await getLogo();
-        form.setFieldValue("logo_url", result.data.logo_url || "");
+        form.setFieldsValue({
+          logo_light_url: result.data.logo_light_url || DEFAULT_LOGOS.logo_light_url,
+          logo_dark_url: result.data.logo_dark_url || DEFAULT_LOGOS.logo_dark_url,
+        });
       } catch (error) {
         notifyError(error?.response?.data?.error?.message || "Cannot load logo");
       } finally {
@@ -29,7 +33,8 @@ function LogoSettingForm() {
       onFinish={async (values) => {
         setLoading(true);
         try {
-          await updateLogo(values);
+          const result = await updateLogo(values);
+          writeLogoCache(normalizeLogoData(result?.data || values));
           notifySuccess("Logo updated");
         } catch (error) {
           notifyError(error?.response?.data?.error?.message || "Cannot update logo");
@@ -38,7 +43,10 @@ function LogoSettingForm() {
         }
       }}
     >
-      <Form.Item label="Logo" name="logo_url" rules={[{ required: true }]}>
+      <Form.Item label="Logo light (for dark background)" name="logo_light_url" rules={[{ required: true }]}>
+        <ImageUploader defaultRatio="free" />
+      </Form.Item>
+      <Form.Item label="Logo dark (for light background)" name="logo_dark_url" rules={[{ required: true }]}>
         <ImageUploader defaultRatio="free" />
       </Form.Item>
       <Space>

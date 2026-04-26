@@ -1,5 +1,9 @@
 const isDesktop = () => window.innerWidth > 1024;
 
+if (window.ABEL_LOGOS?.initLogos) {
+  window.ABEL_LOGOS.initLogos();
+}
+
 // Hàm đợi cho đến khi đủ element mới chạy callback
 const waitForElements = (callback, retries = 10, interval = 300) => {
   const check = () => {

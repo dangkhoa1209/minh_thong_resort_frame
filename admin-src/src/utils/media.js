@@ -1,11 +1,17 @@
 function getBackendOrigin() {
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
-  if (!apiBaseUrl) return "";
-
   try {
-    // Supports both API URLs with and without /api suffix.
-    const parsed = new URL(apiBaseUrl, window.location.origin);
-    return parsed.origin;
+    if (apiBaseUrl && /^https?:\/\//i.test(apiBaseUrl)) {
+      const parsed = new URL(apiBaseUrl, window.location.origin);
+      return parsed.origin;
+    }
+
+    const host = window.location.hostname;
+    if (host === "localhost" || host === "127.0.0.1") {
+      return `${window.location.protocol}//${host}:3001`;
+    }
+
+    return window.location.origin;
   } catch (_error) {
     return "";
   }

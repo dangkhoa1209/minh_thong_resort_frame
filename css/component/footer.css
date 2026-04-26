@@ -80,6 +80,15 @@
   line-height: 1.4;
 }
 
+.footer-text a {
+  color: var(--main-color-white);
+  text-decoration: none;
+}
+
+.footer-text a:hover {
+  text-decoration: underline;
+}
+
 .footer-block {
   margin-bottom: 60px;
 }

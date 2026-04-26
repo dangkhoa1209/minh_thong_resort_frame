@@ -30,4 +30,29 @@ async function getPublicLogo() {
   return response.data;
 }
 
-export { getLogo, updateLogo, getContact, updateContact, getPublicContact, getPublicLogo };
+async function getHomeBanner() {
+  const response = await http.get("/admin/settings/home-banner");
+  return response.data;
+}
+
+async function updateHomeBanner(payload) {
+  const response = await http.put("/admin/settings/home-banner", payload);
+  return response.data;
+}
+
+async function getPublicHomeBanner() {
+  const response = await http.get("/public/settings/home-banner");
+  return response.data;
+}
+
+export {
+  getLogo,
+  updateLogo,
+  getContact,
+  updateContact,
+  getPublicContact,
+  getPublicLogo,
+  getHomeBanner,
+  updateHomeBanner,
+  getPublicHomeBanner,
+};

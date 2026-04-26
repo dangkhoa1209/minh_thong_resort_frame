@@ -91,9 +91,16 @@ contact-container * {
   -ms-user-select: text !important;       /* Cho IE/Edge cũ */
 }
 
-.contact-container__info-item a {
+.contact-container__info-item .footer-icon {
   user-select: none;           /* Giữ nguyên cho icon (không cần copy) */
   cursor: pointer;
+}
+
+.contact-container__info-item > a:not(.footer-icon) {
+  color: inherit;
+  text-decoration: none;
+  user-select: text;
+  cursor: text;
 }
 
 /* Form */

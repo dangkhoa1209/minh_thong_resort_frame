@@ -64,17 +64,19 @@
   transform: translate3d(0,0,0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-pointer-events: auto !important;
- will-change: transform;
-   /* aspect-ratio: 522 / 690*/
+  pointer-events: auto !important;
+  will-change: transform;
+  aspect-ratio: 522 / 690;
+  overflow: hidden;
 }
 
 
 .swiper-slide img {
-display: block;
+  display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
   border-radius: var(--border-radius);
 }
 

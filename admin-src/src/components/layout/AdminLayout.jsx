@@ -12,21 +12,17 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useAuthStore } from "../../store/auth.store";
 import { getLogo } from "../../services/setting.api";
-import { toBackendAssetUrl } from "../../utils/media";
+import {
+  DEFAULT_LOGOS,
+  getLogoCandidates,
+  normalizeLogoData,
+  readLogoCache,
+  resolveLogoUrl,
+  writeLogoCache,
+} from "../../utils/logo-cache";
 
 const { Header, Sider, Content } = Layout;
-const LOGO_CANDIDATES = [
-  "/assets/svg/logo/logo-pro.svg",
-  "/admin/assets/svg/logo/logo-pro.svg",
-];
-
-function resolveLogoUrl(rawValue, fallbackUrl) {
-  const raw = String(rawValue || "").trim();
-  if (!raw) return fallbackUrl;
-  if (/^https?:\/\//i.test(raw) || /^data:/i.test(raw) || /^blob:/i.test(raw)) return raw;
-  if (raw.startsWith("/uploads/")) return toBackendAssetUrl(raw);
-  return raw;
-}
+const LOGO_CANDIDATES = getLogoCandidates("/uploads/default/logo/logo-pro.svg");
 
 function AdminLayout() {
   const location = useLocation();
@@ -37,14 +33,19 @@ function AdminLayout() {
 
   useEffect(() => {
     let active = true;
+    const cached = readLogoCache();
+    if (cached) {
+      setLogoUrl(resolveLogoUrl(cached.logo_light_url) || LOGO_CANDIDATES[0]);
+    }
 
     (async () => {
       try {
         const logoResult = await getLogo();
-        const apiLogo = String(logoResult?.data?.logo_url || "").trim();
+        const normalizedLogo = normalizeLogoData(logoResult?.data || {});
         if (!active) return;
         setLogoIndex(0);
-        setLogoUrl(resolveLogoUrl(apiLogo, LOGO_CANDIDATES[0]));
+        setLogoUrl(resolveLogoUrl(normalizedLogo.logo_light_url) || LOGO_CANDIDATES[0]);
+        writeLogoCache(normalizedLogo);
       } catch (_error) {
         if (!active) return;
         setLogoIndex(0);

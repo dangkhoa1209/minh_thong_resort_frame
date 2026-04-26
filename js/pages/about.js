@@ -1,3 +1,7 @@
+if (window.ABEL_LOGOS?.initLogos) {
+  window.ABEL_LOGOS.initLogos();
+}
+
 loadComponent('../components/header/index.html', 'place-header')
 loadComponent('../components/footer/index.html', 'place-footer')
 

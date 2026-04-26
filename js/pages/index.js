@@ -2,6 +2,10 @@
 //  Load footer HTML động
 // ============================================
 // Tải nội dung HTML từ /components/footer/index.html và chèn vào phần tử có id "place-footer"
+if (window.ABEL_LOGOS?.initLogos) {
+  window.ABEL_LOGOS.initLogos();
+}
+
 loadComponent('./components/header/index.html', 'place-header')
 loadComponent('./components/footer/index.html', 'place-footer')
 
@@ -18,15 +22,51 @@ function getProjectCover(item) {
   return item?.banner_image || item?.image_1 || "";
 }
 
+const CUSTOM_PROJECT_SLUGS = new Set([
+  "ana-mandara-villas-dalat",
+  "binh-an-village-dalat",
+  "four-seasons-resort-the-nam-hai",
+  "marriott-renaissance-hoi-an",
+  "mercure-hotel-vung-tau",
+  "pear-hoi-an",
+]);
+
+function getProjectPageUrl(item) {
+  const slug = item?.slug || "";
+  if (!slug) return item?.project_url || "#";
+  const defaultStaticUrl = `/pages/project/${slug}.html`;
+  if (item?.project_url && item.project_url !== defaultStaticUrl) {
+    return item.project_url;
+  }
+  if (CUSTOM_PROJECT_SLUGS.has(slug)) {
+    return item?.project_url || defaultStaticUrl;
+  }
+  return `/pages/project/project-detail.html?slug=${encodeURIComponent(slug)}`;
+}
+
+function setHomeProjectsVisible(visible) {
+  const section = document.querySelector(".projects");
+  if (!section) return;
+  section.style.display = visible ? "" : "none";
+}
+
 function renderHomeProjects(items) {
   const container = document.querySelector(".projects");
-  if (!container || !Array.isArray(items) || items.length === 0) {
+  if (!container) {
     return;
   }
 
+  if (!Array.isArray(items) || items.length === 0) {
+    container.innerHTML = "";
+    setHomeProjectsVisible(false);
+    return;
+  }
+
+  setHomeProjectsVisible(true);
+
   container.innerHTML = items
     .map((item, index) => {
-      const pageTo = item.project_url || `/pages/project/${item.slug}.html`;
+      const pageTo = getProjectPageUrl(item);
       const cover = getProjectCover(item);
       return `
         <div class="project" data-index="${index}">
@@ -49,12 +89,16 @@ function renderHomeProjects(items) {
 
 async function loadHomeProjects() {
   try {
+    setHomeProjectsVisible(false);
     const response = await fetch(`${getApiBaseUrl()}/api/public/home/projects`);
-    if (!response.ok) return;
+    if (!response.ok) {
+      renderHomeProjects([]);
+      return;
+    }
     const payload = await response.json();
     renderHomeProjects(payload.data || []);
   } catch (_error) {
-    // Keep fallback static content when API fails.
+    renderHomeProjects([]);
   }
 }
 
@@ -112,23 +156,31 @@ document.querySelectorAll('button[data-href]').forEach(button => {
 const bg = document.querySelector('.banner__img.gb');
 const logo = document.querySelector('.banner__img.logo');
 const nonbg = document.querySelector('.banner__img.nonbg');
+const bannerSection = document.querySelector('.banner');
 
-logo.addEventListener('animationend', () => {
-  logo.classList.add('animation-done');
-});
-
-// Biến để tránh update quá nhiều frame
+let isCustomHomeBanner = false;
 let ticking = false;
 
-window.addEventListener('scroll', () => {
-  if (!logo.classList.contains('animation-done')) return;
+function applyCustomHomeBanner(bannerImage) {
+  if (!bannerSection || !bg || !bannerImage) return;
+  isCustomHomeBanner = true;
+  bannerSection.classList.add("banner--custom");
+  bg.src = getAssetUrl(bannerImage);
+}
 
-  if (!ticking) {
-   
-    requestAnimationFrame(updateScrollEffects);
-     ticking = true;
+async function loadHomeBannerSetting() {
+  try {
+    const response = await fetch(`${getApiBaseUrl()}/api/public/settings/home-banner`);
+    if (!response.ok) return;
+    const payload = await response.json();
+    const bannerImage = String(payload?.data?.banner_image || "").trim();
+    if (bannerImage) {
+      applyCustomHomeBanner(bannerImage);
+    }
+  } catch (_error) {
+    // Keep default effect banner when setting API is unavailable.
   }
-});
+}
 
 function updateScrollEffects() {  
   const scrollY = window.scrollY;
@@ -145,3 +197,25 @@ function updateScrollEffects() {
 
   ticking = false;
 }
+
+function initHomeBannerEffects() {
+  if (isCustomHomeBanner) return;
+  if (!bg || !logo || !nonbg) return;
+
+  logo.addEventListener('animationend', () => {
+    logo.classList.add('animation-done');
+  });
+
+  window.addEventListener('scroll', () => {
+    if (!logo.classList.contains('animation-done')) return;
+    if (!ticking) {
+      requestAnimationFrame(updateScrollEffects);
+      ticking = true;
+    }
+  });
+}
+
+(async function bootstrapHomeBanner() {
+  await loadHomeBannerSetting();
+  initHomeBannerEffects();
+})();

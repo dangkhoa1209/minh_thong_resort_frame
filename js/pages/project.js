@@ -5,8 +5,13 @@ loadComponent("../../components/slide-project/index.html", "place-slide-project"
 const popup = document.getElementById("popup");
 
 function getCurrentProjectSlug() {
+  const query = new URLSearchParams(window.location.search);
+  const slugFromQuery = query.get("project") || query.get("slug");
+  if (slugFromQuery) return slugFromQuery;
   const fileName = window.location.pathname.split("/").pop() || "";
-  return fileName.replace(".html", "");
+  const slugFromFile = fileName.replace(".html", "");
+  if (slugFromFile === "project-detail") return "";
+  return slugFromFile;
 }
 
 function escapeHtml(value) {

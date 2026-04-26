@@ -5,10 +5,15 @@ import { login } from "../../services/auth.api";
 import { getPublicContact, getPublicLogo } from "../../services/setting.api";
 import { useAuthStore } from "../../store/auth.store";
 import { notifyError } from "../../utils/notify";
-import { toBackendAssetUrl } from "../../utils/media";
+import {
+  getLogoCandidates,
+  normalizeLogoData,
+  readLogoCache,
+  resolveLogoUrl,
+  writeLogoCache,
+} from "../../utils/logo-cache";
 
 const DEFAULT_LOGIN_BACKGROUND_PATH = "/assets/images/pear-hoi-an/1.webp";
-const DEFAULT_LOGO_PATH = "/assets/svg/logo/logo-pro.svg";
 
 function getFrontendBasePath(projectName = "minh_thong_resort_frame") {
   if (window.location.pathname.includes(`/${projectName}/`)) {
@@ -18,6 +23,9 @@ function getFrontendBasePath(projectName = "minh_thong_resort_frame") {
 }
 
 function resolvePublicAssetCandidates(path) {
+  if (/^https?:\/\//i.test(path) || /^data:/i.test(path) || /^blob:/i.test(path)) {
+    return [path];
+  }
   const basePath = getFrontendBasePath();
   const normalized = path.startsWith("/") ? path : `/${path}`;
   const baseUrl = String(import.meta.env.BASE_URL || "/").replace(/\/$/, "");
@@ -30,18 +38,10 @@ function resolvePublicAssetCandidates(path) {
   ].filter(Boolean);
 }
 
-function resolveLogoUrl(rawValue, fallbackUrl) {
-  const raw = String(rawValue || "").trim();
-  if (!raw) return fallbackUrl;
-  if (/^https?:\/\//i.test(raw) || /^data:/i.test(raw) || /^blob:/i.test(raw)) return raw;
-  if (raw.startsWith("/uploads/")) return toBackendAssetUrl(raw);
-  return raw;
-}
-
 function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [companyName, setCompanyName] = useState("");
-  const [logoUrl, setLogoUrl] = useState(resolvePublicAssetCandidates(DEFAULT_LOGO_PATH)[0]);
+  const [logoUrl, setLogoUrl] = useState("");
   const [logoFallbackIndex, setLogoFallbackIndex] = useState(0);
   const [backgroundUrl, setBackgroundUrl] = useState("");
   const navigate = useNavigate();
@@ -50,25 +50,28 @@ function LoginPage() {
     () => resolvePublicAssetCandidates(DEFAULT_LOGIN_BACKGROUND_PATH),
     []
   );
-  const logoDefaultCandidates = useMemo(
-    () => [
-      "/assets/svg/logo/logo-pro.svg",
-      "/admin/assets/svg/logo/logo-pro.svg",
-    ],
-    []
-  );
+  const logoDefaultCandidates = useMemo(() => getLogoCandidates("/uploads/default/logo/logo-pro.svg"), []);
+
+  useEffect(() => {
+    setLogoUrl(logoDefaultCandidates[0] || "");
+  }, [logoDefaultCandidates]);
 
   useEffect(() => {
     let active = true;
+    const cached = readLogoCache();
+    if (cached) {
+      setLogoUrl(resolveLogoUrl(cached.logo_light_url) || logoDefaultCandidates[0]);
+    }
     (async () => {
       try {
         const [contactResult, logoResult] = await Promise.all([getPublicContact(), getPublicLogo()]);
         const nextName = String(contactResult?.data?.company_name || "").trim();
-        const apiLogo = String(logoResult?.data?.logo_url || "").trim();
+        const normalizedLogo = normalizeLogoData(logoResult?.data || {});
         if (!active) return;
         setCompanyName(nextName);
         setLogoFallbackIndex(0);
-        setLogoUrl(resolveLogoUrl(apiLogo, logoDefaultCandidates[0]));
+        setLogoUrl(resolveLogoUrl(normalizedLogo.logo_light_url) || logoDefaultCandidates[0]);
+        writeLogoCache(normalizedLogo);
       } catch (_error) {
         if (!active) return;
         setCompanyName("");
