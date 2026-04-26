@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Input, Row, Space, Switch } from "antd";
+import { Button, Card, Col, Form, Input, Row, Space } from "antd";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { ImageUploader } from "./ImageUploader";
 import { slugify } from "../../utils/slug";
@@ -58,21 +58,11 @@ function ProjectForm({ form, onSubmit, submitting }) {
         </Row>
       </Card>
 
-      <Card title="Home Card" style={{ marginTop: 16 }}>
+      <Card title="Project Thumbnail" style={{ marginTop: 16 }}>
         <Row gutter={16}>
           <Col xs={24} md={8}>
-            <Form.Item label="Image 1" name="image_1" rules={[{ required: true }]}>
+            <Form.Item label="Thumbnail image" name="image_1" rules={[{ required: true }]}>
               <ImageUploader defaultRatio="1366:778" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={8}>
-            <Form.Item label="Show on Home" name="is_home_visible" valuePropName="checked">
-              <Switch />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={8}>
-            <Form.Item label="Show on Slide" name="is_slide_visible" valuePropName="checked">
-              <Switch />
             </Form.Item>
           </Col>
         </Row>
@@ -81,7 +71,7 @@ function ProjectForm({ form, onSubmit, submitting }) {
       <Card title="Image Rows" style={{ marginTop: 16 }}>
         <Form.List name="image_rows">
           {(fields, { add, remove }) => (
-            <Space direction="vertical" style={{ width: "100%" }} size={16}>
+            <Space orientation="vertical" style={{ width: "100%" }} size={16}>
               {fields.map((field) => {
                 const layout = form.getFieldValue(["image_rows", field.name, "layout"]) || 1;
                 return (

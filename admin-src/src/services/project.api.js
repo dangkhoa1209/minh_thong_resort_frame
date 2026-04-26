@@ -20,8 +20,8 @@ async function updateProject(id, payload) {
   return response.data;
 }
 
-async function updateProjectDisplay(id, payload) {
-  const response = await http.patch(`/admin/projects/${id}/display`, payload);
+async function deleteProject(id) {
+  const response = await http.delete(`/admin/projects/${id}`);
   return response.data;
 }
 
@@ -30,5 +30,5 @@ export {
   getProject,
   createProject,
   updateProject,
-  updateProjectDisplay,
+  deleteProject,
 };

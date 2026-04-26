@@ -1,5 +1,12 @@
 import { Layout, Menu, Typography, Button } from "antd";
-import { AppstoreOutlined, SettingOutlined, DashboardOutlined, LogoutOutlined } from "@ant-design/icons";
+import {
+  AppstoreOutlined,
+  SettingOutlined,
+  DashboardOutlined,
+  LogoutOutlined,
+  HomeOutlined,
+  PictureOutlined,
+} from "@ant-design/icons";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import { useAuthStore } from "../../store/auth.store";
@@ -13,6 +20,8 @@ function AdminLayout() {
 
   const selectedKey = useMemo(() => {
     if (location.pathname.startsWith("/projects")) return "projects";
+    if (location.pathname.startsWith("/showcase/home-highlights")) return "home-highlights";
+    if (location.pathname.startsWith("/showcase/hero-slides")) return "hero-slides";
     if (location.pathname.startsWith("/settings")) return "settings";
     return "dashboard";
   }, [location.pathname]);
@@ -20,12 +29,16 @@ function AdminLayout() {
   const menuItems = [
     { key: "dashboard", icon: <DashboardOutlined />, label: "Dashboard" },
     { key: "projects", icon: <AppstoreOutlined />, label: "Projects" },
+    { key: "home-highlights", icon: <HomeOutlined />, label: "Home Highlights" },
+    { key: "hero-slides", icon: <PictureOutlined />, label: "Hero Slides" },
     { key: "settings", icon: <SettingOutlined />, label: "Settings" },
   ];
 
   const onMenuClick = ({ key }) => {
     if (key === "dashboard") navigate("/");
     if (key === "projects") navigate("/projects");
+    if (key === "home-highlights") navigate("/showcase/home-highlights");
+    if (key === "hero-slides") navigate("/showcase/hero-slides");
     if (key === "settings") navigate("/settings");
   };
 

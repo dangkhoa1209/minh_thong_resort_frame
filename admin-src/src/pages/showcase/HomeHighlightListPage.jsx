@@ -2,12 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import { Button, Input, Popconfirm, Space, Table } from "antd";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import { deleteProject, getProjects } from "../../services/project.api";
 import { PageHeader } from "../../components/common/PageHeader";
+import { StatusTag } from "../../components/common/StatusTag";
 import { toBackendAssetUrl } from "../../utils/media";
 import { notifyError, notifySuccess } from "../../utils/notify";
+import { deleteHomeHighlight, getHomeHighlights } from "../../services/showcase.api";
 
-function ProjectListPage() {
+function HomeHighlightListPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -17,7 +18,7 @@ function ProjectListPage() {
   const fetchData = async (page = 1, limit = 20, search = "") => {
     setLoading(true);
     try {
-      const result = await getProjects({ page, limit, search });
+      const result = await getHomeHighlights({ page, limit, search });
       setItems(result.data.items);
       setPagination({
         current: result.data.pagination.page,
@@ -25,7 +26,7 @@ function ProjectListPage() {
         total: result.data.pagination.total,
       });
     } catch (error) {
-      notifyError(error?.response?.data?.error?.message || "Cannot load projects");
+      notifyError(error?.response?.data?.error?.message || "Cannot load home highlights");
     } finally {
       setLoading(false);
     }
@@ -39,36 +40,32 @@ function ProjectListPage() {
     () => [
       {
         title: "Image",
-        dataIndex: "image_1",
+        dataIndex: "display_image",
         width: 120,
         render: (value) => <img src={toBackendAssetUrl(value)} alt="" style={{ width: 80, height: 50, objectFit: "cover" }} />,
       },
-      { title: "Title", dataIndex: "title", width: 280 },
-      { title: "Slug", dataIndex: "slug", width: 240 },
-      {
-        title: "Updated",
-        dataIndex: "updated_at",
-        width: 170,
-        render: (value) => dayjs(value).format("YYYY-MM-DD HH:mm"),
-      },
+      { title: "Project", dataIndex: "project_title", width: 280 },
+      { title: "Slug", dataIndex: "project_slug", width: 220 },
+      { title: "Order", dataIndex: "sort_order", width: 100 },
+      { title: "Active", dataIndex: "is_active", width: 90, render: (value) => <StatusTag active={value} /> },
+      { title: "Updated", dataIndex: "updated_at", width: 170, render: (value) => dayjs(value).format("YYYY-MM-DD HH:mm") },
       {
         title: "Action",
-        width: 220,
+        width: 180,
         render: (_, row) => (
           <Space>
-            <Button onClick={() => navigate(`/projects/${row.id}`)}>Edit</Button>
+            <Button onClick={() => navigate(`/showcase/home-highlights/${row.id}`)}>Edit</Button>
             <Popconfirm
-              title="Delete project?"
-              description="This action cannot be undone."
+              title="Delete item?"
               okText="Delete"
               okButtonProps={{ danger: true }}
               onConfirm={async () => {
                 try {
-                  await deleteProject(row.id);
-                  notifySuccess("Deleted project successfully");
+                  await deleteHomeHighlight(row.id);
+                  notifySuccess("Deleted successfully");
                   fetchData(pagination.current, pagination.pageSize, keyword);
                 } catch (error) {
-                  notifyError(error?.response?.data?.error?.message || "Cannot delete project");
+                  notifyError(error?.response?.data?.error?.message || "Cannot delete item");
                 }
               }}
             >
@@ -84,13 +81,13 @@ function ProjectListPage() {
   return (
     <div style={{ height: "calc(100vh - 96px)", display: "flex", flexDirection: "column", minHeight: 0 }}>
       <PageHeader
-        title="Projects"
-        extra={<Button type="primary" onClick={() => navigate("/projects/new")}>Create Project</Button>}
+        title="Home Highlights"
+        extra={<Button type="primary" onClick={() => navigate("/showcase/home-highlights/new")}>Add Item</Button>}
       />
 
       <Space style={{ marginBottom: 16 }}>
         <Input.Search
-          placeholder="Search title/slug"
+          placeholder="Search project title/slug"
           allowClear
           onSearch={(value) => {
             setKeyword(value);
@@ -116,4 +113,4 @@ function ProjectListPage() {
   );
 }
 
-export { ProjectListPage };
+export { HomeHighlightListPage };
