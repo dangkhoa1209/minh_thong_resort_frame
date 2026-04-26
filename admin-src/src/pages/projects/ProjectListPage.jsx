@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Button, Input, Popconfirm, Space, Table } from "antd";
+import { Button, Grid, Input, Popconfirm, Space, Table } from "antd";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { deleteProject, getProjects } from "../../services/project.api";
@@ -8,6 +8,8 @@ import { toBackendAssetUrl } from "../../utils/media";
 import { notifyError, notifySuccess } from "../../utils/notify";
 
 function ProjectListPage() {
+  const screens = Grid.useBreakpoint();
+  const isMobile = !screens.md;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -95,10 +97,11 @@ function ProjectListPage() {
         extra={<Button type="primary" onClick={() => navigate("/projects/new")}>Create Project</Button>}
       />
 
-      <Space style={{ marginBottom: 16 }}>
+      <Space style={{ marginBottom: 16, width: isMobile ? "100%" : undefined }}>
         <Input.Search
           placeholder="Search title/name/location"
           allowClear
+          style={{ width: isMobile ? "100%" : 320 }}
           onSearch={(value) => {
             setKeyword(value);
             fetchData(1, pagination.pageSize, value);
@@ -112,10 +115,13 @@ function ProjectListPage() {
           columns={columns}
           dataSource={items}
           loading={loading}
+          size={isMobile ? "small" : "middle"}
           scroll={{ x: "max-content", y: "calc(100vh - 300px)" }}
           pagination={{
             ...pagination,
             onChange: (page, pageSize) => fetchData(page, pageSize, keyword),
+            simple: isMobile,
+            showSizeChanger: !isMobile,
           }}
         />
       </div>

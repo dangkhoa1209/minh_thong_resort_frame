@@ -1,4 +1,4 @@
-import { Layout, Menu, Typography, Button } from "antd";
+import { Layout, Menu, Typography, Button, Drawer, Grid } from "antd";
 import {
   AppstoreOutlined,
   SettingOutlined,
@@ -7,6 +7,7 @@ import {
   HomeOutlined,
   MailOutlined,
   PictureOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
@@ -25,11 +26,14 @@ const { Header, Sider, Content } = Layout;
 const LOGO_CANDIDATES = getLogoCandidates("/uploads/default/logo/logo-pro.svg");
 
 function AdminLayout() {
+  const screens = Grid.useBreakpoint();
+  const isMobile = !screens.lg;
   const location = useLocation();
   const navigate = useNavigate();
   const clearAuth = useAuthStore((state) => state.clearAuth);
   const [logoUrl, setLogoUrl] = useState(LOGO_CANDIDATES[0]);
   const [logoIndex, setLogoIndex] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -83,35 +87,54 @@ function AdminLayout() {
     if (key === "hero-slides") navigate("/showcase/hero-slides");
     if (key === "contacts") navigate("/contacts");
     if (key === "settings") navigate("/settings");
+    if (isMobile) setMenuOpen(false);
   };
+
+  const navContent = (
+    <>
+      <div className="admin-brand">
+        <img
+          src={logoIndex === 0 ? logoUrl : (LOGO_CANDIDATES[logoIndex] || LOGO_CANDIDATES[0])}
+          alt="Site logo"
+          className="admin-brand__logo"
+          onError={() => {
+            setLogoIndex((current) =>
+              Math.min(current + 1, Math.max(0, LOGO_CANDIDATES.length - 1))
+            );
+          }}
+        />
+      </div>
+      <Menu
+        theme="dark"
+        mode="inline"
+        selectedKeys={[selectedKey]}
+        items={menuItems}
+        onClick={onMenuClick}
+      />
+    </>
+  );
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider width={240}>
-        <div className="admin-brand">
-          <img
-            src={logoIndex === 0 ? logoUrl : (LOGO_CANDIDATES[logoIndex] || LOGO_CANDIDATES[0])}
-            alt="Site logo"
-            className="admin-brand__logo"
-            onError={() => {
-              setLogoIndex((current) =>
-                Math.min(current + 1, Math.max(0, LOGO_CANDIDATES.length - 1))
-              );
-            }}
-          />
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[selectedKey]}
-          items={menuItems}
-          onClick={onMenuClick}
-        />
-      </Sider>
+      {!isMobile && <Sider width={240}>{navContent}</Sider>}
+      {isMobile && (
+        <Drawer
+          title="Menu"
+          placement="left"
+          open={menuOpen}
+          onClose={() => setMenuOpen(false)}
+          styles={{ body: { padding: 0, background: "#111111" }, header: { marginBottom: 0 } }}
+        >
+          {navContent}
+        </Drawer>
+      )}
 
       <Layout>
         <Header className="admin-header">
-          <Typography.Text strong>Admin Panel</Typography.Text>
+          <div className="admin-header__left">
+            {isMobile && <Button icon={<MenuOutlined />} onClick={() => setMenuOpen(true)} />}
+            <Typography.Text strong>Admin Panel</Typography.Text>
+          </div>
           <Button
             icon={<LogoutOutlined />}
             onClick={() => {
@@ -119,7 +142,7 @@ function AdminLayout() {
               navigate("/login");
             }}
           >
-            Logout
+            {isMobile ? "Out" : "Logout"}
           </Button>
         </Header>
         <Content className="admin-content">

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Button, Input, InputNumber, Popconfirm, Space, Switch, Table } from "antd";
+import { Button, Grid, Input, InputNumber, Popconfirm, Space, Switch, Table } from "antd";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { PageHeader } from "../../components/common/PageHeader";
@@ -8,6 +8,8 @@ import { notifyError, notifySuccess } from "../../utils/notify";
 import { deleteHomeHighlight, getHomeHighlights, updateHomeHighlight } from "../../services/showcase.api";
 
 function HomeHighlightListPage() {
+  const screens = Grid.useBreakpoint();
+  const isMobile = !screens.md;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -127,10 +129,11 @@ function HomeHighlightListPage() {
         extra={<Button type="primary" onClick={() => navigate("/showcase/home-highlights/new")}>Add Project</Button>}
       />
 
-      <Space style={{ marginBottom: 16 }}>
+      <Space style={{ marginBottom: 16, width: isMobile ? "100%" : undefined }}>
         <Input.Search
           placeholder="Search project title/name"
           allowClear
+          style={{ width: isMobile ? "100%" : 320 }}
           onSearch={(value) => {
             setKeyword(value);
             fetchData(1, pagination.pageSize, value);
@@ -144,10 +147,13 @@ function HomeHighlightListPage() {
           columns={columns}
           dataSource={items}
           loading={loading}
+          size={isMobile ? "small" : "middle"}
           scroll={{ x: "max-content", y: "calc(100vh - 300px)" }}
           pagination={{
             ...pagination,
             onChange: (page, pageSize) => fetchData(page, pageSize, keyword),
+            simple: isMobile,
+            showSizeChanger: !isMobile,
           }}
         />
       </div>

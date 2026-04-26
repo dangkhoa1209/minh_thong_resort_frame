@@ -43,6 +43,12 @@ body {
   padding: 0 16px;
 }
 
+.admin-header__left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .admin-content {
   padding: 16px;
 }
@@ -51,6 +57,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   margin-bottom: 16px;
 }
 
@@ -182,4 +189,27 @@ body {
 .ant-btn-primary:focus {
   background: #000000 !important;
   border-color: #000000 !important;
+}
+
+@media (max-width: 767px) {
+  .admin-content {
+    padding: 12px;
+  }
+
+  .admin-header {
+    padding: 0 12px;
+  }
+
+  .page-header {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .page-header .ant-space {
+    width: 100%;
+  }
+
+  .page-header .ant-space .ant-btn {
+    width: 100%;
+  }
 }

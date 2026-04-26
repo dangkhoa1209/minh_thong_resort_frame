@@ -10,4 +10,9 @@ async function getMe() {
   return response.data;
 }
 
-export { login, getMe };
+async function changePassword(payload) {
+  const response = await http.post("/admin/auth/change-password", payload);
+  return response.data;
+}
+
+export { login, getMe, changePassword };

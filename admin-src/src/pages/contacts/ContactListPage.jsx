@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Input, Select, Space, Table, Tag, Typography } from "antd";
+import { Grid, Input, Select, Space, Table, Tag, Typography } from "antd";
 import dayjs from "dayjs";
 import { PageHeader } from "../../components/common/PageHeader";
 import { getContacts, updateContactStatus } from "../../services/contact.api";
@@ -12,6 +12,8 @@ const statusOptions = [
 ];
 
 function ContactListPage() {
+  const screens = Grid.useBreakpoint();
+  const isMobile = !screens.md;
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [status, setStatus] = useState("");
@@ -106,10 +108,11 @@ function ContactListPage() {
     <div style={{ height: "calc(100vh - 96px)", display: "flex", flexDirection: "column", minHeight: 0 }}>
       <PageHeader title="Contact Requests" />
 
-      <Space style={{ marginBottom: 16 }} wrap>
+      <Space style={{ marginBottom: 16, width: "100%" }} wrap>
         <Input.Search
           placeholder="Search name, email, message"
           allowClear
+          style={{ width: isMobile ? "100%" : 320 }}
           onSearch={(value) => {
             setKeyword(value);
             fetchData(1, pagination.pageSize, value, status);
@@ -117,7 +120,7 @@ function ContactListPage() {
         />
         <Select
           value={status}
-          style={{ width: 180 }}
+          style={{ width: isMobile ? "100%" : 180 }}
           options={[{ value: "", label: "All statuses" }, ...statusOptions]}
           onChange={(value) => {
             setStatus(value);
@@ -132,10 +135,13 @@ function ContactListPage() {
           columns={columns}
           dataSource={items}
           loading={loading}
+          size={isMobile ? "small" : "middle"}
           scroll={{ x: "max-content", y: "calc(100vh - 300px)" }}
           pagination={{
             ...pagination,
             onChange: (page, pageSize) => fetchData(page, pageSize),
+            simple: isMobile,
+            showSizeChanger: !isMobile,
           }}
         />
       </div>
