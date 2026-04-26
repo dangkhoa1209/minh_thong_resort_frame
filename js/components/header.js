@@ -29,6 +29,10 @@ const waitForElements = (callback, retries = 10, interval = 300) => {
 waitForElements(start);
 
 function start({ menuTrigger, drawer, closeBtn, overlay, desktopMenu, header }) {
+  if (window.ABEL_LOGOS?.initLogos) {
+    window.ABEL_LOGOS.initLogos();
+  }
+
   let autoCloseTimer;
 
   const clearAutoCloseTimer = () => {

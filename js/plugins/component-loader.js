@@ -71,6 +71,11 @@ function loadComponent(url, containerId, extraClass = '') {
             content.classList.add(extraClass);
           }
           container.appendChild(content);
+
+          // Re-apply logos after component is mounted to avoid race conditions.
+          if (content.querySelector('[data-logo-role]') && window.ABEL_LOGOS?.initLogos) {
+            window.ABEL_LOGOS.initLogos();
+          }
         }
       });
     })
