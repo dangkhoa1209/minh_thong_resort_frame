@@ -1,11 +1,19 @@
-import { message } from "antd";
+let messageApi = null;
+
+function setNotifyApi(api) {
+  messageApi = api;
+}
 
 function notifySuccess(text) {
-  message.success(text);
+  if (messageApi) {
+    messageApi.success(text);
+  }
 }
 
 function notifyError(text) {
-  message.error(text);
+  if (messageApi) {
+    messageApi.error(text);
+  }
 }
 
-export { notifySuccess, notifyError };
+export { notifySuccess, notifyError, setNotifyApi };

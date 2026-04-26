@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { Button, Input, Popconfirm, Space, Table } from "antd";
+import { Button, Input, InputNumber, Popconfirm, Space, Switch, Table } from "antd";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { PageHeader } from "../../components/common/PageHeader";
-import { StatusTag } from "../../components/common/StatusTag";
 import { toBackendAssetUrl } from "../../utils/media";
 import { notifyError, notifySuccess } from "../../utils/notify";
-import { deleteHomeHighlight, getHomeHighlights } from "../../services/showcase.api";
+import { deleteHomeHighlight, getHomeHighlights, updateHomeHighlight } from "../../services/showcase.api";
 
 function HomeHighlightListPage() {
   const navigate = useNavigate();
@@ -36,6 +35,22 @@ function HomeHighlightListPage() {
     fetchData();
   }, []);
 
+  const handleQuickUpdate = async (row, patch) => {
+    try {
+      await updateHomeHighlight(row.id, {
+        project_id: row.project_id,
+        sort_order: row.sort_order,
+        is_active: row.is_active,
+        ...patch,
+      });
+      notifySuccess("Updated successfully");
+      fetchData(pagination.current, pagination.pageSize, keyword);
+    } catch (error) {
+      notifyError(error?.response?.data?.error?.message || "Cannot update item");
+      fetchData(pagination.current, pagination.pageSize, keyword);
+    }
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -46,8 +61,32 @@ function HomeHighlightListPage() {
       },
       { title: "Project", dataIndex: "project_title", width: 280 },
       { title: "Slug", dataIndex: "project_slug", width: 220 },
-      { title: "Order", dataIndex: "sort_order", width: 100 },
-      { title: "Active", dataIndex: "is_active", width: 90, render: (value) => <StatusTag active={value} /> },
+      {
+        title: "Order",
+        dataIndex: "sort_order",
+        width: 120,
+        render: (value, row) => (
+          <InputNumber
+            min={0}
+            defaultValue={value}
+            onPressEnter={(event) => handleQuickUpdate(row, { sort_order: Number(event.currentTarget.value) || 0 })}
+            onBlur={(event) => {
+              const nextValue = Number(event.currentTarget.value) || 0;
+              if (nextValue !== value) {
+                handleQuickUpdate(row, { sort_order: nextValue });
+              }
+            }}
+          />
+        ),
+      },
+      {
+        title: "Active",
+        dataIndex: "is_active",
+        width: 100,
+        render: (value, row) => (
+          <Switch checked={value} onChange={(checked) => handleQuickUpdate(row, { is_active: checked })} />
+        ),
+      },
       { title: "Updated", dataIndex: "updated_at", width: 170, render: (value) => dayjs(value).format("YYYY-MM-DD HH:mm") },
       {
         title: "Action",
@@ -82,7 +121,7 @@ function HomeHighlightListPage() {
     <div style={{ height: "calc(100vh - 96px)", display: "flex", flexDirection: "column", minHeight: 0 }}>
       <PageHeader
         title="Home Highlights"
-        extra={<Button type="primary" onClick={() => navigate("/showcase/home-highlights/new")}>Add Item</Button>}
+        extra={<Button type="primary" onClick={() => navigate("/showcase/home-highlights/new")}>Add Project</Button>}
       />
 
       <Space style={{ marginBottom: 16 }}>

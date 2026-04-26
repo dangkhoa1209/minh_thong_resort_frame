@@ -18,7 +18,7 @@ function HeroSlideFormPage() {
   useEffect(() => {
     (async () => {
       try {
-        const result = await getProjects({ page: 1, limit: 200 });
+        const result = await getProjects({ page: 1, limit: 100 });
         setProjects(result.data.items || []);
       } catch (error) {
         notifyError(error?.response?.data?.error?.message || "Cannot load projects");
@@ -60,7 +60,7 @@ function HeroSlideFormPage() {
 
   return (
     <div>
-      <PageHeader title={isEdit ? "Edit Hero Slide" : "Create Hero Slide"} />
+      <PageHeader title={isEdit ? "Edit Hero Slide" : "Add Project to Hero Slides"} />
       <Card>
         <ShowcaseItemForm form={form} onSubmit={handleSubmit} submitting={loading} projects={projects} />
       </Card>

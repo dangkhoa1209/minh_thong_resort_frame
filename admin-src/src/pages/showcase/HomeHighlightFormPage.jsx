@@ -18,7 +18,7 @@ function HomeHighlightFormPage() {
   useEffect(() => {
     (async () => {
       try {
-        const result = await getProjects({ page: 1, limit: 200 });
+        const result = await getProjects({ page: 1, limit: 100 });
         setProjects(result.data.items || []);
       } catch (error) {
         notifyError(error?.response?.data?.error?.message || "Cannot load projects");
@@ -60,7 +60,7 @@ function HomeHighlightFormPage() {
 
   return (
     <div>
-      <PageHeader title={isEdit ? "Edit Home Highlight" : "Create Home Highlight"} />
+      <PageHeader title={isEdit ? "Edit Home Highlight" : "Add Project to Home Highlights"} />
       <Card>
         <ShowcaseItemForm form={form} onSubmit={handleSubmit} submitting={loading} projects={projects} />
       </Card>

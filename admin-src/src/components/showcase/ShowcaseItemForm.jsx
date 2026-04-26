@@ -1,8 +1,9 @@
-import { Button, Form, InputNumber, Select, Space, Switch } from "antd";
+import { Button, Form, Image, InputNumber, Select, Space, Switch, Typography } from "antd";
 import { useMemo } from "react";
-import { ImageUploader } from "../projects/ImageUploader";
+import { toBackendAssetUrl } from "../../utils/media";
 
 function ShowcaseItemForm({ form, onSubmit, submitting, projects = [] }) {
+  const selectedProjectId = Form.useWatch("project_id", form);
   const options = useMemo(
     () =>
       projects.map((item) => ({
@@ -10,6 +11,10 @@ function ShowcaseItemForm({ form, onSubmit, submitting, projects = [] }) {
         label: `${item.title} (${item.slug})`,
       })),
     [projects]
+  );
+  const selectedProject = useMemo(
+    () => projects.find((item) => item.id === selectedProjectId),
+    [projects, selectedProjectId]
   );
 
   return (
@@ -23,9 +28,21 @@ function ShowcaseItemForm({ form, onSubmit, submitting, projects = [] }) {
         />
       </Form.Item>
 
-      <Form.Item label="Display image" name="display_image" rules={[{ required: true }]}>
-        <ImageUploader defaultRatio="16:9" />
-      </Form.Item>
+      {selectedProject?.image_1 ? (
+        <Form.Item label="Project thumbnail">
+          <Space align="start">
+            <Image
+              width={160}
+              height={96}
+              src={toBackendAssetUrl(selectedProject.image_1)}
+              style={{ objectFit: "cover", borderRadius: 6 }}
+            />
+            <Typography.Text type="secondary">
+              This image comes from the selected project. Edit the project if you need to change it.
+            </Typography.Text>
+          </Space>
+        </Form.Item>
+      ) : null}
 
       <Space>
         <Form.Item label="Sort order" name="sort_order" initialValue={0}>
