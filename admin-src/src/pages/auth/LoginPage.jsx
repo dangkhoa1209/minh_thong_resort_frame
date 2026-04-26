@@ -30,9 +30,9 @@ function resolvePublicAssetCandidates(path) {
   ].filter(Boolean);
 }
 
-function resolveLogoUrl(value) {
-  const raw = String(value || "").trim();
-  if (!raw) return resolvePublicAssetCandidates(DEFAULT_LOGO_PATH)[0];
+function resolveLogoUrl(rawValue, fallbackUrl) {
+  const raw = String(rawValue || "").trim();
+  if (!raw) return fallbackUrl;
   if (/^https?:\/\//i.test(raw) || /^data:/i.test(raw) || /^blob:/i.test(raw)) return raw;
   if (raw.startsWith("/uploads/")) return toBackendAssetUrl(raw);
   return raw;
@@ -51,7 +51,10 @@ function LoginPage() {
     []
   );
   const logoDefaultCandidates = useMemo(
-    () => resolvePublicAssetCandidates(DEFAULT_LOGO_PATH),
+    () => [
+      "/assets/svg/logo/logo-pro.svg",
+      "/admin/assets/svg/logo/logo-pro.svg",
+    ],
     []
   );
 
@@ -61,13 +64,15 @@ function LoginPage() {
       try {
         const [contactResult, logoResult] = await Promise.all([getPublicContact(), getPublicLogo()]);
         const nextName = String(contactResult?.data?.company_name || "").trim();
-        const nextLogo = resolveLogoUrl(logoResult?.data?.logo_url);
+        const apiLogo = String(logoResult?.data?.logo_url || "").trim();
         if (!active) return;
         setCompanyName(nextName);
-        setLogoUrl(nextLogo);
+        setLogoFallbackIndex(0);
+        setLogoUrl(resolveLogoUrl(apiLogo, logoDefaultCandidates[0]));
       } catch (_error) {
         if (!active) return;
         setCompanyName("");
+        setLogoFallbackIndex(0);
         setLogoUrl(logoDefaultCandidates[0]);
       }
     })();

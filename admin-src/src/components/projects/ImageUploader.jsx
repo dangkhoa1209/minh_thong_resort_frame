@@ -55,7 +55,6 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1 }) {
   const [sourceImage, setSourceImage] = useState("");
   const [sourceFile, setSourceFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [lastCompressionInfo, setLastCompressionInfo] = useState(null);
   const [liveCompressionInfo, setLiveCompressionInfo] = useState(null);
   const cropperRef = useRef(null);
   const estimateRunRef = useRef(0);
@@ -180,14 +179,6 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1 }) {
       const result = await uploadProjectImage(croppedFile);
       const uploadedUrl = result?.data?.url;
 
-      setLastCompressionInfo({
-        originalSize: sourceFile.size,
-        outputSize: blob.size,
-        quality,
-        width,
-        height,
-      });
-
       pushUploadedUrl(uploadedUrl);
       handleCropCancel();
     } catch (error) {
@@ -223,16 +214,6 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1 }) {
         {fileList.length >= maxCount ? null : <PlusOutlined />}
       </Upload>
 
-      {lastCompressionInfo ? (
-        <Space direction="vertical" size={2}>
-          <Typography.Text type="secondary">
-            Before: {formatBytes(lastCompressionInfo.originalSize)}
-          </Typography.Text>
-          <Typography.Text type="secondary">
-            After: {formatBytes(lastCompressionInfo.outputSize)} ({lastCompressionInfo.width}x{lastCompressionInfo.height}, quality {lastCompressionInfo.quality}%)
-          </Typography.Text>
-        </Space>
-      ) : null}
       <Modal
         title="Preview & Crop image"
         open={cropModalOpen}

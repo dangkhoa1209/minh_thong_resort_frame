@@ -15,22 +15,16 @@ import { getLogo } from "../../services/setting.api";
 import { toBackendAssetUrl } from "../../utils/media";
 
 const { Header, Sider, Content } = Layout;
-const DEFAULT_FRONTEND_LOGO = "/assets/svg/logo/logo-pro.svg";
+const LOGO_CANDIDATES = [
+  "/assets/svg/logo/logo-pro.svg",
+  "/admin/assets/svg/logo/logo-pro.svg",
+];
 
-function resolveLogoUrl(value) {
-  const raw = String(value || "").trim();
-  if (!raw) return DEFAULT_FRONTEND_LOGO;
-
-  if (/^https?:\/\//i.test(raw) || /^data:/i.test(raw) || /^blob:/i.test(raw)) {
-    return raw;
-  }
-
-  // Match FE logic: only /uploads/* belongs to backend.
-  if (raw.startsWith("/uploads/")) {
-    return toBackendAssetUrl(raw);
-  }
-
-  // /assets/* and other local paths stay on frontend.
+function resolveLogoUrl(rawValue, fallbackUrl) {
+  const raw = String(rawValue || "").trim();
+  if (!raw) return fallbackUrl;
+  if (/^https?:\/\//i.test(raw) || /^data:/i.test(raw) || /^blob:/i.test(raw)) return raw;
+  if (raw.startsWith("/uploads/")) return toBackendAssetUrl(raw);
   return raw;
 }
 
@@ -38,7 +32,8 @@ function AdminLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const clearAuth = useAuthStore((state) => state.clearAuth);
-  const [logoUrl, setLogoUrl] = useState("");
+  const [logoUrl, setLogoUrl] = useState(LOGO_CANDIDATES[0]);
+  const [logoIndex, setLogoIndex] = useState(0);
 
   useEffect(() => {
     let active = true;
@@ -46,13 +41,14 @@ function AdminLayout() {
     (async () => {
       try {
         const logoResult = await getLogo();
-        const storedLogo = String(logoResult?.data?.logo_url || "").trim();
-
+        const apiLogo = String(logoResult?.data?.logo_url || "").trim();
         if (!active) return;
-        setLogoUrl(resolveLogoUrl(storedLogo));
+        setLogoIndex(0);
+        setLogoUrl(resolveLogoUrl(apiLogo, LOGO_CANDIDATES[0]));
       } catch (_error) {
         if (!active) return;
-        setLogoUrl(DEFAULT_FRONTEND_LOGO);
+        setLogoIndex(0);
+        setLogoUrl(LOGO_CANDIDATES[0]);
       }
     })();
 
@@ -93,11 +89,13 @@ function AdminLayout() {
       <Sider width={240}>
         <div className="admin-brand">
           <img
-            src={logoUrl || DEFAULT_FRONTEND_LOGO}
+            src={logoIndex === 0 ? logoUrl : (LOGO_CANDIDATES[logoIndex] || LOGO_CANDIDATES[0])}
             alt="Site logo"
             className="admin-brand__logo"
-            onError={(event) => {
-              event.currentTarget.src = DEFAULT_FRONTEND_LOGO;
+            onError={() => {
+              setLogoIndex((current) =>
+                Math.min(current + 1, Math.max(0, LOGO_CANDIDATES.length - 1))
+              );
             }}
           />
         </div>

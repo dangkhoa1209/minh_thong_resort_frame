@@ -77,9 +77,9 @@ function DashboardPage() {
         <Col xs={24} lg={8}>
           <Card title="Contact Pipeline" loading={loading}>
             <Space direction="vertical">
-              <Typography.Text><Tag color="blue">New</Tag>{contacts.new || 0}</Typography.Text>
-              <Typography.Text><Tag color="gold">Contacted</Tag>{contacts.contacted || 0}</Typography.Text>
-              <Typography.Text><Tag color="green">Closed</Tag>{contacts.closed || 0}</Typography.Text>
+              <Typography.Text><Tag color="blue">New</Tag> {contacts.new || 0}</Typography.Text>
+              <Typography.Text><Tag color="gold">Contacted</Tag> {contacts.contacted || 0}</Typography.Text>
+              <Typography.Text><Tag color="green">Closed</Tag> {contacts.closed || 0}</Typography.Text>
             </Space>
           </Card>
         </Col>
