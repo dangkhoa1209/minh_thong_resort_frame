@@ -50,6 +50,100 @@ function bindThumbIds() {
   });
 }
 
+function upsertMetaByName(name, content) {
+  if (!name || !content) return;
+  let meta = document.querySelector(`meta[name="${name}"]`);
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", name);
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute("content", content);
+}
+
+function upsertMetaByProperty(property, content) {
+  if (!property || !content) return;
+  let meta = document.querySelector(`meta[property="${property}"]`);
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("property", property);
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute("content", content);
+}
+
+function upsertCanonical(url) {
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (!canonical) {
+    canonical = document.createElement("link");
+    canonical.setAttribute("rel", "canonical");
+    document.head.appendChild(canonical);
+  }
+  canonical.setAttribute("href", url);
+}
+
+function updateProjectSeo(data) {
+  const title = [data.title, data.name].filter(Boolean).join(" | ");
+  const readableTitle = title || "Resort Project";
+  const location = data.location ? ` in ${data.location}` : "";
+  const year = data.year ? ` (${data.year})` : "";
+  const description = `Project ${readableTitle}${location}${year} by Abel Dang Production, specializing in premium resort and hotel photography.`;
+  const canonicalUrl = window.location.href;
+  const ogImage = data.banner_image ? getAssetUrl(data.banner_image) : "";
+
+  document.title = `${readableTitle} | Abel Dang Production`;
+  upsertMetaByName("description", description);
+  upsertMetaByName(
+    "keywords",
+    `Abel Dang, chụp ảnh resort, chụp ảnh khách sạn, ${readableTitle}, resort photography, hotel photography`
+  );
+  upsertMetaByProperty("og:title", `${readableTitle} | Abel Dang Production`);
+  upsertMetaByProperty("og:description", description);
+  upsertMetaByProperty("og:url", canonicalUrl);
+  if (ogImage) {
+    upsertMetaByProperty("og:image", ogImage);
+    upsertMetaByName("twitter:image", ogImage);
+  }
+  upsertMetaByName("twitter:title", `${readableTitle} | Abel Dang Production`);
+  upsertMetaByName("twitter:description", description);
+  upsertCanonical(canonicalUrl);
+
+  const schemaNode = document.getElementById("project-schema");
+  if (schemaNode) {
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      name: readableTitle,
+      description,
+      url: canonicalUrl,
+      creator: {
+        "@type": "Organization",
+        name: "Abel Dang Production",
+      },
+      image: ogImage || undefined,
+      datePublished: data.year ? String(data.year) : undefined,
+      keywords: [
+        "Abel Dang",
+        "chụp ảnh resort",
+        "chụp ảnh khách sạn",
+        "resort photography",
+        "hotel photography",
+      ],
+    };
+    schemaNode.textContent = JSON.stringify(schema);
+  }
+}
+
+function initBaseProjectSeo() {
+  const pageUrl = window.location.href;
+  upsertCanonical(pageUrl);
+  upsertMetaByProperty("og:url", pageUrl);
+
+  const title = document.title || "Abel Dang Production";
+  upsertMetaByProperty("og:title", title);
+  upsertMetaByName("twitter:title", title);
+}
+
 function closePopup() {
   const popupImg = popup.querySelector(".popup-img");
   if (!popupImg) return;
@@ -171,18 +265,30 @@ function renderProjectDetail(data) {
   const contentNode = document.querySelector(".about__content p");
   const locationNode = document.querySelector(".about__meta p:first-child .font-thin");
   const yearNode = document.querySelector(".about__meta p:last-child .font-thin");
-  if (thinTitle) thinTitle.textContent = data.title || data.banner_title || "";
-  if (boldTitle) boldTitle.textContent = data.name || data.banner_subtitle || "";
-  if (locationNode && data.location) locationNode.textContent = data.location;
-  if (yearNode && data.year) yearNode.textContent = data.year;
+  const thinTitleText = data.title || data.banner_title || "";
+  const boldTitleText = data.name || data.banner_subtitle || "";
+  if (thinTitle) thinTitle.textContent = thinTitleText;
+  if (boldTitle) boldTitle.textContent = boldTitleText;
+  if (locationNode) locationNode.textContent = data.location || "";
+  if (yearNode) yearNode.textContent = data.year || "";
   if (contentNode) contentNode.textContent = data.content || "";
+  if (bannerImg && (thinTitleText || boldTitleText)) {
+    bannerImg.alt = `${thinTitleText} ${boldTitleText}`.trim();
+  }
+  updateProjectSeo(data);
 
   const productsContainer = document.querySelector(".products");
-  if (!productsContainer || !Array.isArray(data.image_rows) || data.image_rows.length === 0) {
+  if (!productsContainer) {
     return;
   }
 
-  productsContainer.innerHTML = data.image_rows
+  const imageRows = Array.isArray(data.image_rows) ? data.image_rows : [];
+  if (imageRows.length === 0) {
+    productsContainer.innerHTML = "";
+    return;
+  }
+
+  productsContainer.innerHTML = imageRows
     .map((row) => {
       const className = ratioToClass(row.layout, row.ratio);
       const ratioStyle = ratioToStyle(row.layout, row.ratio);
@@ -237,5 +343,6 @@ function trackProjectView() {
 }
 
 initPopupPreview();
+initBaseProjectSeo();
 loadProjectDetail();
 trackProjectView();
