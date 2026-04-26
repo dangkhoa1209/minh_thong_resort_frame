@@ -18,6 +18,62 @@ function escapeHtml(value) {
     .replace(/'/g, "&#039;");
 }
 
+const HOME_PARTNER_FALLBACK = [
+  "/uploads/default/partners/asset-2.svg",
+  "/uploads/default/partners/asset-3.svg",
+  "/uploads/default/partners/asset-4.svg",
+  "/uploads/default/partners/asset-5.svg",
+  "/uploads/default/partners/asset-6.svg",
+];
+
+function renderHomePartners(logos) {
+  const track = document.getElementById("home-partner-track");
+  const partnerSection = document.querySelector(".partner");
+  if (!track || !partnerSection) return;
+
+  const items = (Array.isArray(logos) ? logos : [])
+    .map((item) => String(item || "").trim())
+    .filter(Boolean);
+
+  if (items.length === 0) {
+    track.innerHTML = "";
+    partnerSection.style.display = "none";
+    return;
+  }
+
+  const slideContent = items
+    .map(
+      (url, index) =>
+        `<div class="partner-item"><img src="${escapeHtml(getAssetUrl(url))}" class="partner-logo" alt="Partner ${index + 1}"></div>`
+    )
+    .join("");
+
+  track.innerHTML = `
+    <div class="slide">${slideContent}</div>
+    <div class="slide">${slideContent}</div>
+  `;
+  partnerSection.style.display = "";
+}
+
+async function loadHomePartners() {
+  try {
+    const response = await fetch(`${getApiBaseUrl()}/api/public/settings/home-partners`);
+    if (!response.ok) {
+      renderHomePartners(HOME_PARTNER_FALLBACK);
+      return;
+    }
+    const payload = await response.json();
+    const logos = payload?.data?.logos;
+    if (!Array.isArray(logos) || logos.length === 0) {
+      renderHomePartners(HOME_PARTNER_FALLBACK);
+      return;
+    }
+    renderHomePartners(logos);
+  } catch (_error) {
+    renderHomePartners(HOME_PARTNER_FALLBACK);
+  }
+}
+
 function getProjectCover(item) {
   return item?.banner_image || item?.image_1 || "";
 }
@@ -103,6 +159,7 @@ async function loadHomeProjects() {
 }
 
 loadHomeProjects();
+loadHomePartners();
 
 
 

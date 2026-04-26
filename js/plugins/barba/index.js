@@ -1,13 +1,15 @@
 try {
   barba.init({
+    sync: true,
+    preventRunning: true,
     transitions: [
       {
         name: 'instant',
         leave() {
-          return Promise.resolve(); // không delay
+          return Promise.resolve();
         },
         enter() {
-          return Promise.resolve(); // không delay
+          return Promise.resolve();
         }
       }
     ]

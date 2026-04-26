@@ -66,6 +66,13 @@ function renderSlides() {
     return false;
   }
 
+  slidesData = slidesData.filter((item) => Boolean(getProjectCover(item)));
+  if (slidesData.length === 0) {
+    wrapper.innerHTML = "";
+    setSlidesVisible(false);
+    return false;
+  }
+
   setSlidesVisible(true);
   wrapper.innerHTML = slidesData
     .map(
@@ -78,12 +85,24 @@ function renderSlides() {
 
 async function loadOtherProjectsFromApi() {
   const slug = getCurrentProjectSlug();
-  if (!slug) return [];
   try {
-    const response = await fetch(`${getApiBaseUrl()}/api/public/projects/${slug}/other-projects?limit=6`);
-    if (!response.ok) return [];
-    const payload = await response.json();
-    return Array.isArray(payload?.data) ? payload.data : [];
+    if (slug) {
+      const response = await fetch(`${getApiBaseUrl()}/api/public/projects/${slug}/other-projects?limit=6`);
+      if (response.ok) {
+        const payload = await response.json();
+        const items = Array.isArray(payload?.data) ? payload.data : [];
+        if (items.length > 0) {
+          return items;
+        }
+      }
+    }
+
+    const fallbackResponse = await fetch(`${getApiBaseUrl()}/api/public/projects?page=1&limit=6`);
+    if (!fallbackResponse.ok) return [];
+    const fallbackPayload = await fallbackResponse.json();
+    const fallbackItems = Array.isArray(fallbackPayload?.data?.items) ? fallbackPayload.data.items : [];
+    if (!slug) return fallbackItems;
+    return fallbackItems.filter((item) => item?.slug !== slug);
   } catch (_error) {
     return [];
   }
@@ -136,10 +155,32 @@ function retryInitSwiper(retries = 50, delay = 300) {
   }
 }
 
-(async function bootstrapSlideProjects() {
+function waitForSlideContainer(retries = 50, delay = 120) {
+  return new Promise((resolve) => {
+    const check = (left) => {
+      const wrapper = document.querySelector(".swiper-projects .swiper-wrapper");
+      if (wrapper) {
+        resolve(true);
+        return;
+      }
+      if (left <= 0) {
+        resolve(false);
+        return;
+      }
+      setTimeout(() => check(left - 1), delay);
+    };
+    check(retries);
+  });
+}
+
+async function bootstrapSlideProjects() {
+  const ready = await waitForSlideContainer();
+  if (!ready) return;
   setSlidesVisible(false);
   slidesData = await loadOtherProjectsFromApi();
   const hasSlides = renderSlides();
   if (!hasSlides) return;
   retryInitSwiper();
-})();
+}
+
+bootstrapSlideProjects();

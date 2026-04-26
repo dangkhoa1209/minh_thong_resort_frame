@@ -45,6 +45,21 @@ async function getPublicHomeBanner() {
   return response.data;
 }
 
+async function getHomePartners() {
+  const response = await http.get("/admin/settings/home-partners");
+  return response.data;
+}
+
+async function updateHomePartners(payload) {
+  const response = await http.put("/admin/settings/home-partners", payload);
+  return response.data;
+}
+
+async function getPublicHomePartners() {
+  const response = await http.get("/public/settings/home-partners");
+  return response.data;
+}
+
 export {
   getLogo,
   updateLogo,
@@ -55,4 +70,7 @@ export {
   getHomeBanner,
   updateHomeBanner,
   getPublicHomeBanner,
+  getHomePartners,
+  updateHomePartners,
+  getPublicHomePartners,
 };

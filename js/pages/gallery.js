@@ -13,8 +13,6 @@ const PAGE_SIZE = 6;
 
 const productsContainer = document.querySelector(".products");
 const loadMoreBtn = document.getElementById("load-more");
-const barbaGoGallery = window.barbaGo || null;
-
 let currentPage = 1;
 let totalPages = 1;
 let loading = false;
@@ -169,11 +167,16 @@ if (productsContainer) {
       popup.style.scale = "1";
       popup.style.filter = "brightness(1)";
 
-      if (barbaGoGallery) {
-        barbaGoGallery(pageTo, 1000);
-      } else {
-        window.location.href = pageTo;
+      const navigateWithBarba = typeof window.barbaGo === "function";
+      if (navigateWithBarba) {
+        window.barbaGo(pageTo, 900);
+        return;
       }
+
+      // Keep transition feeling smooth even when Barba is unavailable.
+      setTimeout(() => {
+        window.location.href = pageTo;
+      }, 900);
     });
   });
 }

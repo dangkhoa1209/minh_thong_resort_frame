@@ -6,7 +6,6 @@ function initCardsEffect() {
   }
 
   const cardsEffect = window.cardsEffect || {};
-  const barbaGoProject = window.barbaGo || null;
   const projectsContainer = document.querySelector(".projects");
   const projects = Array.from(document.querySelectorAll(".project"));
 
@@ -76,7 +75,9 @@ function initCardsEffect() {
     if (!pageTo) return;
 
     const basePath = getBasePath();
-    if (basePath) pageTo = basePath + pageTo;
+    if (basePath && pageTo.startsWith("/")) {
+      pageTo = basePath + pageTo;
+    }
 
     const handler = (event) => {
       event.stopPropagation();
@@ -134,13 +135,15 @@ function initCardsEffect() {
         popup.style.scale = "1";
         popup.style.filter = "brightness(1)";
 
-        if (barbaGoProject) {
-          barbaGoProject(pageTo, 1000);
-        } else {
-          setTimeout(() => {
-            window.location.href = pageTo;
-          }, 1000);
+        const navigateWithBarba = typeof window.barbaGo === "function";
+        if (navigateWithBarba) {
+          window.barbaGo(pageTo, 900);
+          return;
         }
+
+        setTimeout(() => {
+          window.location.href = pageTo;
+        }, 900);
       });
     };
 

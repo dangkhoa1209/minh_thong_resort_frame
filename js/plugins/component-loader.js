@@ -26,8 +26,12 @@ function loadComponent(url, containerId, extraClass = '') {
             const newLink = document.createElement('link');
             newLink.rel = 'stylesheet';
             newLink.href = fullHref;
-            newLink.onload = resolve;
+            // Never block component mount when CSS fails/slow loads.
+            const done = () => resolve();
+            newLink.onload = done;
+            newLink.onerror = done;
             document.head.appendChild(newLink);
+            setTimeout(done, 3000);
           });
         } else {
           return Promise.resolve();
