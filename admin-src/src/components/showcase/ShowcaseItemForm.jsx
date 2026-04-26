@@ -8,7 +8,7 @@ function ShowcaseItemForm({ form, onSubmit, submitting, projects = [] }) {
     () =>
       projects.map((item) => ({
         value: item.id,
-        label: `${item.title} (${item.slug})`,
+        label: `${item.title}${item.name ? ` - ${item.name}` : ""}`,
       })),
     [projects]
   );
@@ -16,6 +16,7 @@ function ShowcaseItemForm({ form, onSubmit, submitting, projects = [] }) {
     () => projects.find((item) => item.id === selectedProjectId),
     [projects, selectedProjectId]
   );
+  const previewImage = selectedProject?.banner_image || selectedProject?.image_1 || "";
 
   return (
     <Form form={form} layout="vertical" onFinish={onSubmit}>
@@ -28,17 +29,17 @@ function ShowcaseItemForm({ form, onSubmit, submitting, projects = [] }) {
         />
       </Form.Item>
 
-      {selectedProject?.image_1 ? (
-        <Form.Item label="Project thumbnail">
+      {previewImage ? (
+        <Form.Item label="Project banner">
           <Space align="start">
             <Image
               width={160}
               height={96}
-              src={toBackendAssetUrl(selectedProject.image_1)}
+              src={toBackendAssetUrl(previewImage)}
               style={{ objectFit: "cover", borderRadius: 6 }}
             />
             <Typography.Text type="secondary">
-              This image comes from the selected project. Edit the project if you need to change it.
+              This image comes from the selected project banner. Edit project banner to change it.
             </Typography.Text>
           </Space>
         </Form.Item>

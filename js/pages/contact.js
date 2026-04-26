@@ -16,7 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = {
       name: name.value,
       email: email.value,
-      description: description.value
+      description: description.value,
+      source: "contact_page"
     };
 
 
@@ -28,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
 
     try {
-      const response = await fetch("https://abeldang.com/api/api/mail/send", {
+      const response = await fetch(`${getApiBaseUrl()}/api/mail/send`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

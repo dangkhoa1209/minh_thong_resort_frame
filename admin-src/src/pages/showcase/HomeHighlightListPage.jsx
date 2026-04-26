@@ -59,8 +59,11 @@ function HomeHighlightListPage() {
         width: 120,
         render: (value) => <img src={toBackendAssetUrl(value)} alt="" style={{ width: 80, height: 50, objectFit: "cover" }} />,
       },
-      { title: "Project", dataIndex: "project_title", width: 280 },
-      { title: "Slug", dataIndex: "project_slug", width: 220 },
+      {
+        title: "Project",
+        width: 320,
+        render: (_, row) => `${row.project_title || ""}${row.project_name ? ` - ${row.project_name}` : ""}`,
+      },
       {
         title: "Order",
         dataIndex: "sort_order",
@@ -126,7 +129,7 @@ function HomeHighlightListPage() {
 
       <Space style={{ marginBottom: 16 }}>
         <Input.Search
-          placeholder="Search project title/slug"
+          placeholder="Search project title/name"
           allowClear
           onSearch={(value) => {
             setKeyword(value);

@@ -20,4 +20,14 @@ async function updateContact(payload) {
   return response.data;
 }
 
-export { getLogo, updateLogo, getContact, updateContact };
+async function getPublicContact() {
+  const response = await http.get("/public/settings/contact");
+  return response.data;
+}
+
+async function getPublicLogo() {
+  const response = await http.get("/public/settings/logo");
+  return response.data;
+}
+
+export { getLogo, updateLogo, getContact, updateContact, getPublicContact, getPublicLogo };

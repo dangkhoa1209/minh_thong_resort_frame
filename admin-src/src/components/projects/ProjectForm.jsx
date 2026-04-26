@@ -1,7 +1,14 @@
-import { Button, Card, Col, Form, Input, Row, Space } from "antd";
+import { Button, Card, Col, Form, Input, Row, Select, Space } from "antd";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { ImageUploader } from "./ImageUploader";
-import { slugify } from "../../utils/slug";
+
+const rowRatioOptions = [
+  { label: "16:9", value: "16:9" },
+  { label: "4:3", value: "4:3" },
+  { label: "3:4", value: "3:4" },
+  { label: "4:5", value: "4:5" },
+  { label: "855:1068", value: "855:1068" },
+];
 
 function ProjectForm({ form, onSubmit, submitting }) {
   return (
@@ -9,30 +16,25 @@ function ProjectForm({ form, onSubmit, submitting }) {
       <Row gutter={16}>
         <Col xs={24} md={12}>
           <Form.Item label="Title" name="title" rules={[{ required: true }]}>
-            <Input
-              onBlur={(event) => {
-                const slug = form.getFieldValue("slug");
-                if (!slug) {
-                  form.setFieldValue("slug", slugify(event.target.value));
-                }
-              }}
-            />
+            <Input />
           </Form.Item>
         </Col>
         <Col xs={24} md={12}>
-          <Form.Item
-            label="Slug"
-            name="slug"
-            rules={[{ required: true, pattern: /^[a-z0-9-]+$/ }]}
-          >
+          <Form.Item label="Name" name="name" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col xs={24} md={8}>
+          <Form.Item label="Location" name="location">
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col xs={24} md={8}>
+          <Form.Item label="Year" name="year">
             <Input />
           </Form.Item>
         </Col>
       </Row>
-
-      <Form.Item label="Short Description" name="short_description">
-        <Input.TextArea rows={2} />
-      </Form.Item>
 
       <Form.Item label="Content" name="content">
         <Input.TextArea rows={5} />
@@ -42,26 +44,6 @@ function ProjectForm({ form, onSubmit, submitting }) {
         <Row gutter={16}>
           <Col xs={24} md={8}>
             <Form.Item label="Banner image" name="banner_image" rules={[{ required: true }]}>
-              <ImageUploader defaultRatio="1366:778" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={8}>
-            <Form.Item label="Banner title" name="banner_title">
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={8}>
-            <Form.Item label="Banner subtitle" name="banner_subtitle">
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-      </Card>
-
-      <Card title="Project Thumbnail" style={{ marginTop: 16 }}>
-        <Row gutter={16}>
-          <Col xs={24} md={8}>
-            <Form.Item label="Thumbnail image" name="image_1" rules={[{ required: true }]}>
               <ImageUploader defaultRatio="1366:778" />
             </Form.Item>
           </Col>
@@ -107,7 +89,16 @@ function ProjectForm({ form, onSubmit, submitting }) {
                           />
                         </Form.Item>
                       </Col>
-                      <Col xs={24} md={18}>
+                      <Col xs={24} md={6}>
+                        <Form.Item
+                          label="Ratio (display only)"
+                          name={[field.name, "ratio"]}
+                          initialValue="4:3"
+                        >
+                          <Select options={rowRatioOptions} />
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} md={12}>
                         <Form.Item
                           label={`Images (${layout} item)`}
                           name={[field.name, "images"]}
@@ -125,7 +116,7 @@ function ProjectForm({ form, onSubmit, submitting }) {
                 );
               })}
 
-              <Button type="dashed" icon={<PlusOutlined />} onClick={() => add({ layout: 1, images: [] })}>
+              <Button type="dashed" icon={<PlusOutlined />} onClick={() => add({ layout: 1, ratio: "4:3", images: [] })}>
                 Add Row
               </Button>
             </Space>

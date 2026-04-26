@@ -1,14 +1,37 @@
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #f5f7fb;
+  background: #ffffff;
+  color: #111111;
+}
+
+#root {
+  max-width: none !important;
+  margin: 0 !important;
+  border: 0 !important;
+  display: block !important;
 }
 
 .admin-brand {
-  color: #fff;
-  font-weight: 600;
-  padding: 16px;
+  padding: 14px 16px 10px;
   text-align: center;
+}
+
+.admin-brand__logo {
+  display: block;
+  width: 100%;
+  max-width: 170px;
+  height: 32px;
+  margin: 0 auto;
+  object-fit: contain;
+  object-position: center;
 }
 
 .admin-header {
@@ -16,7 +39,7 @@ body {
   justify-content: space-between;
   align-items: center;
   background: #fff;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #d9d9d9;
   padding: 0 16px;
 }
 
@@ -32,14 +55,131 @@ body {
 }
 
 .login-wrap {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #2b2b2b;
+  overflow: auto;
+}
+
+.login-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.login-wrap > * {
+  position: relative;
+  z-index: 1;
 }
 
 .login-card {
   width: 100%;
   max-width: 420px;
+  margin: 0 auto !important;
+}
+
+.login-card--dark {
+  background: #111111 !important;
+  border: 1px solid #2a2a2a !important;
+  box-shadow: 0 14px 48px rgba(0, 0, 0, 0.45) !important;
+}
+
+.login-card--dark .ant-card-body {
+  padding: 24px !important;
+}
+
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.login-brand__logo {
+  width: 100%;
+  max-width: 220px;
+  height: 40px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.login-brand__subtitle {
+  color: #d0d0d0 !important;
+}
+
+.login-card--dark .ant-typography,
+.login-card--dark .ant-form-item-label > label {
+  color: #ffffff !important;
+}
+
+.login-card--dark .ant-input,
+.login-card--dark .ant-input-affix-wrapper {
+  background: #1c1c1c !important;
+  border-color: #3a3a3a !important;
+  color: #ffffff !important;
+}
+
+.login-card--dark .ant-input::placeholder,
+.login-card--dark .ant-input-affix-wrapper input::placeholder {
+  color: #a8a8a8 !important;
+}
+
+.login-card--dark .ant-input-affix-wrapper .ant-input-password-icon {
+  color: #d7d7d7 !important;
+}
+
+.login-card--dark .ant-btn-primary {
+  height: 50px;
+  border-radius: 12px;
+  border: 1px solid #3a3a3a !important;
+  background: #171717 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  outline: none !important;
+  margin-top: 12px;
+}
+
+.login-card--dark .ant-btn-primary:hover {
+  background: #222222 !important;
+  border-color: #4a4a4a !important;
+  box-shadow: none !important;
+}
+
+.login-card--dark .ant-btn-primary:focus,
+.login-card--dark .ant-btn-primary:focus-visible,
+.login-card--dark .ant-btn-primary:active {
+  background: #1f1f1f !important;
+  border-color: #4a4a4a !important;
+  box-shadow: none !important;
+}
+
+.ant-layout-sider {
+  background: #111111 !important;
+}
+
+.ant-layout-sider .ant-menu.ant-menu-dark {
+  background: #111111;
+}
+
+.ant-layout-sider .ant-menu-dark .ant-menu-item-selected {
+  background-color: #2b2b2b !important;
+}
+
+.ant-btn-primary {
+  background: #111111;
+  border-color: #111111;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  background: #000000 !important;
+  border-color: #000000 !important;
 }

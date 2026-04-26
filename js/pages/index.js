@@ -14,6 +14,10 @@ function escapeHtml(value) {
     .replace(/'/g, "&#039;");
 }
 
+function getProjectCover(item) {
+  return item?.banner_image || item?.image_1 || "";
+}
+
 function renderHomeProjects(items) {
   const container = document.querySelector(".projects");
   if (!container || !Array.isArray(items) || items.length === 0) {
@@ -23,13 +27,14 @@ function renderHomeProjects(items) {
   container.innerHTML = items
     .map((item, index) => {
       const pageTo = item.project_url || `/pages/project/${item.slug}.html`;
+      const cover = getProjectCover(item);
       return `
         <div class="project" data-index="${index}">
           <div class="project__inner" data-page-to="${escapeHtml(pageTo)}">
-            <img loading="lazy" src="${escapeHtml(item.image_1)}" class="project-thumbnail" alt="${escapeHtml(item.title)}">
+            <img loading="lazy" src="${escapeHtml(getAssetUrl(cover))}" class="project-thumbnail" alt="${escapeHtml(item.title)}">
             <div class="project-meta">
-              <h2 class="project-title font-style-montserrat">${escapeHtml(item.short_description || "")}</h2>
-              <h2 class="project-desc font-style-montserrat">${escapeHtml(item.title)}</h2>
+              <h2 class="project-title font-style-montserrat">${escapeHtml(item.title || item.short_description || "")}</h2>
+              <h2 class="project-desc font-style-montserrat">${escapeHtml(item.name || item.title || "")}</h2>
             </div>
           </div>
         </div>
@@ -44,7 +49,7 @@ function renderHomeProjects(items) {
 
 async function loadHomeProjects() {
   try {
-    const response = await fetch(`${getBasePath()}/api/public/home/projects`);
+    const response = await fetch(`${getApiBaseUrl()}/api/public/home/projects`);
     if (!response.ok) return;
     const payload = await response.json();
     renderHomeProjects(payload.data || []);

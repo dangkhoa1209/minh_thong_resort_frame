@@ -19,11 +19,24 @@ function escapeHtml(value) {
 }
 
 function ratioToClass(layout, ratio) {
+  const knownRatios = new Set(["3:4", "4:3", "4:5", "16:9", "855:1068"]);
   if (ratio && /^(\d+):(\d+)$/.test(ratio)) {
+    if (!knownRatios.has(ratio)) {
+      return "";
+    }
     const [w, h] = ratio.split(":");
     return `ratio-${w}-${h}`;
   }
   return layout === 2 ? "ratio-4-3" : "ratio-16-9";
+}
+
+function ratioToStyle(layout, ratio) {
+  if (ratio && /^(\d+):(\d+)$/.test(ratio)) {
+    const [w, h] = ratio.split(":");
+    return `aspect-ratio: ${w} / ${h};`;
+  }
+
+  return layout === 2 ? "aspect-ratio: 4 / 3;" : "aspect-ratio: 16 / 9;";
 }
 
 function bindThumbIds() {
@@ -145,14 +158,18 @@ function initPopupPreview() {
 function renderProjectDetail(data) {
   const bannerImg = document.querySelector(".banner .banner__img");
   if (bannerImg && data.banner_image) {
-    bannerImg.src = data.banner_image;
+    bannerImg.src = getAssetUrl(data.banner_image);
   }
 
   const thinTitle = document.querySelector(".about__title--thin");
   const boldTitle = document.querySelector(".about__title--bold");
   const contentNode = document.querySelector(".about__content p");
-  if (thinTitle) thinTitle.textContent = data.banner_subtitle || "";
-  if (boldTitle) boldTitle.textContent = data.banner_title || data.title || "";
+  const locationNode = document.querySelector(".about__meta p:first-child .font-thin");
+  const yearNode = document.querySelector(".about__meta p:last-child .font-thin");
+  if (thinTitle) thinTitle.textContent = data.title || data.banner_title || "";
+  if (boldTitle) boldTitle.textContent = data.name || data.banner_subtitle || "";
+  if (locationNode && data.location) locationNode.textContent = data.location;
+  if (yearNode && data.year) yearNode.textContent = data.year;
   if (contentNode) contentNode.textContent = data.content || "";
 
   const productsContainer = document.querySelector(".products");
@@ -163,12 +180,14 @@ function renderProjectDetail(data) {
   productsContainer.innerHTML = data.image_rows
     .map((row) => {
       const className = ratioToClass(row.layout, row.ratio);
+      const ratioStyle = ratioToStyle(row.layout, row.ratio);
       const images = (row.images || [])
         .map((item) => {
           const url = typeof item === "string" ? item : item.url;
+          if (!url) return "";
           return `
-            <div class="product-item ${className}">
-              <img loading="lazy" src="${escapeHtml(url)}" class="product-thumbnail" alt="">
+            <div class="product-item ${className}" style="${ratioStyle}">
+              <img loading="lazy" src="${escapeHtml(getAssetUrl(url))}" class="product-thumbnail" alt="">
             </div>
           `;
         })
@@ -185,7 +204,7 @@ async function loadProjectDetail() {
   if (!slug) return;
 
   try {
-    const response = await fetch(`${getBasePath()}/api/public/projects/${slug}`);
+    const response = await fetch(`${getApiBaseUrl()}/api/public/projects/${slug}`);
     if (!response.ok) return;
     const payload = await response.json();
     if (payload?.data) {
@@ -196,5 +215,22 @@ async function loadProjectDetail() {
   }
 }
 
+function trackProjectView() {
+  const slug = getCurrentProjectSlug();
+  if (!slug) return;
+
+  fetch(`${getApiBaseUrl()}/api/public/analytics/project-view`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      project_slug: slug,
+      path: window.location.pathname,
+    }),
+  }).catch(() => {
+    // Analytics should never block the project page.
+  });
+}
+
 initPopupPreview();
 loadProjectDetail();
+trackProjectView();

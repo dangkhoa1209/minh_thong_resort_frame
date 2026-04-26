@@ -10,6 +10,10 @@ const fallbackSlides = [
 let slidesData = [...fallbackSlides];
 let bg = document.getElementById("slideBackground");
 
+function getProjectCover(item) {
+  return item?.banner_image || item?.image_1 || "";
+}
+
 function getCurrentProjectSlug() {
   const fileName = window.location.pathname.split("/").pop() || "";
   return fileName.replace(".html", "");
@@ -18,7 +22,7 @@ function getCurrentProjectSlug() {
 function setBackground(index) {
   if (!bg) bg = document.getElementById("slideBackground");
   if (!bg || !slidesData[index]) return;
-  bg.style.backgroundImage = `url(${getBasePath()}${slidesData[index].image_1})`;
+  bg.style.backgroundImage = `url(${getAssetUrl(getProjectCover(slidesData[index]))})`;
 }
 
 function goToProject(index) {
@@ -33,7 +37,7 @@ function renderSlides() {
   wrapper.innerHTML = slidesData
     .map(
       (item, index) =>
-        `<div class="swiper-slide" data-index="${index}"><img src="${getBasePath()}${item.image_1}" /></div>`
+        `<div class="swiper-slide" data-index="${index}"><img src="${getAssetUrl(getProjectCover(item))}" /></div>`
     )
     .join("");
 }
@@ -42,7 +46,7 @@ async function loadOtherProjectsFromApi() {
   const slug = getCurrentProjectSlug();
   if (!slug) return;
   try {
-    const response = await fetch(`${getBasePath()}/api/public/projects/${slug}/other-projects?limit=6`);
+    const response = await fetch(`${getApiBaseUrl()}/api/public/projects/${slug}/other-projects?limit=6`);
     if (!response.ok) return;
     const payload = await response.json();
     if (Array.isArray(payload?.data) && payload.data.length > 0) {

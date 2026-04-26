@@ -1,8 +1,13 @@
 const appTheme = {
   token: {
-    colorPrimary: "#1677ff",
-    borderRadius: 10,
-    colorBgLayout: "#f5f7fb",
+    colorPrimary: "#111111",
+    colorInfo: "#111111",
+    colorText: "#111111",
+    colorTextBase: "#111111",
+    colorBgLayout: "#ffffff",
+    colorBgContainer: "#ffffff",
+    colorBorder: "#d9d9d9",
+    borderRadius: 8,
   },
 };
 

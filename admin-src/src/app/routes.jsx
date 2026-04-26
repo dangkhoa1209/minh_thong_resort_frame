@@ -9,6 +9,7 @@ import { HomeHighlightListPage } from "../pages/showcase/HomeHighlightListPage";
 import { HomeHighlightFormPage } from "../pages/showcase/HomeHighlightFormPage";
 import { HeroSlideListPage } from "../pages/showcase/HeroSlideListPage";
 import { HeroSlideFormPage } from "../pages/showcase/HeroSlideFormPage";
+import { ContactListPage } from "../pages/contacts/ContactListPage";
 import { SettingsPage } from "../pages/settings/SettingsPage";
 
 const routes = [
@@ -31,6 +32,7 @@ const routes = [
       { path: "showcase/hero-slides", element: <HeroSlideListPage /> },
       { path: "showcase/hero-slides/new", element: <HeroSlideFormPage /> },
       { path: "showcase/hero-slides/:id", element: <HeroSlideFormPage /> },
+      { path: "contacts", element: <ContactListPage /> },
       { path: "settings", element: <SettingsPage /> },
     ],
   },

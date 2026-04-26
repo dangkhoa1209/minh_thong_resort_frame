@@ -39,12 +39,19 @@ function ProjectListPage() {
     () => [
       {
         title: "Image",
-        dataIndex: "image_1",
         width: 120,
-        render: (value) => <img src={toBackendAssetUrl(value)} alt="" style={{ width: 80, height: 50, objectFit: "cover" }} />,
+        render: (_, row) => (
+          <img
+            src={toBackendAssetUrl(row.banner_image || row.image_1)}
+            alt=""
+            style={{ width: 80, height: 50, objectFit: "cover" }}
+          />
+        ),
       },
       { title: "Title", dataIndex: "title", width: 280 },
-      { title: "Slug", dataIndex: "slug", width: 240 },
+      { title: "Name", dataIndex: "name", width: 240 },
+      { title: "Location", dataIndex: "location", width: 180 },
+      { title: "Year", dataIndex: "year", width: 100 },
       {
         title: "Updated",
         dataIndex: "updated_at",
@@ -90,7 +97,7 @@ function ProjectListPage() {
 
       <Space style={{ marginBottom: 16 }}>
         <Input.Search
-          placeholder="Search title/slug"
+          placeholder="Search title/name/location"
           allowClear
           onSearch={(value) => {
             setKeyword(value);

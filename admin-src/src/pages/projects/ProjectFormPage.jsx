@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { Card, Form } from "antd";
+import { Button, Card, Form } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { PageHeader } from "../../components/common/PageHeader";
 import { ProjectForm } from "../../components/projects/ProjectForm";
 import { createProject, getProject, updateProject } from "../../services/project.api";
 import { notifyError, notifySuccess } from "../../utils/notify";
+import { slugify } from "../../utils/slug";
 
 function normalizeRows(rows = []) {
   return rows.map((row) => ({
@@ -43,8 +45,14 @@ function ProjectFormPage() {
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
+      const autoSlug = slugify(`${values.title || ""} ${values.name || ""}`);
       const payload = {
         ...values,
+        slug: autoSlug,
+        short_description: values.title || "",
+        banner_title: values.banner_title || values.title || "",
+        banner_subtitle: values.banner_subtitle || values.name || "",
+        image_1: values.banner_image || "",
         image_rows: (values.image_rows || []).map((row) => ({
           layout: Number(row.layout) === 2 ? 2 : 1,
           ratio: row.ratio || "4:3",
@@ -72,7 +80,14 @@ function ProjectFormPage() {
 
   return (
     <div>
-      <PageHeader title={isEdit ? "Edit Project" : "Create Project"} />
+      <PageHeader
+        title={isEdit ? "Edit Project" : "Create Project"}
+        extra={
+          <Button icon={<ArrowLeftOutlined />} onClick={() => navigate("/projects")}>
+            Back
+          </Button>
+        }
+      />
       <Card>
         <ProjectForm form={form} onSubmit={handleSubmit} submitting={loading} />
       </Card>
