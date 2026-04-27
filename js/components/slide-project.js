@@ -87,7 +87,7 @@ async function loadOtherProjectsFromApi() {
   const slug = getCurrentProjectSlug();
   try {
     if (slug) {
-      const response = await fetch(`${getApiBaseUrl()}/api/public/projects/${slug}/other-projects?limit=6`);
+      const response = await fetch(`${getApiBaseUrl()}/public/projects/${slug}/other-projects?limit=6`);
       if (response.ok) {
         const payload = await response.json();
         const items = Array.isArray(payload?.data) ? payload.data : [];
@@ -97,7 +97,7 @@ async function loadOtherProjectsFromApi() {
       }
     }
 
-    const fallbackResponse = await fetch(`${getApiBaseUrl()}/api/public/projects?page=1&limit=6`);
+    const fallbackResponse = await fetch(`${getApiBaseUrl()}/public/projects?page=1&limit=6`);
     if (!fallbackResponse.ok) return [];
     const fallbackPayload = await fallbackResponse.json();
     const fallbackItems = Array.isArray(fallbackPayload?.data?.items) ? fallbackPayload.data.items : [];

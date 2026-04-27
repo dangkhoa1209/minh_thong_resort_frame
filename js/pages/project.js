@@ -315,7 +315,7 @@ async function loadProjectDetail() {
   if (!slug) return;
 
   try {
-    const response = await fetch(`${getApiBaseUrl()}/api/public/projects/${slug}`);
+    const response = await fetch(`${getApiBaseUrl()}/public/projects/${slug}`);
     if (!response.ok) return;
     const payload = await response.json();
     if (payload?.data) {
@@ -330,7 +330,7 @@ function trackProjectView() {
   const slug = getCurrentProjectSlug();
   if (!slug) return;
 
-  fetch(`${getApiBaseUrl()}/api/public/analytics/project-view`, {
+  fetch(`${getApiBaseUrl()}/public/analytics/project-view`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

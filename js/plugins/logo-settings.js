@@ -65,7 +65,7 @@
     try {
       const apiBase = typeof getApiBaseUrl === "function" ? getApiBaseUrl() : "";
       if (!apiBase) return null;
-      const response = await fetch(`${apiBase}/api/public/settings/logo`);
+      const response = await fetch(`${apiBase}/public/settings/logo`);
       if (!response.ok) return null;
       const payload = await response.json();
       return normalizeLogoData(payload?.data || {});

@@ -57,7 +57,7 @@ function renderHomePartners(logos) {
 
 async function loadHomePartners() {
   try {
-    const response = await fetch(`${getApiBaseUrl()}/api/public/settings/home-partners`);
+    const response = await fetch(`${getApiBaseUrl()}/public/settings/home-partners`);
     if (!response.ok) {
       renderHomePartners(HOME_PARTNER_FALLBACK);
       return;
@@ -146,7 +146,7 @@ function renderHomeProjects(items) {
 async function loadHomeProjects() {
   try {
     setHomeProjectsVisible(false);
-    const response = await fetch(`${getApiBaseUrl()}/api/public/home/projects`);
+    const response = await fetch(`${getApiBaseUrl()}/public/home/projects`);
     if (!response.ok) {
       renderHomeProjects([]);
       return;
@@ -227,7 +227,7 @@ function applyCustomHomeBanner(bannerImage) {
 
 async function loadHomeBannerSetting() {
   try {
-    const response = await fetch(`${getApiBaseUrl()}/api/public/settings/home-banner`);
+    const response = await fetch(`${getApiBaseUrl()}/public/settings/home-banner`);
     if (!response.ok) return;
     const payload = await response.json();
     const bannerImage = String(payload?.data?.banner_image || "").trim();

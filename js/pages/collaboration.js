@@ -3,7 +3,7 @@ loadComponent('../components/footer/index.html', 'place-footer')
 
 async function fetchPublicContactInfo() {
   try {
-    const response = await fetch(`${getApiBaseUrl()}/api/public/settings/contact`);
+    const response = await fetch(`${getApiBaseUrl()}/public/settings/contact`);
     if (!response.ok) return null;
     const payload = await response.json();
     return payload?.data || null;

@@ -6,9 +6,12 @@ function getBasePath(p = 'minh_thong_resort_frame') {
 }
 
 function getApiBaseUrl() {
-  return 'https://abeldang.com/api';
+  return `${getApiOriginBaseUrl()}/api`;
+}
+
+function getApiOriginBaseUrl() {
   // if (window.ABEL_API_BASE_URL) {
-  //   return window.ABEL_API_BASE_URL.replace(/\/$/, '');
+  //   return window.ABEL_API_BASE_URL.replace(/\/+$/, "").replace(/\/api$/i, "");
   // }
 
   // const hostname = window.location.hostname;
@@ -16,7 +19,7 @@ function getApiBaseUrl() {
   //   return 'http://localhost:3001';
   // }
 
-  // return '';
+  return 'https://abeldang.com';
 }
 
 function getAssetUrl(path) {
@@ -29,7 +32,7 @@ function getAssetUrl(path) {
   }
 
   if (path.startsWith('/uploads/')) {
-    return `${getApiBaseUrl()}${path}`;
+    return `${getApiOriginBaseUrl()}${path}`;
   }
 
   if (path.startsWith('/')) {

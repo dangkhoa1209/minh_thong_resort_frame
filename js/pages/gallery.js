@@ -71,7 +71,7 @@ function updateLoadMoreVisibility() {
 
 async function fetchProjects(page) {
   const response = await fetch(
-    `${getApiBaseUrl()}/api/public/projects?page=${page}&limit=${PAGE_SIZE}`
+    `${getApiBaseUrl()}/public/projects?page=${page}&limit=${PAGE_SIZE}`
   );
   if (!response.ok) throw new Error("Cannot load projects");
 

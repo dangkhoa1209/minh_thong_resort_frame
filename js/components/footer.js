@@ -13,7 +13,7 @@ function normalizePhoneForTel(phone) {
 
 async function fetchPublicContactInfo() {
   try {
-    const response = await fetch(`${getApiBaseUrl()}/api/public/settings/contact`);
+    const response = await fetch(`${getApiBaseUrl()}/public/settings/contact`);
     if (!response.ok) return null;
     const payload = await response.json();
     return payload?.data || null;
@@ -72,7 +72,7 @@ async function submitFooterContact() {
   }
 
   try {
-    const response = await fetch(`${getApiBaseUrl()}/api/mail/send`, {
+    const response = await fetch(`${getApiBaseUrl()}/mail/send`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, source: "footer" }),
