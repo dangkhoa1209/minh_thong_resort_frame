@@ -91,7 +91,7 @@ function renderSlides() {
   wrapper.innerHTML = slidesData
     .map(
       (item, index) =>
-        `<div class="swiper-slide" data-index="${index}"><img src="${getAssetUrl(getProjectCover(item))}" /></div>`
+        `<div class="swiper-slide" data-index="${index}"><img loading="lazy" decoding="async" fetchpriority="low" src="${getAssetUrl(getProjectCover(item))}" alt="" /></div>`
     )
     .join("");
   return true;

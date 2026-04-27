@@ -358,7 +358,7 @@ function renderProjectDetail(data) {
           if (!url) return "";
           return `
             <div class="product-item ${className}" style="${ratioStyle}">
-              <img loading="lazy" src="${escapeHtml(getAssetUrl(url))}" class="product-thumbnail" alt="">
+              <img loading="lazy" decoding="async" fetchpriority="low" src="${escapeHtml(getAssetUrl(url))}" class="product-thumbnail" alt="">
             </div>
           `;
         })

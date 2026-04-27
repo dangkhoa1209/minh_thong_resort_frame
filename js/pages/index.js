@@ -44,7 +44,7 @@ function renderHomePartners(logos) {
   const slideContent = items
     .map(
       (url, index) =>
-        `<div class="partner-item"><img src="${escapeHtml(getAssetUrl(url))}" class="partner-logo" alt="Partner ${index + 1}"></div>`
+        `<div class="partner-item"><img loading="lazy" decoding="async" fetchpriority="low" src="${escapeHtml(getAssetUrl(url))}" class="partner-logo" alt="Partner ${index + 1}"></div>`
     )
     .join("");
 
@@ -143,7 +143,7 @@ function renderHomeProjects(items) {
       return `
         <div class="project" data-index="${index}">
           <div class="project__inner" data-page-to="${escapeHtml(pageTo)}">
-            <img loading="lazy" src="${escapeHtml(getAssetUrl(cover))}" class="project-thumbnail" alt="${escapeHtml(item.title)}">
+            <img loading="lazy" decoding="async" fetchpriority="low" src="${escapeHtml(getAssetUrl(cover))}" class="project-thumbnail" alt="${escapeHtml(item.title)}">
             <div class="project-meta">
               <h2 class="project-title font-style-montserrat">${escapeHtml(item.title || item.short_description || "")}</h2>
               <h2 class="project-desc font-style-montserrat">${escapeHtml(item.name || item.title || "")}</h2>

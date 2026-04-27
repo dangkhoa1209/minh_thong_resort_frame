@@ -64,7 +64,7 @@ function renderProjectCard(item) {
   return `
     <div class="product-item">
       <div class="image-container" data-page-to="${escapeHtml(pageTo)}">
-        <img loading="lazy" src="${escapeHtml(getAssetUrl(cover))}" class="product-thumbnail" alt="${escapeHtml(item.title || item.name || "Project image")}">
+        <img loading="lazy" decoding="async" fetchpriority="low" src="${escapeHtml(getAssetUrl(cover))}" class="product-thumbnail" alt="${escapeHtml(item.title || item.name || "Project image")}">
       </div>
       <div class="product-description">
         <p class="resort-name">${escapeHtml(item.title || item.short_description || "")}${item.name ? ` ${escapeHtml(item.name)}` : ""}</p>
