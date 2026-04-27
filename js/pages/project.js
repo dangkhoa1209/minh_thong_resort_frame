@@ -134,6 +134,40 @@ function updateProjectSeo(data) {
   }
 }
 
+function updateProjectNotFoundSeo() {
+  const title = "Project not found | Abel Dang Production";
+  const description = "This project does not exist or is no longer available.";
+  document.title = title;
+  upsertMetaByName("description", description);
+  upsertMetaByProperty("og:title", title);
+  upsertMetaByProperty("og:description", description);
+  upsertMetaByProperty("og:url", window.location.href);
+  upsertMetaByName("twitter:title", title);
+  upsertMetaByName("twitter:description", description);
+  upsertCanonical(window.location.href);
+}
+
+function renderProjectNotFound() {
+  updateProjectNotFoundSeo();
+
+  const container = document.querySelector(".container");
+  if (!container) return;
+
+  container.innerHTML = `
+    <section class="project-not-found px py">
+      <div class="project-not-found__inner">
+        <p class="project-not-found__eyebrow">404</p>
+        <h1>Project not found</h1>
+        <p>This project does not exist or is no longer available.</p>
+        <a href="/pages/gallery.html">Back to Gallery</a>
+      </div>
+    </section>
+    <div id="place-footer"></div>
+  `;
+
+  loadComponent("../../components/footer/index.html", "place-footer");
+}
+
 function initBaseProjectSeo() {
   const pageUrl = window.location.href;
   upsertCanonical(pageUrl);
@@ -312,17 +346,25 @@ function renderProjectDetail(data) {
 
 async function loadProjectDetail() {
   const slug = getCurrentProjectSlug();
-  if (!slug) return;
+  if (!slug) {
+    renderProjectNotFound();
+    return;
+  }
 
   try {
     const response = await fetch(`${getApiBaseUrl()}/public/projects/${slug}`);
-    if (!response.ok) return;
+    if (!response.ok) {
+      renderProjectNotFound();
+      return;
+    }
     const payload = await response.json();
     if (payload?.data) {
       renderProjectDetail(payload.data);
+      return;
     }
+    renderProjectNotFound();
   } catch (_error) {
-    // Keep fallback static HTML when API fails.
+    renderProjectNotFound();
   }
 }
 
