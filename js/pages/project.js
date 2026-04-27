@@ -4,6 +4,24 @@ loadComponent("../../components/slide-project/index.html", "place-slide-project"
 
 const popup = document.getElementById("popup");
 
+const PROJECT_DATA_SLUG_ALIASES = {
+  "ana-mandara-villas-dalat": "resort-spa-ana-mandara-villas",
+  "binh-an-village-dalat": "resort-binh-an-village",
+  "four-seasons-resort-the-nam-hai": "four-seasons-resort-the-nam-hai",
+  "marriott-renaissance-hoi-an": "resort-spa-renaissance",
+  "mercure-hotel-vung-tau": "hotel-mercure-vung-tau",
+  "pear-hoi-an": "resort-citadines-pearl-hoi-an",
+};
+
+const STATIC_PROJECT_SLUGS = new Set([
+  "ana-mandara-villas-dalat",
+  "binh-an-village-dalat",
+  "four-seasons-resort-the-nam-hai",
+  "marriott-renaissance-hoi-an",
+  "mercure-hotel-vung-tau",
+  "pear-hoi-an",
+]);
+
 function getCurrentProjectSlug() {
   const query = new URLSearchParams(window.location.search);
   const slugFromQuery = query.get("project") || query.get("slug");
@@ -12,6 +30,14 @@ function getCurrentProjectSlug() {
   const slugFromFile = fileName.replace(".html", "");
   if (slugFromFile === "project-detail") return "";
   return slugFromFile;
+}
+
+function getProjectLookupSlugs(slug) {
+  return [...new Set([slug, PROJECT_DATA_SLUG_ALIASES[slug]].filter(Boolean))];
+}
+
+function isStaticProjectPage(slug) {
+  return STATIC_PROJECT_SLUGS.has(slug);
 }
 
 function escapeHtml(value) {
@@ -352,18 +378,24 @@ async function loadProjectDetail() {
   }
 
   try {
-    const response = await fetch(`${getApiBaseUrl()}/public/projects/${slug}`);
-    if (!response.ok) {
-      renderProjectNotFound();
-      return;
+    const lookupSlugs = getProjectLookupSlugs(slug);
+    for (const lookupSlug of lookupSlugs) {
+      const response = await fetch(`${getApiBaseUrl()}/public/projects/${lookupSlug}`);
+      if (!response.ok) continue;
+      const payload = await response.json();
+      if (payload?.data) {
+        renderProjectDetail(payload.data);
+        return;
+      }
     }
-    const payload = await response.json();
-    if (payload?.data) {
-      renderProjectDetail(payload.data);
+    if (isStaticProjectPage(slug)) {
       return;
     }
     renderProjectNotFound();
   } catch (_error) {
+    if (isStaticProjectPage(slug)) {
+      return;
+    }
     renderProjectNotFound();
   }
 }

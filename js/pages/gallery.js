@@ -12,6 +12,7 @@ const CUSTOM_PROJECT_SLUGS = new Set([
 const PROJECT_STATIC_SLUG_ALIASES = {
   "resort-spa-ana-mandara-villas": "ana-mandara-villas-dalat",
   "resort-binh-an-village": "binh-an-village-dalat",
+  "four-seasons-resort-the-nam-hai": "four-seasons-resort-the-nam-hai",
   "resort-spa-renaissance": "marriott-renaissance-hoi-an",
   "hotel-mercure-vung-tau": "mercure-hotel-vung-tau",
   "resort-citadines-pearl-hoi-an": "pear-hoi-an",
