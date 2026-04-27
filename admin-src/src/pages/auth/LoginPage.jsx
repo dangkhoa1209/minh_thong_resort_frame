@@ -145,7 +145,12 @@ function LoginPage() {
             }}
           />
         </div>
-        <Form layout="vertical" onFinish={onFinish} initialValues={{ email: "", password: "" }}>
+        <Form
+          layout="vertical"
+          requiredMark={false}
+          onFinish={onFinish}
+          initialValues={{ email: "", password: "" }}
+        >
           <Form.Item label="Email" name="email" rules={[{ required: true, type: "email" }]}>
             <Input placeholder="admin@example.com" />
           </Form.Item>
