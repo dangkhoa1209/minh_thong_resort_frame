@@ -25,8 +25,9 @@ function getLogoCandidates(path) {
 }
 
 function normalizeLogoData(raw = {}) {
-  const light = String(raw.logo_light_url || "").trim();
-  const dark = String(raw.logo_dark_url || "").trim();
+  const normalizeLogoPath = (value) => String(value || "").trim().replace(/\/+$/, "");
+  const light = normalizeLogoPath(raw.logo_light_url);
+  const dark = normalizeLogoPath(raw.logo_dark_url);
 
   return {
     logo_light_url: light || DEFAULT_LOGOS.logo_light_url,
@@ -35,7 +36,7 @@ function normalizeLogoData(raw = {}) {
 }
 
 function resolveLogoUrl(value) {
-  const raw = String(value || "").trim();
+  const raw = String(value || "").trim().replace(/\/+$/, "");
   if (!raw) return "";
   if (/^https?:\/\//i.test(raw) || /^data:/i.test(raw) || /^blob:/i.test(raw)) return raw;
   if (raw.startsWith("/uploads/")) return toBackendAssetUrl(raw);
@@ -51,7 +52,7 @@ function readLogoCache() {
     if (!parsed?.ts || !parsed?.data) return null;
     if (Date.now() - Number(parsed.ts) > LOGO_CACHE_TTL_MS) return null;
     return normalizeLogoData(parsed.data);
-  } catch (_error) {
+  } catch {
     return null;
   }
 }
@@ -65,7 +66,7 @@ function writeLogoCache(data) {
         data: normalizeLogoData(data),
       })
     );
-  } catch (_error) {
+  } catch {
     // Ignore localStorage failure in private mode.
   }
 }

@@ -14,9 +14,10 @@ function LogoSettingForm() {
       setLoading(true);
       try {
         const result = await getLogo();
+        const normalized = normalizeLogoData(result?.data || {});
         form.setFieldsValue({
-          logo_light_url: result.data.logo_light_url || DEFAULT_LOGOS.logo_light_url,
-          logo_dark_url: result.data.logo_dark_url || DEFAULT_LOGOS.logo_dark_url,
+          logo_light_url: normalized.logo_light_url || DEFAULT_LOGOS.logo_light_url,
+          logo_dark_url: normalized.logo_dark_url || DEFAULT_LOGOS.logo_dark_url,
         });
       } catch (error) {
         notifyError(error?.response?.data?.error?.message || "Cannot load logo");
@@ -33,8 +34,11 @@ function LogoSettingForm() {
       onFinish={async (values) => {
         setLoading(true);
         try {
-          const result = await updateLogo(values);
-          writeLogoCache(normalizeLogoData(result?.data || values));
+          const payload = normalizeLogoData(values);
+          const result = await updateLogo(payload);
+          const normalized = normalizeLogoData(result?.data || payload);
+          form.setFieldsValue(normalized);
+          writeLogoCache(normalized);
           notifySuccess("Logo updated");
         } catch (error) {
           notifyError(error?.response?.data?.error?.message || "Cannot update logo");
@@ -43,10 +47,13 @@ function LogoSettingForm() {
         }
       }}
     >
-      <Form.Item label="Logo light (for dark background)" name="logo_light_url" rules={[{ required: true }]}>
-        <div className="logo-light-uploader">
-          <ImageUploader defaultRatio="free" />
-        </div>
+      <Form.Item
+        className="logo-light-uploader"
+        label="Logo light (for dark background)"
+        name="logo_light_url"
+        rules={[{ required: true }]}
+      >
+        <ImageUploader defaultRatio="free" />
       </Form.Item>
       <Form.Item label="Logo dark (for light background)" name="logo_dark_url" rules={[{ required: true }]}>
         <ImageUploader defaultRatio="free" />
