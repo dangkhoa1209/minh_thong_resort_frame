@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
-import { Button, Grid, Input, Popconfirm, Space, Table, Tag } from "antd";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Button, Grid, Input, Popconfirm, Space, Switch, Table } from "antd";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import { deleteProject, getProjects } from "../../services/project.api";
+import { deleteProject, getProjects, updateProjectActive } from "../../services/project.api";
 import { PageHeader } from "../../components/common/PageHeader";
 import { toBackendAssetUrl } from "../../utils/media";
 import { notifyError, notifySuccess } from "../../utils/notify";
@@ -15,8 +15,10 @@ function ProjectListPage() {
   const [keyword, setKeyword] = useState("");
   const [items, setItems] = useState([]);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 20, total: 0 });
+  const currentPage = pagination.current;
+  const currentPageSize = pagination.pageSize;
 
-  const fetchData = async (page = 1, limit = 20, search = "") => {
+  const fetchData = useCallback(async (page = 1, limit = 20, search = "") => {
     setLoading(true);
     try {
       const result = await getProjects({ page, limit, search });
@@ -31,11 +33,22 @@ function ProjectListPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    queueMicrotask(() => fetchData());
+  }, [fetchData]);
+
+  const handleActiveChange = useCallback(async (row, checked) => {
+    try {
+      await updateProjectActive(row.id, checked);
+      notifySuccess("Updated successfully");
+      fetchData(currentPage, currentPageSize, keyword);
+    } catch (error) {
+      notifyError(error?.response?.data?.error?.message || "Cannot update project");
+      fetchData(currentPage, currentPageSize, keyword);
+    }
+  }, [currentPage, currentPageSize, fetchData, keyword]);
 
   const columns = useMemo(
     () => [
@@ -57,11 +70,9 @@ function ProjectListPage() {
       {
         title: "Active",
         dataIndex: "is_active",
-        width: 120,
-        render: (value) => (
-          <Tag color={value !== false ? "green" : "default"}>
-            {value !== false ? "Active" : "Inactive"}
-          </Tag>
+        width: 100,
+        render: (value, row) => (
+          <Switch checked={value !== false} onChange={(checked) => handleActiveChange(row, checked)} />
         ),
       },
       {
@@ -85,7 +96,7 @@ function ProjectListPage() {
                 try {
                   await deleteProject(row.id);
                   notifySuccess("Deleted project successfully");
-                  fetchData(pagination.current, pagination.pageSize, keyword);
+                  fetchData(currentPage, currentPageSize, keyword);
                 } catch (error) {
                   notifyError(error?.response?.data?.error?.message || "Cannot delete project");
                 }
@@ -97,7 +108,7 @@ function ProjectListPage() {
         ),
       },
     ],
-    [keyword, navigate, pagination.current, pagination.pageSize]
+    [currentPage, currentPageSize, fetchData, handleActiveChange, keyword, navigate]
   );
 
   return (

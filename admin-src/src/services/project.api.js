@@ -20,6 +20,11 @@ async function updateProject(id, payload) {
   return response.data;
 }
 
+async function updateProjectActive(id, isActive) {
+  const response = await http.patch(`/admin/projects/${id}/active`, { is_active: isActive });
+  return response.data;
+}
+
 async function deleteProject(id) {
   const response = await http.delete(`/admin/projects/${id}`);
   return response.data;
@@ -30,5 +35,6 @@ export {
   getProject,
   createProject,
   updateProject,
+  updateProjectActive,
   deleteProject,
 };

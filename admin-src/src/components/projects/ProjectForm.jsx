@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Input, Row, Select, Space, Switch } from "antd";
+import { Button, Card, Col, Form, Input, Row, Select, Space } from "antd";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { ImageUploader } from "./ImageUploader";
 
@@ -32,11 +32,6 @@ function ProjectForm({ form, onSubmit, submitting }) {
         <Col xs={24} md={8}>
           <Form.Item label="Year" name="year">
             <Input />
-          </Form.Item>
-        </Col>
-        <Col xs={24} md={8}>
-          <Form.Item label="Active" name="is_active" valuePropName="checked" initialValue={true}>
-            <Switch />
           </Form.Item>
         </Col>
       </Row>
