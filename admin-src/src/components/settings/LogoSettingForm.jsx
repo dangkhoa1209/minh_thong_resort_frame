@@ -44,14 +44,7 @@ function LogoSettingForm() {
       }}
     >
       <Form.Item label="Logo light (for dark background)" name="logo_light_url" rules={[{ required: true }]}>
-        <div
-          style={{
-            background: "#0f1012",
-            border: "1px solid #26282d",
-            borderRadius: 8,
-            padding: 12,
-          }}
-        >
+        <div className="logo-light-uploader">
           <ImageUploader defaultRatio="free" />
         </div>
       </Form.Item>
@@ -63,6 +56,15 @@ function LogoSettingForm() {
           Save Logo
         </Button>
       </Space>
+      <style>
+        {`
+          .logo-light-uploader .ant-upload.ant-upload-select,
+          .logo-light-uploader .ant-upload-list-item {
+            background: #0f1012 !important;
+            border-color: #2a2d33 !important;
+          }
+        `}
+      </style>
     </Form>
   );
 }
