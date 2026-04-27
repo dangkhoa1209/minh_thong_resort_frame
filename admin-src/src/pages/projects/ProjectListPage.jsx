@@ -1,11 +1,30 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button, Grid, Input, Popconfirm, Space, Switch, Table } from "antd";
+import { EyeOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { deleteProject, getProjects, updateProjectActive } from "../../services/project.api";
 import { PageHeader } from "../../components/common/PageHeader";
 import { toBackendAssetUrl } from "../../utils/media";
 import { notifyError, notifySuccess } from "../../utils/notify";
+
+const CUSTOM_PROJECT_SLUGS = new Set([
+  "ana-mandara-villas-dalat",
+  "binh-an-village-dalat",
+  "four-seasons-resort-the-nam-hai",
+  "marriott-renaissance-hoi-an",
+  "mercure-hotel-vung-tau",
+  "pear-hoi-an",
+]);
+
+function getPublicProjectUrl(row) {
+  const slug = String(row?.slug || "").trim();
+  if (!slug) return "";
+  if (CUSTOM_PROJECT_SLUGS.has(slug)) {
+    return `/pages/project/${slug}.html`;
+  }
+  return `/pages/project/project-detail.html?slug=${encodeURIComponent(slug)}`;
+}
 
 function ProjectListPage() {
   const screens = Grid.useBreakpoint();
@@ -83,9 +102,18 @@ function ProjectListPage() {
       },
       {
         title: "Action",
-        width: 220,
+        width: 270,
         render: (_, row) => (
           <Space>
+            <Button
+              icon={<EyeOutlined />}
+              href={getPublicProjectUrl(row)}
+              target="_blank"
+              rel="noopener noreferrer"
+              disabled={!row.slug}
+            >
+              View
+            </Button>
             <Button onClick={() => navigate(`/projects/${row.id}`)}>Edit</Button>
             <Popconfirm
               title="Delete project?"
