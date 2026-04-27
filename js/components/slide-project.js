@@ -18,15 +18,24 @@ const CUSTOM_PROJECT_SLUGS = new Set([
   "pear-hoi-an",
 ]);
 
+const PROJECT_STATIC_SLUG_ALIASES = {
+  "resort-spa-ana-mandara-villas": "ana-mandara-villas-dalat",
+  "resort-binh-an-village": "binh-an-village-dalat",
+  "resort-spa-renaissance": "marriott-renaissance-hoi-an",
+  "hotel-mercure-vung-tau": "mercure-hotel-vung-tau",
+  "resort-citadines-pearl-hoi-an": "pear-hoi-an",
+};
+
 function getProjectPageUrl(item) {
   const slug = item?.slug || "";
   if (!slug) return item?.project_url || "";
+  const staticSlug = PROJECT_STATIC_SLUG_ALIASES[slug] || slug;
+  if (CUSTOM_PROJECT_SLUGS.has(staticSlug)) {
+    return `/pages/project/${staticSlug}.html`;
+  }
   const defaultStaticUrl = `/pages/project/${slug}.html`;
   if (item?.project_url && item.project_url !== defaultStaticUrl) {
     return item.project_url;
-  }
-  if (CUSTOM_PROJECT_SLUGS.has(slug)) {
-    return item?.project_url || defaultStaticUrl;
   }
   return `/pages/project/project-detail.html?slug=${encodeURIComponent(slug)}`;
 }
