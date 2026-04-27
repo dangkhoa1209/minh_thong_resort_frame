@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Card, Form } from "antd";
+import { Button, Card, Form } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { PageHeader } from "../../components/common/PageHeader";
 import { ShowcaseItemForm } from "../../components/showcase/ShowcaseItemForm";
@@ -60,7 +61,14 @@ function HomeHighlightFormPage() {
 
   return (
     <div>
-      <PageHeader title={isEdit ? "Edit Home Highlight" : "Add Project to Home Highlights"} />
+      <PageHeader
+        title={isEdit ? "Edit Home Highlight" : "Add Project to Home Highlights"}
+        extra={
+          <Button icon={<ArrowLeftOutlined />} onClick={() => navigate("/showcase/home-highlights")}>
+            Back
+          </Button>
+        }
+      />
       <Card>
         <ShowcaseItemForm form={form} onSubmit={handleSubmit} submitting={loading} projects={projects} />
       </Card>

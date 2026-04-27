@@ -23,9 +23,24 @@
 }
 
 .footer-column-2 {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  column-gap: 48px;
   width: 100%;
-  justify-content: space-between;
+  align-items: start;
+}
+
+.footer-address-block {
+  min-width: 0;
+}
+
+.footer-follow-block {
+  min-width: 148px;
+  flex-shrink: 0;
+}
+
+.footer-follow-block .footer-heading {
+  white-space: nowrap;
 }
 
 /* Menu */
@@ -250,8 +265,13 @@
   }
 
   .footer-column-2 {
+    display: flex;
     flex-direction: column;
     gap: 30px;
+  }
+
+  .footer-follow-block {
+    min-width: 0;
   }
 
   .footer-menu li {

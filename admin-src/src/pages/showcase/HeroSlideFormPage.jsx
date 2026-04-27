@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Card, Form } from "antd";
+import { Button, Card, Form } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { PageHeader } from "../../components/common/PageHeader";
 import { ShowcaseItemForm } from "../../components/showcase/ShowcaseItemForm";
@@ -60,7 +61,14 @@ function HeroSlideFormPage() {
 
   return (
     <div>
-      <PageHeader title={isEdit ? "Edit Hero Slide" : "Add Project to Hero Slides"} />
+      <PageHeader
+        title={isEdit ? "Edit Hero Slide" : "Add Project to Hero Slides"}
+        extra={
+          <Button icon={<ArrowLeftOutlined />} onClick={() => navigate("/showcase/hero-slides")}>
+            Back
+          </Button>
+        }
+      />
       <Card>
         <ShowcaseItemForm form={form} onSubmit={handleSubmit} submitting={loading} projects={projects} />
       </Card>
