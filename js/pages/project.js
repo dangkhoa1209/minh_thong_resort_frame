@@ -3,6 +3,7 @@ loadComponent("../../components/footer/index.html", "place-footer");
 loadComponent("../../components/slide-project/index.html", "place-slide-project");
 
 const popup = document.getElementById("popup");
+let popupAnimating = false;
 
 const PROJECT_DATA_SLUG_ALIASES = {
   "ana-mandara-villas-dalat": "resort-spa-ana-mandara-villas",
@@ -205,16 +206,25 @@ function initBaseProjectSeo() {
 }
 
 function closePopup() {
+  if (popupAnimating) return;
   const popupImg = popup.querySelector(".popup-img");
   if (!popupImg) return;
+  popupAnimating = true;
 
   const sourceId = popupImg.dataset.sourceId;
   const original = document.querySelector(`.product-thumbnail[data-thumb-id="${sourceId}"]`);
-  if (!original) return;
+  if (!original) {
+    popup.classList.remove("is-open");
+    popup.innerHTML = "";
+    document.body.classList.remove("popup-open");
+    popupAnimating = false;
+    return;
+  }
 
   const toRect = original.getBoundingClientRect();
   const fromRect = popupImg.getBoundingClientRect();
-  const scale = Math.min(toRect.width / fromRect.width, toRect.height / fromRect.height);
+  const scaleX = toRect.width / fromRect.width;
+  const scaleY = toRect.height / fromRect.height;
 
   const clone = popupImg.cloneNode();
   clone.classList.remove("popup-img");
@@ -224,35 +234,65 @@ function closePopup() {
     top: `${fromRect.top}px`,
     width: `${fromRect.width}px`,
     height: `${fromRect.height}px`,
-    objectFit: "cover",
-    zIndex: "9999",
+    objectFit: "contain",
+    objectPosition: "center",
+    zIndex: "10001",
     borderRadius: "0px",
     transformOrigin: "top left",
-    transform: "scale(1)",
-    transition: "all 0.5s ease-in-out",
+    willChange: "transform, border-radius, opacity",
+    pointerEvents: "none",
   });
 
   document.body.appendChild(clone);
-  popup.style.display = "none";
+  popup.classList.remove("is-open");
   popup.innerHTML = "";
-  void clone.offsetWidth;
+  document.body.classList.remove("popup-open");
 
-  Object.assign(clone.style, {
-    left: `${toRect.left}px`,
-    top: `${toRect.top}px`,
-    transform: `scale(${scale})`,
-    borderRadius: "20px",
-  });
+  clone
+    .animate(
+      [
+        {
+          transform: "translate3d(0, 0, 0) scale(1, 1)",
+          borderRadius: "0px",
+          opacity: 1,
+        },
+        {
+          transform: `translate3d(${toRect.left - fromRect.left}px, ${toRect.top - fromRect.top}px, 0) scale(${scaleX}, ${scaleY})`,
+          borderRadius: "20px",
+          opacity: 0.92,
+        },
+      ],
+      {
+        duration: 520,
+        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        fill: "forwards",
+      }
+    )
+    .finished.finally(() => {
+      clone.remove();
+      popupAnimating = false;
+    });
+}
 
-  setTimeout(() => clone.remove(), 500);
+async function waitForImageDecode(img) {
+  if (!img || img.complete) return;
+  try {
+    await img.decode();
+  } catch (_error) {
+    // Continue animation even when decode is unsupported or interrupted.
+  }
 }
 
 function initPopupPreview() {
   bindThumbIds();
 
-  document.addEventListener("click", (event) => {
+  document.addEventListener("click", async (event) => {
+    if (popupAnimating || popup.classList.contains("is-open")) return;
     const img = event.target.closest(".product-thumbnail");
     if (!img) return;
+
+    popupAnimating = true;
+    await waitForImageDecode(img);
 
     const rect = img.getBoundingClientRect();
     const clone = img.cloneNode();
@@ -279,34 +319,56 @@ function initPopupPreview() {
       height: `${rect.height}px`,
       objectFit: "contain",
       objectPosition: "center",
-      zIndex: "9999",
+      zIndex: "10001",
       borderRadius: "20px",
       transformOrigin: "top left",
-      transform: "scale(1)",
-      transition: "all 0.5s ease-in-out",
+      willChange: "transform, border-radius, opacity",
+      pointerEvents: "none",
     });
 
+    popup.innerHTML = '<span class="popup-close" id="popupClose">✕</span>';
+    popup.classList.add("is-open");
+    document.body.classList.add("popup-open");
     document.body.appendChild(clone);
-    void clone.offsetWidth;
 
-    requestAnimationFrame(() => {
-      Object.assign(clone.style, {
-        left: `${(window.innerWidth - targetW) / 2}px`,
-        top: `${(window.innerHeight - targetH) / 2}px`,
-        width: `${targetW}px`,
-        height: `${targetH}px`,
-        borderRadius: "0px",
+    const targetLeft = (window.innerWidth - targetW) / 2;
+    const targetTop = (window.innerHeight - targetH) / 2;
+    const scaleX = targetW / rect.width;
+    const scaleY = targetH / rect.height;
+
+    clone
+      .animate(
+        [
+          {
+            transform: "translate3d(0, 0, 0) scale(1, 1)",
+            borderRadius: "20px",
+          },
+          {
+            transform: `translate3d(${targetLeft - rect.left}px, ${targetTop - rect.top}px, 0) scale(${scaleX}, ${scaleY})`,
+            borderRadius: "0px",
+          },
+        ],
+        {
+          duration: 560,
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          fill: "forwards",
+        }
+      )
+      .finished.then(() => {
+        clone.dataset.sourceId = img.dataset.thumbId;
+        clone.classList.add("popup-img");
+        clone.style.left = `${targetLeft}px`;
+        clone.style.top = `${targetTop}px`;
+        clone.style.width = `${targetW}px`;
+        clone.style.height = `${targetH}px`;
+        clone.style.transform = "none";
+        clone.style.pointerEvents = "";
+        popup.appendChild(clone);
+        document.getElementById("popupClose").addEventListener("click", closePopup);
+      })
+      .finally(() => {
+        popupAnimating = false;
       });
-    });
-
-    setTimeout(() => {
-      clone.dataset.sourceId = img.dataset.thumbId;
-      clone.classList.add("popup-img");
-      popup.innerHTML = '<span class="popup-close" id="popupClose">✕</span>';
-      popup.appendChild(clone);
-      popup.style.display = "flex";
-      document.getElementById("popupClose").addEventListener("click", closePopup);
-    }, 500);
   });
 
   popup.addEventListener("click", (event) => {

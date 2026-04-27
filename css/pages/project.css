@@ -141,13 +141,25 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
   z-index: 9999;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.4s ease;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
   width: 100vw;
   height: 100vh;
   cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+.popup-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.popup-open {
+  overflow: hidden;
 }
 
 .popup-close {
@@ -158,10 +170,19 @@
   font-size: 30px;
   cursor: pointer;
   z-index: 10000;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.24s ease 0.18s, transform 0.24s ease 0.18s;
+}
+
+.popup-overlay.is-open .popup-close {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .popup-img {
   cursor: default;
+  will-change: transform;
 }
 
 /* end products */
@@ -252,4 +273,3 @@
   font-size: 43px;
 } 
 }
-
