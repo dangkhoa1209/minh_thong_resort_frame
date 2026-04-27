@@ -6,16 +6,17 @@ function getBasePath(p = 'minh_thong_resort_frame') {
 }
 
 function getApiBaseUrl() {
-  if (window.ABEL_API_BASE_URL) {
-    return window.ABEL_API_BASE_URL.replace(/\/$/, '');
-  }
+  return 'https://abeldang.com/api';
+  // if (window.ABEL_API_BASE_URL) {
+  //   return window.ABEL_API_BASE_URL.replace(/\/$/, '');
+  // }
 
-  const hostname = window.location.hostname;
-  if (hostname === 'localhost' || hostname === '127.0.0.1' || window.location.protocol === 'file:') {
-    return 'http://localhost:3001';
-  }
+  // const hostname = window.location.hostname;
+  // if (hostname === 'localhost' || hostname === '127.0.0.1' || window.location.protocol === 'file:') {
+  //   return 'http://localhost:3001';
+  // }
 
-  return '';
+  // return '';
 }
 
 function getAssetUrl(path) {
