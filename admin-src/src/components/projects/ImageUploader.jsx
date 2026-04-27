@@ -142,7 +142,7 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1 }) {
         width,
         height,
       });
-    } catch (_error) {
+    } catch {
       // Ignore estimation failures; upload flow is still available.
     }
   };
@@ -204,6 +204,7 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1 }) {
   return (
     <Space orientation="vertical" style={{ width: "100%" }}>
       <Upload
+        accept="image/*"
         listType="picture-card"
         fileList={fileList}
         beforeUpload={handleBeforeUpload}
