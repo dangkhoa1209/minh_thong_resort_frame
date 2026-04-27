@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Button, Grid, Input, Popconfirm, Space, Table } from "antd";
+import { Button, Grid, Input, Popconfirm, Space, Table, Tag } from "antd";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { deleteProject, getProjects } from "../../services/project.api";
@@ -54,6 +54,16 @@ function ProjectListPage() {
       { title: "Name", dataIndex: "name", width: 240 },
       { title: "Location", dataIndex: "location", width: 180 },
       { title: "Year", dataIndex: "year", width: 100 },
+      {
+        title: "Active",
+        dataIndex: "is_active",
+        width: 120,
+        render: (value) => (
+          <Tag color={value !== false ? "green" : "default"}>
+            {value !== false ? "Active" : "Inactive"}
+          </Tag>
+        ),
+      },
       {
         title: "Updated",
         dataIndex: "updated_at",

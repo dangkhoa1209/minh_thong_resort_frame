@@ -326,23 +326,6 @@ async function loadProjectDetail() {
   }
 }
 
-function trackProjectView() {
-  const slug = getCurrentProjectSlug();
-  if (!slug) return;
-
-  fetch(`${getApiBaseUrl()}/public/analytics/project-view`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      project_slug: slug,
-      path: window.location.pathname,
-    }),
-  }).catch(() => {
-    // Analytics should never block the project page.
-  });
-}
-
 initPopupPreview();
 initBaseProjectSeo();
 loadProjectDetail();
-trackProjectView();

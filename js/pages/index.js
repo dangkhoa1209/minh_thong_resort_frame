@@ -78,6 +78,10 @@ function getProjectCover(item) {
   return item?.banner_image || item?.image_1 || "";
 }
 
+function isProjectActive(item) {
+  return item?.is_active !== false;
+}
+
 const CUSTOM_PROJECT_SLUGS = new Set([
   "ana-mandara-villas-dalat",
   "binh-an-village-dalat",
@@ -112,7 +116,9 @@ function renderHomeProjects(items) {
     return;
   }
 
-  if (!Array.isArray(items) || items.length === 0) {
+  const activeItems = (Array.isArray(items) ? items : []).filter(isProjectActive);
+
+  if (activeItems.length === 0) {
     container.innerHTML = "";
     setHomeProjectsVisible(false);
     return;
@@ -120,7 +126,7 @@ function renderHomeProjects(items) {
 
   setHomeProjectsVisible(true);
 
-  container.innerHTML = items
+  container.innerHTML = activeItems
     .map((item, index) => {
       const pageTo = getProjectPageUrl(item);
       const cover = getProjectCover(item);

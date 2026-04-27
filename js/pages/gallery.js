@@ -30,6 +30,10 @@ function getProjectCover(item) {
   return item?.banner_image || item?.image_1 || "";
 }
 
+function isProjectActive(item) {
+  return item?.is_active !== false;
+}
+
 function getProjectPageUrl(item) {
   const slug = item?.slug || "";
   if (!slug) return item?.project_url || "";
@@ -90,7 +94,7 @@ async function loadProjects(page = 1) {
 
   try {
     const result = await fetchProjects(page);
-    const items = result.items || [];
+    const items = (result.items || []).filter(isProjectActive);
     const pagination = result.pagination || {};
 
     currentPage = Number(pagination.page || page);

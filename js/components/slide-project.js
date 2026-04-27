@@ -5,6 +5,10 @@ function getProjectCover(item) {
   return item?.banner_image || item?.image_1 || "";
 }
 
+function isProjectActive(item) {
+  return item?.is_active !== false;
+}
+
 const CUSTOM_PROJECT_SLUGS = new Set([
   "ana-mandara-villas-dalat",
   "binh-an-village-dalat",
@@ -90,7 +94,7 @@ async function loadOtherProjectsFromApi() {
       const response = await fetch(`${getApiBaseUrl()}/public/projects/${slug}/other-projects?limit=6`);
       if (response.ok) {
         const payload = await response.json();
-        const items = Array.isArray(payload?.data) ? payload.data : [];
+        const items = (Array.isArray(payload?.data) ? payload.data : []).filter(isProjectActive);
         if (items.length > 0) {
           return items;
         }
@@ -100,7 +104,7 @@ async function loadOtherProjectsFromApi() {
     const fallbackResponse = await fetch(`${getApiBaseUrl()}/public/projects?page=1&limit=6`);
     if (!fallbackResponse.ok) return [];
     const fallbackPayload = await fallbackResponse.json();
-    const fallbackItems = Array.isArray(fallbackPayload?.data?.items) ? fallbackPayload.data.items : [];
+    const fallbackItems = (Array.isArray(fallbackPayload?.data?.items) ? fallbackPayload.data.items : []).filter(isProjectActive);
     if (!slug) return fallbackItems;
     return fallbackItems.filter((item) => item?.slug !== slug);
   } catch (_error) {

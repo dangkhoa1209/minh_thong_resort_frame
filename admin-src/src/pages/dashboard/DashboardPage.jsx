@@ -28,7 +28,6 @@ function DashboardPage() {
   const contacts = summary?.contacts || {};
   const projects = summary?.projects || {};
   const showcase = summary?.showcase || {};
-  const analytics = summary?.analytics || {};
 
   return (
     <Space direction="vertical" size={16} style={{ width: "100%" }}>
@@ -38,6 +37,11 @@ function DashboardPage() {
         <Col xs={24} sm={12} xl={6}>
           <Card loading={loading}>
             <Statistic title="Projects" value={projects.total || 0} />
+          </Card>
+        </Col>
+        <Col xs={24} sm={12} xl={6}>
+          <Card loading={loading}>
+            <Statistic title="Projects Active" value={projects.active || 0} />
           </Card>
         </Col>
         <Col xs={24} sm={12} xl={6}>
@@ -53,11 +57,6 @@ function DashboardPage() {
         <Col xs={24} sm={12} xl={6}>
           <Card loading={loading}>
             <Statistic title="New Contact Requests" value={contacts.new || 0} />
-          </Card>
-        </Col>
-        <Col xs={24} sm={12} xl={6}>
-          <Card loading={loading}>
-            <Statistic title="Project Views" value={analytics.total_views || 0} />
           </Card>
         </Col>
       </Row>
@@ -134,20 +133,6 @@ function DashboardPage() {
         </Col>
       </Row>
 
-      <Card title="Top Viewed Projects" loading={loading}>
-        <List
-          dataSource={analytics.top_projects || []}
-          renderItem={(item, index) => (
-            <List.Item>
-              <List.Item.Meta
-                title={`${index + 1}. ${item.title || "Untitled project"}${item.name ? ` - ${item.name}` : ""}`}
-                description={`Last viewed ${dayjs(item.last_viewed_at).format("YYYY-MM-DD HH:mm")}`}
-              />
-              <Statistic value={item.views} suffix="views" />
-            </List.Item>
-          )}
-        />
-      </Card>
     </Space>
   );
 }
