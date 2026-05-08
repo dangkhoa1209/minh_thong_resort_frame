@@ -14,10 +14,10 @@ function getApiOriginBaseUrl() {
   //   return window.ABEL_API_BASE_URL.replace(/\/+$/, "").replace(/\/api$/i, "");
   // }
 
-  // const hostname = window.location.hostname;
-  // if (hostname === 'localhost' || hostname === '127.0.0.1' || window.location.protocol === 'file:') {
-  //   return 'http://localhost:3001';
-  // }
+  const hostname = window.location.hostname;
+  if (hostname === 'localhost' || hostname === '127.0.0.1' || window.location.protocol === 'file:') {
+    return 'http://localhost:3001';
+  }
 
   return 'https://abeldang.com';
 }

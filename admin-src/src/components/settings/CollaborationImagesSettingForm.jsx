@@ -1,4 +1,4 @@
-import { Button, Col, Form, Row, Space, Typography } from "antd";
+import { Button, Card, Col, Divider, Form, Input, Row, Space, Typography } from "antd";
 import { useEffect, useState } from "react";
 import {
   getCollaborationImages,
@@ -23,9 +23,58 @@ function normalizeImages(value) {
   return COLLABORATION_IMAGE_SLOTS.map((_, index) => String(source[index] || "").trim());
 }
 
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function applyInlineFormatting(text) {
+  return escapeHtml(text).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
+
+function renderRichContent(content) {
+  const lines = String(content || "").split(/\r?\n/);
+  const blocks = [];
+  let listBuffer = [];
+
+  const flushList = () => {
+    if (listBuffer.length === 0) return;
+    blocks.push(
+      `<ul style="padding-left: 20px; margin: 0 0 12px 0;">${listBuffer
+        .map((item) => `<li style="margin: 4px 0;"><span>${applyInlineFormatting(item)}</span></li>`)
+        .join("")}</ul>`
+    );
+    listBuffer = [];
+  };
+
+  lines.forEach((rawLine) => {
+    const line = String(rawLine || "").trim();
+    if (!line) {
+      flushList();
+      return;
+    }
+
+    if (line.startsWith("- ")) {
+      listBuffer.push(line.slice(2).trim());
+      return;
+    }
+
+    flushList();
+    blocks.push(`<p style="margin: 0 0 12px 0;">${applyInlineFormatting(line)}</p>`);
+  });
+
+  flushList();
+  return blocks.join("") || `<p style="margin: 0;">No content preview.</p>`;
+}
+
 function CollaborationImagesSettingForm() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const contentValue = Form.useWatch("content", form);
 
   useEffect(() => {
     (async () => {
@@ -33,6 +82,9 @@ function CollaborationImagesSettingForm() {
       try {
         const result = await getCollaborationImages();
         form.setFieldsValue({
+          title: String(result?.data?.title || "").trim(),
+          subtitle: String(result?.data?.subtitle || "").trim(),
+          content: String(result?.data?.content || "").trim(),
           images: normalizeImages(result?.data?.images || []),
         });
       } catch (error) {
@@ -47,9 +99,12 @@ function CollaborationImagesSettingForm() {
     setLoading(true);
     try {
       await updateCollaborationImages({
+        title: String(values?.title || "").trim(),
+        subtitle: String(values?.subtitle || "").trim(),
+        content: String(values?.content || "").trim(),
         images: normalizeImages(values?.images || []),
       });
-      notifySuccess("Collaboration images updated");
+      notifySuccess("Collaboration content updated");
     } catch (error) {
       notifyError(error?.response?.data?.error?.message || "Cannot update collaboration images");
     } finally {
@@ -59,6 +114,51 @@ function CollaborationImagesSettingForm() {
 
   return (
     <Form form={form} layout="vertical" onFinish={onFinish}>
+      <Typography.Paragraph type="secondary">
+        You can customize title, subtitle and content for the Collaboration page.
+      </Typography.Paragraph>
+      <Typography.Paragraph type="secondary">
+        Content supports lightweight formatting: use <Typography.Text code>**text**</Typography.Text> for bold, start line with <Typography.Text code>- </Typography.Text> for bullet list, and press Enter to create new lines.
+      </Typography.Paragraph>
+      <Typography.Paragraph type="secondary">
+        Example:
+        <br />
+        <Typography.Text code>**At Abel Dang Production**</Typography.Text>
+        <br />
+        <Typography.Text code>- Highlight signature spaces</Typography.Text>
+        <br />
+        <Typography.Text code>- Reflect authentic guest experiences</Typography.Text>
+        <br />
+        <Typography.Text code>[abeldang@dangvuproduction.com](mailto:abeldang@dangvuproduction.com)</Typography.Text>
+      </Typography.Paragraph>
+      <Row gutter={[16, 0]}>
+        <Col xs={24}>
+          <Form.Item label="Title" name="title">
+            <Input maxLength={150} />
+          </Form.Item>
+        </Col>
+        <Col xs={24}>
+          <Form.Item label="Subtitle" name="subtitle">
+            <Input maxLength={250} />
+          </Form.Item>
+        </Col>
+        <Col xs={24}>
+          <Form.Item label="Content" name="content">
+            <Input.TextArea rows={8} maxLength={5000} />
+          </Form.Item>
+        </Col>
+        <Col xs={24}>
+          <Typography.Text type="secondary">Preview Content</Typography.Text>
+          <Card size="small" style={{ marginTop: 8 }}>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: renderRichContent(String(contentValue || "")),
+              }}
+            />
+          </Card>
+        </Col>
+      </Row>
+      <Divider />
       <Typography.Paragraph type="secondary">
         Upload replacement images for each Collaboration slot. Empty slots keep the default image.
       </Typography.Paragraph>
@@ -76,7 +176,7 @@ function CollaborationImagesSettingForm() {
       </Row>
       <Space>
         <Button htmlType="submit" type="primary" loading={loading}>
-          Save Collaboration Images
+          Save Collaboration
         </Button>
       </Space>
     </Form>
