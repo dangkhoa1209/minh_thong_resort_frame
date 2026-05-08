@@ -24,4 +24,28 @@ async function applyCollabContactEmail() {
   emailLink.textContent = email;
 }
 
+async function fetchPublicCollaborationImages() {
+  try {
+    const response = await fetch(`${getApiBaseUrl()}/public/collaboration-images`);
+    if (!response.ok) return null;
+    const payload = await response.json();
+    return Array.isArray(payload?.data?.images) ? payload.data.images : null;
+  } catch (_error) {
+    return null;
+  }
+}
+
+async function applyCollaborationImages() {
+  const images = await fetchPublicCollaborationImages();
+  if (!images) return;
+
+  document.querySelectorAll("[data-collaboration-image]").forEach((image) => {
+    const index = Number(image.getAttribute("data-collaboration-image")) - 1;
+    const url = String(images[index] || "").trim();
+    if (!url) return;
+    image.src = getAssetUrl(url);
+  });
+}
+
 applyCollabContactEmail();
+applyCollaborationImages();

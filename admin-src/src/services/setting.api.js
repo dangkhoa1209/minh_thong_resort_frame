@@ -60,6 +60,21 @@ async function getPublicHomePartners() {
   return response.data;
 }
 
+async function getCollaborationImages() {
+  const response = await http.get("/admin/collaboration-images");
+  return response.data;
+}
+
+async function updateCollaborationImages(payload) {
+  const response = await http.put("/admin/collaboration-images", payload);
+  return response.data;
+}
+
+async function getPublicCollaborationImages() {
+  const response = await http.get("/public/collaboration-images");
+  return response.data;
+}
+
 export {
   getLogo,
   updateLogo,
@@ -73,4 +88,7 @@ export {
   getHomePartners,
   updateHomePartners,
   getPublicHomePartners,
+  getCollaborationImages,
+  updateCollaborationImages,
+  getPublicCollaborationImages,
 };

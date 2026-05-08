@@ -49,7 +49,15 @@ function toFileList(value) {
   ];
 }
 
-function ImageUploader({ value, onChange, multiple = false, maxCount = 1 }) {
+function parseAspectRatio(value) {
+  if (!value || value === "free") return Number.NaN;
+  if (typeof value === "number") return value > 0 ? value : Number.NaN;
+  const parts = String(value).split(":").map((item) => Number(item.trim()));
+  if (parts.length !== 2 || !parts[0] || !parts[1]) return Number.NaN;
+  return parts[0] / parts[1];
+}
+
+function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaultRatio = "free" }) {
   const [quality, setQuality] = useState(75);
   const [cropModalOpen, setCropModalOpen] = useState(false);
   const [sourceImage, setSourceImage] = useState("");
@@ -60,6 +68,7 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1 }) {
   const estimateRunRef = useRef(0);
 
   const fileList = useMemo(() => toFileList(value), [value]);
+  const aspectRatio = useMemo(() => parseAspectRatio(defaultRatio), [defaultRatio]);
 
   const pushUploadedUrl = (uploadedUrl) => {
     if (!uploadedUrl) return;
@@ -256,7 +265,7 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1 }) {
             viewMode={1}
             autoCropArea={1}
             dragMode="move"
-            aspectRatio={Number.NaN}
+            aspectRatio={aspectRatio}
             guides
             cropBoxResizable
             cropBoxMovable

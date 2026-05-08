@@ -7,6 +7,7 @@ import {
   HomeOutlined,
   MailOutlined,
   PictureOutlined,
+  BlockOutlined,
   MenuOutlined,
 } from "@ant-design/icons";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -66,6 +67,7 @@ function AdminLayout() {
     if (location.pathname.startsWith("/projects")) return "projects";
     if (location.pathname.startsWith("/showcase/home-highlights")) return "home-highlights";
     if (location.pathname.startsWith("/showcase/hero-slides")) return "hero-slides";
+    if (location.pathname.startsWith("/collaboration")) return "collaboration";
     if (location.pathname.startsWith("/contacts")) return "contacts";
     if (location.pathname.startsWith("/settings")) return "settings";
     return "dashboard";
@@ -76,6 +78,7 @@ function AdminLayout() {
     { key: "projects", icon: <AppstoreOutlined />, label: "Projects" },
     { key: "home-highlights", icon: <HomeOutlined />, label: "Home Highlights" },
     { key: "hero-slides", icon: <PictureOutlined />, label: "Hero Slides" },
+    { key: "collaboration", icon: <BlockOutlined />, label: "Collaboration" },
     { key: "contacts", icon: <MailOutlined />, label: "Contacts" },
     { key: "settings", icon: <SettingOutlined />, label: "Settings" },
   ];
@@ -85,6 +88,7 @@ function AdminLayout() {
     if (key === "projects") navigate("/projects");
     if (key === "home-highlights") navigate("/showcase/home-highlights");
     if (key === "hero-slides") navigate("/showcase/hero-slides");
+    if (key === "collaboration") navigate("/collaboration");
     if (key === "contacts") navigate("/contacts");
     if (key === "settings") navigate("/settings");
     if (isMobile) setMenuOpen(false);

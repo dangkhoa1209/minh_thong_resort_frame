@@ -11,6 +11,7 @@ import { HeroSlideListPage } from "../pages/showcase/HeroSlideListPage";
 import { HeroSlideFormPage } from "../pages/showcase/HeroSlideFormPage";
 import { ContactListPage } from "../pages/contacts/ContactListPage";
 import { SettingsPage } from "../pages/settings/SettingsPage";
+import { CollaborationPage } from "../pages/collaboration/CollaborationPage";
 
 const routes = [
   { path: "/login", element: <LoginPage /> },
@@ -32,6 +33,7 @@ const routes = [
       { path: "showcase/hero-slides", element: <HeroSlideListPage /> },
       { path: "showcase/hero-slides/new", element: <HeroSlideFormPage /> },
       { path: "showcase/hero-slides/:id", element: <HeroSlideFormPage /> },
+      { path: "collaboration", element: <CollaborationPage /> },
       { path: "contacts", element: <ContactListPage /> },
       { path: "settings", element: <SettingsPage /> },
     ],
