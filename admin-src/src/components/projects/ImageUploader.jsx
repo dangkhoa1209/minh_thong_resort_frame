@@ -3,13 +3,23 @@ import { Modal, Slider, Space, Spin, Upload, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { Cropper } from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { uploadProjectImage } from "../../services/media.api";
+import { getUploadErrorMessage, uploadProjectImage } from "../../services/media.api";
 import { toBackendAssetUrl } from "../../utils/media";
 import { notifyError } from "../../utils/notify";
 
 const MAX_OUTPUT_WIDTH = 1920;
 const MAX_PREVIEW_SIDE = 4096;
 const LARGE_FILE_BYTES = 10 * 1024 * 1024;
+const MAX_UPLOAD_BYTES = Math.max(1, Number(import.meta.env.VITE_MAX_UPLOAD_MB || 8)) * 1024 * 1024;
+const ESTIMATE_QUALITY_STEPS = [100, 90, 80, 75, 70, 60, 50, 40, 30];
+
+let encodeChain = Promise.resolve();
+
+function runExclusiveEncode(task) {
+  const result = encodeChain.then(task);
+  encodeChain = result.catch(() => {});
+  return result;
+}
 
 function loadImageElement(src) {
   return new Promise((resolve, reject) => {
@@ -112,13 +122,174 @@ function formatBytes(value) {
   return `${(size / (1024 * 1024)).toFixed(2)} MB`;
 }
 
-function getTargetDimensions(width, height) {
-  if (!width || !height) return { width: 0, height: 0 };
-  const scale = Math.min(MAX_OUTPUT_WIDTH / width, 1);
-  return {
-    width: Math.max(1, Math.round(width * scale)),
-    height: Math.max(1, Math.round(height * scale)),
-  };
+function cloneCanvas(sourceCanvas) {
+  const canvas = document.createElement("canvas");
+  canvas.width = sourceCanvas.width;
+  canvas.height = sourceCanvas.height;
+  const context = canvas.getContext("2d");
+  if (!context) throw new Error("Cannot clone canvas");
+  context.drawImage(sourceCanvas, 0, 0);
+  return canvas;
+}
+
+function resizeCanvasToMaxWidth(sourceCanvas, maxWidth) {
+  if (!sourceCanvas?.width || !sourceCanvas?.height) {
+    throw new Error("Invalid canvas");
+  }
+
+  const scale = Math.min(maxWidth / sourceCanvas.width, 1);
+  if (scale >= 1) {
+    return sourceCanvas;
+  }
+
+  const width = Math.max(1, Math.round(sourceCanvas.width * scale));
+  const height = Math.max(1, Math.round(sourceCanvas.height * scale));
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+
+  const context = canvas.getContext("2d");
+  if (!context) throw new Error("Cannot resize canvas");
+  context.imageSmoothingEnabled = true;
+  context.imageSmoothingQuality = "high";
+  context.drawImage(sourceCanvas, 0, 0, width, height);
+  return canvas;
+}
+
+function prefersJpegEncoding() {
+  if (typeof navigator === "undefined") return false;
+  const ua = navigator.userAgent;
+  return /Safari/i.test(ua) && !/Chrome|Chromium|Edg|OPR|CriOS|FxiOS/i.test(ua);
+}
+
+function isEfficientWebpBlob(blob, width, height, quality) {
+  if (!blob || blob.type !== "image/webp") return false;
+  const pixels = Math.max(1, width * height);
+  const normalizedQuality = Math.max(0.01, Math.min(1, quality / 100));
+  const maxBytes = Math.max(512 * 1024, pixels * 0.45 * normalizedQuality);
+  return blob.size <= maxBytes;
+}
+
+async function encodeCanvasBlob(canvas, quality) {
+  const normalizedQuality = Math.max(0.01, Math.min(1, quality / 100));
+  const outputCanvas = cloneCanvas(canvas);
+  const tryEncode = (type) =>
+    new Promise((resolve) => {
+      outputCanvas.toBlob(resolve, type, normalizedQuality);
+    });
+
+  if (!prefersJpegEncoding()) {
+    const webpBlob = await tryEncode("image/webp");
+    if (isEfficientWebpBlob(webpBlob, outputCanvas.width, outputCanvas.height, quality)) {
+      return { blob: webpBlob, mimeType: "image/webp", extension: "webp" };
+    }
+  }
+
+  const jpegBlob = await tryEncode("image/jpeg");
+  if (jpegBlob && (!jpegBlob.type || jpegBlob.type === "image/jpeg")) {
+    return { blob: jpegBlob, mimeType: "image/jpeg", extension: "jpg" };
+  }
+
+  throw new Error("Cannot encode image");
+}
+
+async function buildEstimateProfile(canvas) {
+  const profile = [];
+  let bestSizeSoFar = Number.POSITIVE_INFINITY;
+
+  for (const stepQuality of ESTIMATE_QUALITY_STEPS) {
+    const encoded = await encodeCanvasBlob(canvas, stepQuality);
+    let size = encoded.blob.size;
+    if (size > bestSizeSoFar) {
+      size = bestSizeSoFar;
+    } else {
+      bestSizeSoFar = size;
+    }
+
+    profile.push({
+      quality: stepQuality,
+      size,
+      width: canvas.width,
+      height: canvas.height,
+      format: encoded.extension,
+    });
+  }
+
+  return profile.sort((left, right) => left.quality - right.quality);
+}
+
+function lookupEstimateFromProfile(profile, quality) {
+  if (!profile?.length) return null;
+
+  const exact = profile.find((item) => item.quality === quality);
+  if (exact) return exact;
+
+  if (quality <= profile[0].quality) return { ...profile[0], quality };
+  if (quality >= profile[profile.length - 1].quality) {
+    return { ...profile[profile.length - 1], quality };
+  }
+
+  for (let index = 0; index < profile.length - 1; index += 1) {
+    const lower = profile[index];
+    const upper = profile[index + 1];
+    if (quality < lower.quality || quality > upper.quality) continue;
+
+    const ratio = (quality - lower.quality) / (upper.quality - lower.quality);
+    const size = Math.round(lower.size + (upper.size - lower.size) * ratio);
+    return {
+      quality,
+      size,
+      width: upper.width,
+      height: upper.height,
+    };
+  }
+
+  return { ...profile[profile.length - 1], quality };
+}
+
+function getCroppedOutputCanvas(cropper) {
+  const croppedCanvas = cropper.getCroppedCanvas({
+    imageSmoothingEnabled: true,
+    imageSmoothingQuality: "high",
+  });
+  if (!croppedCanvas || !croppedCanvas.width || !croppedCanvas.height) {
+    return null;
+  }
+  const resized = resizeCanvasToMaxWidth(croppedCanvas, MAX_OUTPUT_WIDTH);
+  return cloneCanvas(resized);
+}
+
+async function canvasToUploadFile(canvas, baseName, quality) {
+  const encoded = await encodeCanvasBlob(canvas, quality);
+  return new File([encoded.blob], `${baseName}.${encoded.extension}`, { type: encoded.mimeType });
+}
+
+async function createCroppedUploadFile(canvas, baseName, quality) {
+  const candidates = [];
+  for (let nextQuality = quality; nextQuality >= 30; nextQuality -= 5) {
+    candidates.push(nextQuality);
+  }
+
+  let bestFile = null;
+  for (const nextQuality of candidates) {
+    const file = await canvasToUploadFile(canvas, baseName, nextQuality);
+    if (file.size > MAX_UPLOAD_BYTES) continue;
+    if (!bestFile || nextQuality > bestFile.quality) {
+      bestFile = { file, quality: nextQuality };
+    }
+  }
+  if (bestFile) return bestFile.file;
+
+  let smallestFile = null;
+  for (const nextQuality of candidates) {
+    const file = await canvasToUploadFile(canvas, baseName, nextQuality);
+    if (!smallestFile || file.size < smallestFile.size) {
+      smallestFile = file;
+    }
+  }
+  if (smallestFile) return smallestFile;
+
+  throw new Error(`Cannot compress image below ${formatBytes(MAX_UPLOAD_BYTES)}`);
 }
 
 function toFileList(value) {
@@ -159,9 +330,12 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaul
   const [sourceFile, setSourceFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [preparingImage, setPreparingImage] = useState(false);
+  const [estimatingSize, setEstimatingSize] = useState(false);
   const [liveCompressionInfo, setLiveCompressionInfo] = useState(null);
   const cropperRef = useRef(null);
-  const estimateRunRef = useRef(0);
+  const estimateProfileRef = useRef([]);
+  const estimateProfileSeqRef = useRef(0);
+  const qualityRef = useRef(75);
   const previewUrlRef = useRef("");
 
   const revokePreviewUrl = () => {
@@ -170,7 +344,9 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaul
     previewUrlRef.current = "";
   };
 
-  useEffect(() => () => revokePreviewUrl(), []);
+  useEffect(() => () => {
+    revokePreviewUrl();
+  }, []);
 
   const fileList = useMemo(() => toFileList(value), [value]);
   const aspectRatio = useMemo(() => parseAspectRatio(defaultRatio), [defaultRatio]);
@@ -200,6 +376,7 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaul
     setSourceFile(file);
     setSourceImage("");
     setLiveCompressionInfo(null);
+    estimateProfileRef.current = [];
     revokePreviewUrl();
 
     try {
@@ -221,48 +398,52 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaul
     setSourceImage("");
     setSourceFile(null);
     setLiveCompressionInfo(null);
+    estimateProfileRef.current = [];
+    setEstimatingSize(false);
     setPreparingImage(false);
     revokePreviewUrl();
   };
 
-  const estimateCompression = async (nextQuality) => {
+  const applyEstimateFromProfile = (nextQuality) => {
+    const matched = lookupEstimateFromProfile(estimateProfileRef.current, nextQuality);
+    if (!matched || !sourceFile) return;
+
+    setLiveCompressionInfo({
+      originalSize: sourceFile.size,
+      outputSize: matched.size,
+      quality: nextQuality,
+      width: matched.width,
+      height: matched.height,
+      format: matched.format || "jpg",
+    });
+  };
+
+  const rebuildEstimateProfile = async () => {
     const cropper = cropperRef.current?.cropper;
     if (!cropper || !sourceFile) return;
 
-    const runId = Date.now();
-    estimateRunRef.current = runId;
+    estimateProfileSeqRef.current += 1;
+    const runId = estimateProfileSeqRef.current;
+    setEstimatingSize(true);
 
-    try {
-      const croppedCanvas = cropper.getCroppedCanvas();
-      if (!croppedCanvas) return;
+    await runExclusiveEncode(async () => {
+      try {
+        const outputCanvas = getCroppedOutputCanvas(cropper);
+        if (!outputCanvas) return;
 
-      const { width, height } = getTargetDimensions(croppedCanvas.width, croppedCanvas.height);
-      if (!width || !height) return;
+        const profile = await buildEstimateProfile(outputCanvas);
+        if (runId !== estimateProfileSeqRef.current) return;
 
-      const outputCanvas = document.createElement("canvas");
-      outputCanvas.width = width;
-      outputCanvas.height = height;
-
-      const context = outputCanvas.getContext("2d");
-      if (!context) return;
-      context.drawImage(croppedCanvas, 0, 0, width, height);
-
-      const blob = await new Promise((resolve) => {
-        outputCanvas.toBlob(resolve, "image/webp", nextQuality / 100);
-      });
-      if (!blob) return;
-
-      if (estimateRunRef.current !== runId) return;
-      setLiveCompressionInfo({
-        originalSize: sourceFile.size,
-        outputSize: blob.size,
-        quality: nextQuality,
-        width,
-        height,
-      });
-    } catch {
-      // Ignore estimation failures; upload flow is still available.
-    }
+        estimateProfileRef.current = profile;
+        applyEstimateFromProfile(qualityRef.current);
+      } catch {
+        // Ignore estimation failures; upload flow is still available.
+      } finally {
+        if (runId === estimateProfileSeqRef.current) {
+          setEstimatingSize(false);
+        }
+      }
+    });
   };
 
   const handleCropOk = async () => {
@@ -271,36 +452,20 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaul
 
     setUploading(true);
     try {
-      const croppedCanvas = cropper.getCroppedCanvas();
-      if (!croppedCanvas) throw new Error("Cannot crop image");
-
-      const { width, height } = getTargetDimensions(croppedCanvas.width, croppedCanvas.height);
-      if (!width || !height) throw new Error("Invalid cropped size");
-
-      const outputCanvas = document.createElement("canvas");
-      outputCanvas.width = width;
-      outputCanvas.height = height;
-
-      const context = outputCanvas.getContext("2d");
-      if (!context) throw new Error("Cannot process image");
-      context.drawImage(croppedCanvas, 0, 0, width, height);
-
-      const blob = await new Promise((resolve) => {
-        outputCanvas.toBlob(resolve, "image/webp", quality / 100);
-      });
-
-      if (!blob) throw new Error("Cannot create cropped image");
+      const outputCanvas = getCroppedOutputCanvas(cropper);
+      if (!outputCanvas) {
+        throw new Error("Cannot crop image");
+      }
 
       const baseName = sourceFile.name.replace(/\.[^.]+$/, "") || "image";
-      const outputName = `${baseName}.webp`;
-      const croppedFile = new File([blob], outputName, { type: "image/webp" });
+      const croppedFile = await createCroppedUploadFile(outputCanvas, baseName, quality);
       const result = await uploadProjectImage(croppedFile);
       const uploadedUrl = result?.data?.url;
 
       pushUploadedUrl(uploadedUrl);
       handleCropCancel();
     } catch (error) {
-      notifyError(error?.response?.data?.error?.message || error?.message || "Upload failed");
+      notifyError(getUploadErrorMessage(error));
     } finally {
       setUploading(false);
     }
@@ -350,8 +515,15 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaul
               value={quality}
               onChange={(nextValue) => {
                 const numericValue = Number(nextValue) || 75;
+                qualityRef.current = numericValue;
                 setQuality(numericValue);
-                estimateCompression(numericValue);
+                applyEstimateFromProfile(numericValue);
+              }}
+              onChangeComplete={(nextValue) => {
+                const numericValue = Number(nextValue) || 75;
+                qualityRef.current = numericValue;
+                setQuality(numericValue);
+                applyEstimateFromProfile(numericValue);
               }}
             />
           </Space>
@@ -360,9 +532,11 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaul
               Original: {sourceFile ? formatBytes(sourceFile.size) : "0 B"}
             </Typography.Text>
             <Typography.Text type="secondary">
-              Estimated: {liveCompressionInfo
-                ? `${formatBytes(liveCompressionInfo.outputSize)} (${liveCompressionInfo.width}x${liveCompressionInfo.height}, quality ${liveCompressionInfo.quality}%)`
-                : "Move quality slider to preview size"}
+              Estimated: {estimatingSize
+                ? "Calculating..."
+                : liveCompressionInfo
+                  ? `${formatBytes(liveCompressionInfo.outputSize)} (${liveCompressionInfo.width}x${liveCompressionInfo.height}, quality ${quality}%, ${String(liveCompressionInfo.format || "jpg").toUpperCase()})`
+                  : "Preparing size estimate..."}
             </Typography.Text>
           </Space>
         </Space>
@@ -384,10 +558,10 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaul
                 background={false}
                 checkOrientation={false}
                 ready={() => {
-                  estimateCompression(quality);
+                  rebuildEstimateProfile();
                 }}
                 cropend={() => {
-                  estimateCompression(quality);
+                  rebuildEstimateProfile();
                 }}
               />
             ) : (
