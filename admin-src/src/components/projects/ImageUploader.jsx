@@ -1,5 +1,5 @@
-import { useMemo, useRef, useState } from "react";
-import { Modal, Slider, Space, Upload, Typography } from "antd";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Modal, Slider, Space, Spin, Upload, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { Cropper } from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -8,6 +8,101 @@ import { toBackendAssetUrl } from "../../utils/media";
 import { notifyError } from "../../utils/notify";
 
 const MAX_OUTPUT_WIDTH = 1920;
+const MAX_PREVIEW_SIDE = 4096;
+const LARGE_FILE_BYTES = 10 * 1024 * 1024;
+
+function loadImageElement(src) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error("Cannot load image"));
+    image.src = src;
+  });
+}
+
+async function canvasToBlobUrl(canvas, type = "image/jpeg", quality = 0.92) {
+  const blob = await new Promise((resolve) => {
+    canvas.toBlob(resolve, type, quality);
+  });
+  if (!blob) throw new Error("Cannot prepare image preview");
+  return URL.createObjectURL(blob);
+}
+
+async function bitmapToBlobUrl(bitmap, type = "image/jpeg", quality = 0.92) {
+  const canvas = document.createElement("canvas");
+  canvas.width = bitmap.width;
+  canvas.height = bitmap.height;
+  const context = canvas.getContext("2d");
+  if (!context) {
+    bitmap.close?.();
+    throw new Error("Cannot prepare image preview");
+  }
+  context.drawImage(bitmap, 0, 0);
+  bitmap.close?.();
+  return canvasToBlobUrl(canvas, type, quality);
+}
+
+async function prepareImageForCrop(file) {
+  const shouldDownscale = file.size > LARGE_FILE_BYTES;
+
+  if (!shouldDownscale) {
+    const objectUrl = URL.createObjectURL(file);
+    try {
+      const image = await loadImageElement(objectUrl);
+      if (image.naturalWidth <= MAX_PREVIEW_SIDE && image.naturalHeight <= MAX_PREVIEW_SIDE) {
+        return objectUrl;
+      }
+    } catch {
+      // Fall through to downscale path.
+    }
+    URL.revokeObjectURL(objectUrl);
+  }
+
+  if (typeof createImageBitmap === "function") {
+    try {
+      const bitmap = await createImageBitmap(file, {
+        resizeWidth: MAX_PREVIEW_SIDE,
+        resizeQuality: "high",
+      });
+      if (bitmap.width <= MAX_PREVIEW_SIDE && bitmap.height <= MAX_PREVIEW_SIDE) {
+        return bitmapToBlobUrl(bitmap);
+      }
+      const scale = Math.min(MAX_PREVIEW_SIDE / bitmap.width, MAX_PREVIEW_SIDE / bitmap.height, 1);
+      const resized = await createImageBitmap(bitmap, {
+        resizeWidth: Math.max(1, Math.round(bitmap.width * scale)),
+        resizeHeight: Math.max(1, Math.round(bitmap.height * scale)),
+        resizeQuality: "high",
+      });
+      bitmap.close();
+      return bitmapToBlobUrl(resized);
+    } catch {
+      // Fall through to canvas downscale.
+    }
+  }
+
+  const objectUrl = URL.createObjectURL(file);
+  try {
+    const image = await loadImageElement(objectUrl);
+    const scale = Math.min(
+      MAX_PREVIEW_SIDE / image.naturalWidth,
+      MAX_PREVIEW_SIDE / image.naturalHeight,
+      1,
+    );
+    const width = Math.max(1, Math.round(image.naturalWidth * scale));
+    const height = Math.max(1, Math.round(image.naturalHeight * scale));
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext("2d");
+    if (!context) throw new Error("Cannot prepare image preview");
+    context.drawImage(image, 0, 0, width, height);
+    URL.revokeObjectURL(objectUrl);
+    return canvasToBlobUrl(canvas);
+  } catch (error) {
+    URL.revokeObjectURL(objectUrl);
+    throw error;
+  }
+}
 
 function formatBytes(value) {
   const size = Number(value || 0);
@@ -63,9 +158,19 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaul
   const [sourceImage, setSourceImage] = useState("");
   const [sourceFile, setSourceFile] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [preparingImage, setPreparingImage] = useState(false);
   const [liveCompressionInfo, setLiveCompressionInfo] = useState(null);
   const cropperRef = useRef(null);
   const estimateRunRef = useRef(0);
+  const previewUrlRef = useRef("");
+
+  const revokePreviewUrl = () => {
+    if (!previewUrlRef.current) return;
+    URL.revokeObjectURL(previewUrlRef.current);
+    previewUrlRef.current = "";
+  };
+
+  useEffect(() => () => revokePreviewUrl(), []);
 
   const fileList = useMemo(() => toFileList(value), [value]);
   const aspectRatio = useMemo(() => parseAspectRatio(defaultRatio), [defaultRatio]);
@@ -89,22 +194,24 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaul
     onChange?.(next);
   };
 
-  const readAsDataUrl = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = () => reject(new Error("Cannot read image"));
-      reader.readAsDataURL(file);
-    });
-
   const handleBeforeUpload = async (file) => {
+    setPreparingImage(true);
+    setCropModalOpen(true);
+    setSourceFile(file);
+    setSourceImage("");
+    setLiveCompressionInfo(null);
+    revokePreviewUrl();
+
     try {
-      const dataUrl = await readAsDataUrl(file);
-      setSourceImage(dataUrl);
-      setSourceFile(file);
-      setCropModalOpen(true);
+      const previewUrl = await prepareImageForCrop(file);
+      previewUrlRef.current = previewUrl;
+      setSourceImage(previewUrl);
     } catch (error) {
+      setCropModalOpen(false);
+      setSourceFile(null);
       notifyError(error?.message || "Cannot read image");
+    } finally {
+      setPreparingImage(false);
     }
     return Upload.LIST_IGNORE;
   };
@@ -114,6 +221,8 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaul
     setSourceImage("");
     setSourceFile(null);
     setLiveCompressionInfo(null);
+    setPreparingImage(false);
+    revokePreviewUrl();
   };
 
   const estimateCompression = async (nextQuality) => {
@@ -229,7 +338,7 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaul
         open={cropModalOpen}
         onCancel={handleCropCancel}
         onOk={handleCropOk}
-        okButtonProps={{ loading: uploading }}
+        okButtonProps={{ loading: uploading, disabled: preparingImage || !sourceImage }}
         width={920}
       >
         <Space direction="vertical" size={12} style={{ width: "100%", marginBottom: 12 }}>
@@ -257,29 +366,35 @@ function ImageUploader({ value, onChange, multiple = false, maxCount = 1, defaul
             </Typography.Text>
           </Space>
         </Space>
-        {sourceImage ? (
-          <Cropper
-            ref={cropperRef}
-            src={sourceImage}
-            style={{ height: 460, width: "100%" }}
-            viewMode={1}
-            autoCropArea={1}
-            dragMode="move"
-            aspectRatio={aspectRatio}
-            guides
-            cropBoxResizable
-            cropBoxMovable
-            responsive
-            background={false}
-            checkOrientation={false}
-            ready={() => {
-              estimateCompression(quality);
-            }}
-            cropend={() => {
-              estimateCompression(quality);
-            }}
-          />
-        ) : null}
+        <Spin spinning={preparingImage} tip="Preparing image preview...">
+          <div style={{ minHeight: 460 }}>
+            {sourceImage ? (
+              <Cropper
+                ref={cropperRef}
+                src={sourceImage}
+                style={{ height: 460, width: "100%" }}
+                viewMode={1}
+                autoCropArea={1}
+                dragMode="move"
+                aspectRatio={aspectRatio}
+                guides
+                cropBoxResizable
+                cropBoxMovable
+                responsive
+                background={false}
+                checkOrientation={false}
+                ready={() => {
+                  estimateCompression(quality);
+                }}
+                cropend={() => {
+                  estimateCompression(quality);
+                }}
+              />
+            ) : (
+              <div style={{ height: 460 }} />
+            )}
+          </div>
+        </Spin>
       </Modal>
     </Space>
   );
